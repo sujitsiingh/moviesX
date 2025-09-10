@@ -18,33 +18,151 @@
         </Breadcrumbs>
 
         <HBox id="_IDGenHBox">
-            <VBox id="_IDGenVBox1" >
-                <Label id="_IDGenLabel1" text="title" />
-                <Input id="_IDGenInput1" placeholder="Enter Title of the movie" />
+            <VBox id="_IDGenVBox1">
+                <Label
+                    id="_IDGenLabel1"
+                    text="title"
+                />
+                <Input
+                    id="_IDGenInput1"
+                    placeholder="Enter Title of the movie"
+                />
             </VBox>
-            <VBox id="_IDGenVBox2" >
-                <Label id="_IDGenLabel2" text="overview" />
-                <Input id="_IDGenInput2" placeholder="Enter overview of the movie" />
+            <VBox id="_IDGenVBox2">
+                <Label
+                    id="_IDGenLabel2"
+                    text="overview"
+                />
+                <Input
+                    id="_IDGenInput2"
+                    placeholder="Enter overview of the movie"
+                />
             </VBox>
-            <VBox id="_IDGenVBox3" >
-                <Label id="_IDGenLabel3" text="releaseYear" />
-                <Input id="_IDGenInput3" placeholder="Enter release year of the movie" />
+            <VBox id="_IDGenVBox3">
+                <Label
+                    id="_IDGenLabel3"
+                    text="releaseYear"
+                />
+                <Input
+                    id="_IDGenInput3"
+                    placeholder="Enter release year of the movie"
+                />
             </VBox>
         </HBox>
 
-        <HBox id="_IDGenHBox1" >
-            <VBox id="_IDGenVBox4" >
-                <Label id="_IDGenLabel4" text="runtimeMin" />
-                <Input id="_IDGenInput4" placeholder="Enter run time(mins)" />
+        <HBox id="_IDGenHBox1">
+            <VBox id="_IDGenVBox4">
+                <Label
+                    id="_IDGenLabel4"
+                    text="Run Time"
+                />
+                <Input
+                    id="_IDGenInput4"
+                    placeholder="Enter run time(mins)"
+                />
             </VBox>
-            <VBox id="_IDGenVBox5" >
-                <Label id="_IDGenLabel5" text="currency" />
-                <Input id="_IDGenInput5" placeholder="Enter currency" />
+            <VBox id="_IDGenVBox5">
+                <Label
+                    id="_IDGenLabel5"
+                    text="Reviews"
+                />
+                <Input
+                    id="_IDGenInput5"
+                    placeholder="Enter reviews"
+                />
             </VBox>
-            <VBox id="_IDGenVBox" ></VBox>
-                <Label id="_IDGenLabel6" text="homepage" />
+            <VBox id="_IDGenVBox6">
+                <Label
+                    id="_IDGenLabel6"
+                    text="cast"
+                />
+                <Input
+                    id="_IDGenInput6"
+                    placeholder="Enter cast name"
+                />
+            </VBox>
         </HBox>
 
-
+        <subHeader>
+            <Toolbar id="_IDGenToolbar1">
+                <SearchField
+                    id="_IDGenSearchField"
+                    width="15rem"
+                    liveChange=".onSearch"
+                    placeholder="Search title/overview"
+                />
+                <ToolbarSpacer id="_IDGenToolbarSpacer" />
+                <Select
+                    id="_IDGenSelect"
+                    width="12rem"
+                    change=".onGenreChange"
+                    forceSelection="false"
+                >
+                    <items>
+                        <core:Item
+                            id="_IDGenItem"
+                            xmlns:core="sap.ui.core"
+                            key=""
+                            text="All Genres"
+                        />
+                    </items>
+                    <items>
+                        <core:Item
+                            id="_IDGenItem1"
+                            xmlns:core="sap.ui.core"
+                            key="{ID}"
+                            text="{name}"
+                        />
+                    </items>
+                    <!-- <dependents>
+                        <JSONModel id="genreModel" />
+                    </dependents> -->
+                </Select>
+                <Button
+                    id="_IDGenButton"
+                    icon="sap-icon://sort"
+                    press=".onSortMenuOpen"
+                />
+                <Menu id="sortMenu">
+                    <MenuItem
+                        id="_IDGenMenuItem"
+                        text="Rating ↑"
+                        press=".onSortAscRating"
+                    />
+                    <MenuItem
+                        id="_IDGenMenuItem1"
+                        text="Rating ↓"
+                        press=".onSortDescRating"
+                    />
+                    <MenuItem
+                        id="_IDGenMenuItem2"
+                        text="Release Date ↓"
+                        press=".onSortDescDate"
+                    />
+                </Menu>
+            </Toolbar>
+        </subHeader>
+        <!-- <content>
+            <List
+                id="movieList"
+                mode="SingleSelectMaster"
+                itemPress=".onItemPress"
+                growing="true"
+                growingScrollToLoad="true"
+            >
+                <items>
+                    <StandardListItem
+                        id="_IDGenStandardListItem"
+                        title="{title}"
+                        description="{overview}"
+                        iconDensityAware="true"
+                        icon="{posterUrl}"
+                        info="{= ${rating} ? ${rating}.toFixed(1) : '' }"
+                        infoState="Success"
+                        type="Navigation"
+                    />
+                </items>
+            </List>
+        </content> -->
     </Page>
 </mvc:View>

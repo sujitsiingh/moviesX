@@ -3,7 +3,11 @@
   "sap.app": {
     "id": "movies",
     "type": "application",
-    "i18n": "i18n/i18n.properties",
+    "i18n": {
+      "bundleUrl": "i18n/i18n.properties",
+      "supportedLocales": ["en"],
+      "fallbackLocale": "en"
+    },
     "applicationVersion": {
       "version": "0.0.1"
     },
@@ -58,8 +62,11 @@
     "models": {
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
+        "preload": true,
         "settings": {
-          "bundleName": "movies.i18n.i18n"
+          "bundleName": "movies.i18n.i18n",
+          "supportedLocales": ["en"],
+          "fallbackLocale": "en"
         }
       },
       "": {
@@ -89,7 +96,7 @@
         "viewType": "XML",
         "path": "movies.view",
         "async": true,
-        "viewPath": "movies.view"
+        "Path": "movies.view"
       },
       "routes": [
         {
