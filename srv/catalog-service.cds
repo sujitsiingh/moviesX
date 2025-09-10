@@ -7,9 +7,5 @@ service CatalogService {
     entity Genres as projection on movies.Genres excluding {
         createdAt, createdBy, modifiedAt, modifiedBy
     };
-    entity Roles as projection on movies.Roles;
-    entity Castings as projection on movies.Castings;
-    entity MovieGenres as projection on movies.MovieGenres {
-        genre, movie
-    }
+    entity Reviews as projection on movies.Reviews;
 }

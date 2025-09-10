@@ -1,0 +1,11 @@
+ID,movie_ID,name,rating,comment,user_ID,createdAt,createdBy,modifiedAt,modifiedBy
+1,1,Alice,4.5,Mind-bending and visually stunning!,1
+2,1,Bob,4.0,Great concept and execution.,2
+3,2,Charlie,5.0,A masterpiece of cinema.,3
+4,2,Diana,4.8,Brilliant performances and storytelling.,4
+5,3,Eve,4.7,Epic and emotional journey through space.,5
+6,3,Frank,4.6,Thought-provoking and visually impressive.,6
+7,4,Grace,4.9,A powerful social commentary.,7
+8,4,Hank,4.7,"Dark, funny, and deeply moving.",8
+9,5,Ivy,5.0,Magical and unforgettable experience.,9
+10,5,Jack,4.8,Beautiful animation and story.,10

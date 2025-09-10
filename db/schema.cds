@@ -7,45 +7,59 @@ type Name: String(255);
 type Year: Integer @assert.range: [1995,2025];
 type Url: String(2048);
 
-entity Roles: cuid, managed {
-    name: localized String(50);
-    descr: localized Text;
+@assert.unique: {
+    uniqueEmail: [ email ]
 }
 
-entity Movies: managed {
-    key ID: UUID;
+entity Users: cuid, managed {
+    username: String(60);
+    email: String(60) @mandatory @assert.format:'email';
+    password: String(255) @mandatory;
+    isAdmin: Boolean default false @mandatory;
+}
+
+entity Genres: cuid, managed {
+    name: localized String(60) @mandatory;
+    // descr: localized Text;
+}
+
+// entity Roles: cuid, managed {
+//     name: localized String(50);
+//     descr: localized Text;
+// }
+
+entity Movies: cuid, managed {
     title: localized String(100);
     overview: localized Text;
     releaseYear: Year;
     runtimeMin: Integer;
     currency: Currency;
     homepage: Url;
+    numReviews: Integer default 0;
     // Relationships -->
-    castings: Composition of many Castings on castings.movie = $self;
-    genres: Association to many MovieGenres on genres.movie = $self;
-    crew: Association to many Crew on crew.movie = $self;
+    genres: Association to Genres @mandatory;
+    ![cast]: array of String;
+    reviews: Composition of many Reviews on reviews.movie = $self;
 }
 
-entity Castings: cuid, managed {
+entity Reviews: cuid, managed {
     movie: Association to Movies;
-    role: Association to Roles;
-    characterName: String(150);
+    name: Name @mandatory;
+    rating: Decimal(2, 1) @mandatory;
+    comment: Text;
+    user: Association to Users @mandatory;
 }
 
-entity Genres: managed {
-    key ID: UUID;
-    name: localized String(60);
-    descr: localized Text;
-}
+
 
 // Many-to-many relationships
-entity MovieGenres {
-    key movie: Association to Movies;
-    key genre: Association to Genres;
-}
+// entity MovieGenres {
+//     key movie: Association to Movies;
+//     key genre: Association to Genres;
+// }
 
-entity Crew: cuid, managed {
-    movie: Association to Movies;
-    role: Association to Roles;   // dir, prod
-    department: String(50);
-}
+// entity Crew: cuid, managed {
+//     movie: Association to Movies;
+//     role: Association to Roles;   // dir, prod
+//     department: String(50);
+// }

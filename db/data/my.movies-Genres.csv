@@ -1,5 +1,11 @@
-ID,name,descr,createdAt,createdBy,modifiedAt,modifiedBy
-G1,Science Fiction,Speculative science-based narratives.
-G2,Action,High-Intensity sequences and stunts.
-G3,Drama,Character-driven emotional stroytelling.
-G4,Thriller,Suspenseful plots with tension and twists.
+ID,name,createdAt,createdBy,modifiedAt,modifiedBy
+1,Action
+2,Comedy
+3,Drama
+4,Thriller
+5,Romance
+6,Sci-Fi
+7,Horror
+8,Documentary
+9,Animation
+10,Fantasy

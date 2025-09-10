@@ -1,0 +1,11 @@
+ID,username,email,password,isAdmin,createdAt,createdBy,modifiedAt,modifiedBy
+1,alice,alice@example.com,password123,False
+2,bob,bob@example.com,securepass456,True
+3,charlie,charlie@example.com,charlie789,False
+4,diana,diana@example.com,diana321,False
+5,edward,edward@example.com,edward654,True
+6,fiona,fiona@example.com,fiona987,False
+7,george,george@example.com,george111,False
+8,hannah,hannah@example.com,hannah222,False
+9,ian,ian@example.com,ian333,True
+10,julia,julia@example.com,julia444,False
