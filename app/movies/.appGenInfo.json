@@ -1,6 +1,6 @@
 {
   "generationParameters": {
-    "generationDate": "Tue Sep 09 2025 11:27:30 GMT+0000 (Coordinated Universal Time)",
+    "generationDate": "Wed Sep 10 2025 05:47:08 GMT+0000 (Coordinated Universal Time)",
     "generatorPlatform": "SAP Business Application Studio",
     "serviceType": "Local CAP",
     "metadataFilename": "",
@@ -16,18 +16,9 @@
     "enableTypeScript": false,
     "showMockDataInfo": false,
     "generatorVersion": "1.18.6",
-    "template": "List Report Page V4",
+    "template": "Basic V4",
     "generatorName": "SAP Fiori Application Generator",
-    "entityRelatedConfig": [
-      {
-        "type": "Main Entity",
-        "value": "Movies"
-      },
-      {
-        "type": "Navigation Entity",
-        "value": "None"
-      }
-    ],
-    "launchText": "To launch the generated app, start your CAP project:  and navigate to the following location in your browser:\n\nhttp://localhost:4004/movies/webapp/index.html"
+    "entityRelatedConfig": [],
+    "launchText": "To launch the generated app, start your CAP project:  and navigate to the following location in your browser:\n\nhttp://localhost:4004/movies/index.html"
   }
 }

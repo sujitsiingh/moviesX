@@ -11,9 +11,9 @@
     "description": "{{appDescription}}",
     "resources": "resources.json",
     "sourceTemplate": {
-      "id": "@sap/generator-fiori:lrop",
+      "id": "@sap/generator-fiori:basic",
       "version": "1.18.6",
-      "toolsId": "8188f28e-84e5-49c5-92da-8fdd41053894"
+      "toolsId": "0b9fbbbd-4460-44e9-b4c5-26caee57c659"
     },
     "dataSources": {
       "mainService": {
@@ -48,8 +48,7 @@
       "minUI5Version": "1.140.0",
       "libs": {
         "sap.m": {},
-        "sap.ui.core": {},
-        "sap.fe.templates": {}
+        "sap.ui.core": {}
       }
     },
     "contentDensities": {
@@ -71,71 +70,48 @@
           "autoExpandSelect": true,
           "earlyRequests": true
         }
-      },
-      "@i18n": {
-        "type": "sap.ui.model.resource.ResourceModel",
-        "uri": "i18n/i18n.properties"
       }
     },
     "resources": {
-      "css": []
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
     },
     "routing": {
-      "config": {},
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "movies.view",
+        "async": true,
+        "viewPath": "movies.view"
+      },
       "routes": [
         {
+          "name": "RouteHome",
           "pattern": ":?query:",
-          "name": "MoviesList",
-          "target": "MoviesList"
-        },
-        {
-          "pattern": "Movies({key}):?query:",
-          "name": "MoviesObjectPage",
-          "target": "MoviesObjectPage"
+          "target": [
+            "TargetHome"
+          ]
         }
       ],
       "targets": {
-        "MoviesList": {
-          "type": "Component",
-          "id": "MoviesList",
-          "name": "sap.fe.templates.ListReport",
-          "options": {
-            "settings": {
-              "contextPath": "/Movies",
-              "variantManagement": "Page",
-              "navigation": {
-                "Movies": {
-                  "detail": {
-                    "route": "MoviesObjectPage"
-                  }
-                }
-              },
-              "controlConfiguration": {
-                "@com.sap.vocabularies.UI.v1.LineItem": {
-                  "tableSettings": {
-                    "type": "ResponsiveTable"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "MoviesObjectPage": {
-          "type": "Component",
-          "id": "MoviesObjectPage",
-          "name": "sap.fe.templates.ObjectPage",
-          "options": {
-            "settings": {
-              "editableHeaderContent": false,
-              "contextPath": "/Movies"
-            }
-          }
+        "TargetHome": {
+          "id": "Home",
+          "name": "Home"
         }
       }
+    },
+    "rootView": {
+      "viewName": "movies.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
     }
-  },
-  "sap.fiori": {
-    "registrationIds": [],
-    "archeType": "transactional"
   }
 }

@@ -1,12 +1,26 @@
-sap.ui.define(
-    ["sap/fe/core/AppComponent"],
-    function (Component) {
-        "use strict";
+sap.ui.define([
+    "sap/ui/core/UIComponent",
+    "movies/model/models"
+], (UIComponent, models) => {
+    "use strict";
 
-        return Component.extend("movies.Component", {
-            metadata: {
-                manifest: "json"
-            }
-        });
-    }
-);
+    return UIComponent.extend("movies.Component", {
+        metadata: {
+            manifest: "json",
+            interfaces: [
+                "sap.ui.core.IAsyncContentCreation"
+            ]
+        },
+
+        init() {
+            // call the base component's init function
+            UIComponent.prototype.init.apply(this, arguments);
+
+            // set the device model
+            this.setModel(models.createDeviceModel(), "device");
+
+            // enable routing
+            this.getRouter().initialize();
+        }
+    });
+});
