@@ -12,6 +12,18 @@ sap.ui.define([
         onInit: function () {
 
         },
+
+        // side toggle
+        onCollapseExpandPress() {
+			const oSideNavigation = this.byId("sideNavigation"),
+				bExpanded = oSideNavigation.getExpanded();
+
+			oSideNavigation.setExpanded(!bExpanded);
+		},
+
+
+
+
         onAddMe: function () {
             var title = this.getView().byId("_IDGenInput1").getValue();
             var overview = this.getView().byId("_IDGenInput2").getValue();
@@ -37,6 +49,12 @@ sap.ui.define([
 
             oContext.created().then(() => {
                 MessageBox.success("Movie Added Successfully");
+                this.getView().byId("_IDGenInput1").setValue(null);
+                this.getView().byId("_IDGenInput2").setValue(null);
+                this.getView().byId("_IDGenInput3").setValue(null);
+                this.getView().byId("_IDGenInput4").setValue(null);
+                this.getView().byId("_IDGenInput5").setValue(null);
+                this.getView().byId("_IDGenInput6").setValue(null);
             }).catch((err) => {
                 MessageBox.error("error adding new movie");
                 console.error("Error adding Item : " + err);

@@ -2,91 +2,394 @@
     controllerName="movies.controller.Home"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
+    xmlns:tnt="sap.tnt"
 >
     <Page
         id="page"
         title="{i18n>title}"
     >
-        <Breadcrumbs
-            id="_IDGenBreadcrumbs"
-            currentLocationText="Add new item"
+        <!-- toll header of the page -->
+        <tnt:ToolHeader
+            id="shellLikeToolHeader"
+            class="sapUiTinyMargin"
         >
-            <Link
-                id="_IDGenLink"
-                text="Master"
+            <Button
+                id="_IDGenButton3"
+                icon="sap-icon://menu2"
+                type="Transparent"
+                tooltip="Menu"
+                press=".onCollapseExpandPress"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData"
+                        priority="NeverOverflow"
+                    />
+                </layoutData>
+            </Button>
+            <Image
+                id="_IDGenImage"
+                src="test-resources/sap/tnt/images/SAP_Logo.png"
+                decorative="false"
+                press="onLogoPressed"
+                tooltip="SAP Logo"
+                width="60px"
+                height="30px"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData1"
+                        priority="NeverOverflow"
+                    />
+                </layoutData>
+            </Image>
+            <Title
+                text="Prоduct Name"
+                wrapping="false"
+                id="productName"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData2"
+                        priority="Disappear"
+                    />
+                </layoutData>
+            </Title>
+            <Text
+                text="Second title"
+                wrapping="false"
+                id="secondTitle"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData3"
+                        priority="Disappear"
+                    />
+                </layoutData>
+            </Text>
+            <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+            <SearchField
+                width="25rem"
+                id="searchField"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData4"
+                        priority="Low"
+                        group="1"
+                    />
+                </layoutData>
+            </SearchField>
+            <Button
+                visible="false"
+                icon="sap-icon://search"
+                type="Transparent"
+                id="searchButton"
+                tooltip="Search"
             />
-        </Breadcrumbs>
+            <OverflowToolbarButton
+                id="_IDGenOverflowToolbarButton"
+                icon="sap-icon://da"
+                type="Transparent"
+                tooltip="Joule"
+                text="Joule"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData5"
+                        group="2"
+                    />
+                </layoutData>
+            </OverflowToolbarButton>
+            <OverflowToolbarButton
+                id="_IDGenOverflowToolbarButton1"
+                icon="sap-icon://source-code"
+                type="Transparent"
+                tooltip="Action 1"
+                text="Action 1"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData6"
+                        group="2"
+                    />
+                </layoutData>
+            </OverflowToolbarButton>
+            <OverflowToolbarButton
+                id="_IDGenOverflowToolbarButton2"
+                icon="sap-icon://card"
+                type="Transparent"
+                tooltip="Action 2"
+                text="Action 2"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData7"
+                        group="2"
+                    />
+                </layoutData>
+            </OverflowToolbarButton>
+            <OverflowToolbarButton
+                id="_IDGenOverflowToolbarButton3"
+                icon="sap-icon://action-settings"
+                type="Transparent"
+                text="Settings"
+            />
+            <Button
+                id="_IDGenButton4"
+                icon="sap-icon://bell"
+                type="Transparent"
+                tooltip="Notification"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData8"
+                        priority="NeverOverflow"
+                    />
+                </layoutData>
+            </Button>
+            <tnt:ToolHeaderUtilitySeparator
+                id="_IDGenToolHeaderUtilitySeparator"
+            />
+            <OverflowToolbarButton
+                id="_IDGenOverflowToolbarButton4"
+                icon="sap-icon://grid"
+                type="Transparent"
+                text="My Products"
+                tooltip="My Products"
+            />
+            <Avatar
+                id="_IDGenAvatar"
+                src="test-resources/sap/tnt/images/Woman_avatar_01.png"
+                displaySize="XS"
+                press=".onAvatarPressed"
+                tooltip="Profile"
+            >
+                <layoutData>
+                    <OverflowToolbarLayoutData
+                        id="_IDGenOverflowToolbarLayoutData9"
+                        priority="NeverOverflow"
+                    />
+                </layoutData>
+            </Avatar>
+        </tnt:ToolHeader>
 
-        <HBox id="_IDGenHBox">
-            <VBox id="_IDGenVBox1">
-                <Label
-                    id="_IDGenLabel1"
-                    text="title"
-                />
-                <Input
-                    id="_IDGenInput1"
-                    placeholder="Enter Title of the movie"
-                />
-            </VBox>
-            <VBox id="_IDGenVBox2">
-                <Label
-                    id="_IDGenLabel2"
-                    text="overview"
-                />
-                <Input
-                    id="_IDGenInput2"
-                    placeholder="Enter overview of the movie"
-                />
-            </VBox>
-            <VBox id="_IDGenVBox3">
-                <Label
-                    id="_IDGenLabel3"
-                    text="releaseYear"
-                />
-                <Input
-                    id="_IDGenInput3"
-                    placeholder="Enter release year of the movie"
-                />
-            </VBox>
-        </HBox>
+        <!-- side navigation -->
+        <HBox id="_IDGenHBox3" >
 
-        <HBox id="_IDGenHBox1">
-            <VBox id="_IDGenVBox4">
-                <Label
-                    id="_IDGenLabel4"
-                    text="runtimeMin"
-                />
-                <Input
-                    id="_IDGenInput4"
-                    placeholder="Enter run time(mins)"
-                />
+            <VBox id="_IDGenVBox7">
+                <tnt:SideNavigation
+                    id="sideNavigation"
+                    selectedKey="walked"
+                    expanded="false"
+                >
+                    <tnt:NavigationList id="_IDGenNavigationList">
+                        <tnt:NavigationListItem
+                            id="_IDGenNavigationListItem1"
+                            text="Home"
+                            icon="sap-icon://home"
+                        />
+                        <tnt:NavigationListGroup
+                            id="_IDGenNavigationListGroup"
+                            text="New"
+                        >
+                            <tnt:NavigationListItem
+                                id="_IDGenNavigationListItem2"
+                                text="People"
+                                icon="sap-icon://people-connected"
+                            />
+                            <tnt:NavigationListItem
+                                id="_IDGenNavigationListItem3"
+                                text="Building"
+                                icon="sap-icon://building"
+                            >
+                                <tnt:NavigationListItem
+                                    id="_IDGenNavigationListItem4"
+                                    text="Office 01"
+                                />
+                                <tnt:NavigationListItem
+                                    id="_IDGenNavigationListItem5"
+                                    text="Office 02"
+                                />
+                            </tnt:NavigationListItem>
+                            <tnt:NavigationListItem
+                                id="_IDGenNavigationListItem6"
+                                text="Mileage"
+                                icon="sap-icon://mileage"
+                            >
+                                <tnt:NavigationListItem
+                                    id="_IDGenNavigationListItem7"
+                                    text="Driven"
+                                />
+                                <tnt:NavigationListItem
+                                    text="Walked"
+                                    id="walked"
+                                />
+                            </tnt:NavigationListItem>
+                        </tnt:NavigationListGroup>
+                        <tnt:NavigationListGroup
+                            id="_IDGenNavigationListGroup1"
+                            text="Recently used"
+                        >
+                            <tnt:NavigationListItem
+                                id="_IDGenNavigationListItem8"
+                                text="Managing My Area"
+                                icon="sap-icon://kpi-managing-my-area"
+                            />
+                            <tnt:NavigationListItem
+                                id="_IDGenNavigationListItem9"
+                                text="Flight"
+                                icon="sap-icon://flight"
+                            />
+                            <tnt:NavigationListItem
+                                id="_IDGenNavigationListItem10"
+                                text="Map"
+                                icon="sap-icon://map-2"
+                            />
+                        </tnt:NavigationListGroup>
+                        <tnt:NavigationListGroup
+                            id="_IDGenNavigationListGroup2"
+                            text="Restricted"
+                            enabled="false"
+                        >
+                            <tnt:NavigationListItem
+                                id="_IDGenNavigationListItem11"
+                                text="Running"
+                                icon="sap-icon://physical-activity"
+                            />
+                            <tnt:NavigationListItem
+                                id="_IDGenNavigationListItem12"
+                                text="Scissors"
+                                icon="sap-icon://scissors"
+                            />
+                        </tnt:NavigationListGroup>
+                        <tnt:NavigationListItem
+                            id="_IDGenNavigationListItem13"
+                            text="Transport"
+                            icon="sap-icon://passenger-train"
+                        />
+                    </tnt:NavigationList>
+                    <tnt:fixedItem>
+                        <tnt:NavigationList id="_IDGenNavigationList1">
+                            <tnt:NavigationListItem
+                                id="_IDGenNavigationListItem14"
+                                text="Bar Chart"
+                                icon="sap-icon://bar-chart"
+                            />
+                            <tnt:NavigationListItem
+                                id="_IDGenNavigationListItem15"
+                                selectable="false"
+                                href="https://sap.com"
+                                target="_blank"
+                                text="External Link"
+                                icon="sap-icon://attachment"
+                            />
+                            <tnt:NavigationListItem
+                                id="_IDGenNavigationListItem16"
+                                selectable="false"
+                                href="https://sap.com"
+                                target="_top"
+                                text="External Link _top"
+                                icon="sap-icon://attachment"
+                            />
+                            <tnt:NavigationListItem
+                                id="_IDGenNavigationListItem17"
+                                text="Compare"
+                                icon="sap-icon://compare"
+                            />
+                        </tnt:NavigationList>
+                    </tnt:fixedItem>
+                </tnt:SideNavigation>
             </VBox>
-            <VBox id="_IDGenVBox5">
-                <Label
-                    id="_IDGenLabel5"
-                    text="Reviews"
-                />
-                <Input
-                    id="_IDGenInput5"
-                    placeholder="Enter reviews"
-                />
-            </VBox>
-            <VBox id="_IDGenVBox6">
-                <Label
-                    id="_IDGenLabel6"
-                    text="cast"
-                />
-                <Input
-                    id="_IDGenInput6"
-                    placeholder="Enter cast name"
-                />
-            </VBox>
-        </HBox>
 
-        <HBox id="_IDGenHBox2" >
-            <VBox id="_IDGenVBox" >
-                <Button id="_IDGenButton1" text="Add Me" press=".onAddMe"></Button>
+            <VBox id="_IDGenVBox8">
+                <Breadcrumbs
+                    id="_IDGenBreadcrumbs"
+                    currentLocationText="Add new item"
+                >
+                    <Link
+                        id="_IDGenLink"
+                        text="Master"
+                    />
+                </Breadcrumbs>
+
+                <HBox id="_IDGenHBox">
+                    <VBox id="_IDGenVBox1">
+                        <Label
+                            id="_IDGenLabel1"
+                            text="title"
+                        />
+                        <Input
+                            id="_IDGenInput1"
+                            placeholder="Enter Title of the movie"
+                        />
+                    </VBox>
+                    <VBox id="_IDGenVBox2">
+                        <Label
+                            id="_IDGenLabel2"
+                            text="overview"
+                        />
+                        <Input
+                            id="_IDGenInput2"
+                            placeholder="Enter overview of the movie"
+                        />
+                    </VBox>
+                    <VBox id="_IDGenVBox3">
+                        <Label
+                            id="_IDGenLabel3"
+                            text="releaseYear"
+                        />
+                        <Input
+                            id="_IDGenInput3"
+                            placeholder="Enter release year of the movie"
+                        />
+                    </VBox>
+                </HBox>
+
+                <HBox id="_IDGenHBox1">
+                    <VBox id="_IDGenVBox4">
+                        <Label
+                            id="_IDGenLabel4"
+                            text="runtimeMin"
+                        />
+                        <Input
+                            id="_IDGenInput4"
+                            placeholder="Enter run time(mins)"
+                        />
+                    </VBox>
+                    <VBox id="_IDGenVBox5">
+                        <Label
+                            id="_IDGenLabel5"
+                            text="Reviews"
+                        />
+                        <Input
+                            id="_IDGenInput5"
+                            placeholder="Enter reviews"
+                        />
+                    </VBox>
+                    <VBox id="_IDGenVBox6">
+                        <Label
+                            id="_IDGenLabel6"
+                            text="cast"
+                        />
+                        <Input
+                            id="_IDGenInput6"
+                            placeholder="Enter cast name"
+                        />
+                    </VBox>
+                </HBox>
+
+                <HBox id="_IDGenHBox2">
+                    <VBox id="_IDGenVBox">
+                        <Button
+                            id="_IDGenButton1"
+                            text="Add Me"
+                            press=".onAddMe"
+                        />
+                    </VBox>
+                </HBox>
             </VBox>
+
         </HBox>
 
         <subHeader>
@@ -112,14 +415,14 @@
                             text="All Genres"
                         />
                     </items>
-                    <items>
+                    <!-- <items>
                         <core:Item
                             id="_IDGenItem1"
                             xmlns:core="sap.ui.core"
                             key="{ID}"
                             text="{name}"
                         />
-                    </items>
+                    </items> -->
                     <!-- <dependents>
                         <JSONModel id="genreModel" />
                     </dependents> -->
@@ -148,6 +451,7 @@
                 </Menu>
             </Toolbar>
         </subHeader>
+
         <!-- <content>
             <List
                 id="movieList"
