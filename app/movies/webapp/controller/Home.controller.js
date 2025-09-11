@@ -21,6 +21,24 @@ sap.ui.define([
 			oSideNavigation.setExpanded(!bExpanded);
 		},
 
+        onAddMoviesPress: function () {
+            this.hideAllPanels();
+            var oPanel = this.byId("panel1");
+            oPanel.setVisible(true);
+        },
+
+        onViewMoviesPress: function () {
+            this.hideAllPanels();
+            var oPanel = this.byId("panel2");
+            oPanel.setVisible(true);
+        },
+
+        hideAllPanels: function () {
+            const oPanel = this.byId("panel1");
+            oPanel.setVisible(false);
+            const oPanel1 = this.byId("panel2");
+            oPanel1.setVisible(false);
+        },
 
 
 
