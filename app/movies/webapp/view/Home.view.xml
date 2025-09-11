@@ -54,7 +54,7 @@
             <VBox id="_IDGenVBox4">
                 <Label
                     id="_IDGenLabel4"
-                    text="Run Time"
+                    text="runtimeMin"
                 />
                 <Input
                     id="_IDGenInput4"
@@ -80,6 +80,12 @@
                     id="_IDGenInput6"
                     placeholder="Enter cast name"
                 />
+            </VBox>
+        </HBox>
+
+        <HBox id="_IDGenHBox2" >
+            <VBox id="_IDGenVBox" >
+                <Button id="_IDGenButton1" text="Add Me" press=".onAddMe"></Button>
             </VBox>
         </HBox>
 

@@ -19,7 +19,7 @@ entity Users: cuid, managed {
 }
 
 entity Genres: cuid, managed {
-    name: localized String(60) @mandatory;
+    name: localized String(60);
     // descr: localized Text;
 }
 
@@ -37,7 +37,7 @@ entity Movies: cuid, managed {
     homepage: Url;
     numReviews: Integer default 0;
     // Relationships -->
-    genres: Association to Genres @mandatory;
+    genres: Association to Genres;
     ![cast]: array of String;
     reviews: Composition of many Reviews on reviews.movie = $self;
 }

@@ -1,2 +1,22 @@
 ###
 GET http://localhost:4004/odata/v4/catalog/Movies
+
+###
+POST http://localhost:4004/odata/v4/catalog/Movies
+Content-Type: application/json
+
+{
+    "title": "Gladiator",
+    "overview": "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family.",
+    "releaseYear": 2000,
+    "runtimeMin": 2000,
+    "numReviews": 1100,
+    "cast": [
+      "Russell Crowe",
+      "Joaquin Phoenix",
+      "Connie Nielsen"
+    ]
+}
+
+###
+DELETE http://localhost:4004/odata/v4/catalog/Movies(203a4704-0272-4761-9fb5-38c0def33655)
