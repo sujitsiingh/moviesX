@@ -1,1 +1,4 @@
-/* Enter your custom styles here */
+/* for cast */
+.commaSeparated .sapMText:not(:last-child)::after {
+  content: ", ";
+}

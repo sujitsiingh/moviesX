@@ -399,6 +399,18 @@
 
                     <HBox id="_IDGenHBox2">
                         <VBox id="_IDGenVBox">
+                            <Label
+                                id="_IDGenLabel7"
+                                text="Currency"
+                            />
+                            <Input
+                                id="_IDGenInput7"
+                                placeholder="Enter currency"
+                            />
+                        </VBox>
+                    </HBox>
+                    <HBox id="_IDGenHBox5">
+                        <VBox id="_IDGenVBox9">
                             <Button
                                 id="_IDGenButton1"
                                 text="Add Me"
@@ -426,21 +438,38 @@
                                 <Text id="_IDGenText4" text="Runtime (min)"/>
                             </Column>
                             <Column id="_IDGenColumn4">
-                                <Text id="_IDGenText5" text="Reviews"/>
+                                <Text id="_IDGenText5" text="Currency"/>
                             </Column>
                             <Column id="_IDGenColumn5">
-                                <Text id="_IDGenText6"  text="Cast"/>
+                                <Text id="_IDGenText6"  text="Reviews"/>
+                            </Column>
+                            <!-- <Column id="_IDGenColumn6">
+                                <Text id="_IDGenText7"  text="Cast"/>
+                            </Column> -->
+                            <Column id="_IDGenColumn7">
+                                <Text id="actionText"  text="Action"/>
                             </Column>
                         </columns>
                         <items>
                             <ColumnListItem id="_IDGenColumnListItem">
                                 <cells>
-                                    <Text id="_IDGenText7" text="{title}"/>
-                                    <Text id="_IDGenText8" text="{overview}"/>
-                                    <Text id="_IDGenText9" text="{releaseYear}"/>
-                                    <Text id="_IDGenText10" text="{runtimeMin}"/>
-                                    <Text id="_IDGenText11" text="{numReviews}"/>
-                                    <Text id="_IDGenText12" text="{![cast]}"/>
+                                    <Text id="_IDGenText8" text="{title}"/>
+                                    <Text id="_IDGenText9" text="{overview}"/>
+                                    <Text id="_IDGenText10" text="{releaseYear}"/>
+                                    <Text id="_IDGenText11" text="{runtimeMin}"/>
+                                    <Text id="_IDGenText12" text="{currency_code}"/>
+                                    <Text id="_IDGenText13" text="{numReviews}"/>
+                                    <!-- <Text id="_IDGenText12" text="{= ${cast} ? ${cast}.join(', ') : ''}"/> -->
+                                    <!-- <Text id="_IDGenText14" text="{ path: 'cast', formatter: '.formatCast' }"/> -->
+                                    <!-- <VBox id="_IDGenVBox10" items="{path: 'cast'}"><items><Text id="_IDGenText" text="{.}"/></items></VBox> -->
+                                    
+                                    <!-- <HBox id="_IDGenHBox4" class="commaSeparated" items="{path: 'cast'}">
+                                        <items>
+                                            <Text id="_IDGenText14" text="{.}" />
+                                        </items>
+                                    </HBox> -->
+                                    <Button id="_IDGenButton2" icon="sap-icon://action" text="Click Me" press="onActionPress($event)"></Button>
+
                                 </cells>
                             </ColumnListItem>
                         </items>

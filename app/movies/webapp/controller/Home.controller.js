@@ -4,8 +4,9 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
     "sap/ui/model/Sorter",
-    "sap/m/MessageBox"
-], (Controller, Filter, FilterOperator, MessageToast, Sorter, MessageBox) => {
+    "sap/m/MessageBox",
+    "sap/ui/core/Fragment"
+], (Controller, Filter, FilterOperator, MessageToast, Sorter, MessageBox, Fragment) => {
     "use strict";
 
     return Controller.extend("movies.controller.Home", {
@@ -48,9 +49,11 @@ sap.ui.define([
             var releaseYear = this.getView().byId("_IDGenInput3").getValue();
             var runtimeMin = this.getView().byId("_IDGenInput4").getValue();
             var numReviews = this.getView().byId("_IDGenInput5").getValue();
-
+            
             const castRaw = this.byId("_IDGenInput6").getValue();
             const cast = castRaw ? castRaw.split(",").map(s => s.trim()).filter(Boolean) : [];
+            
+            var currency = this.getView().byId("_IDGenInput7").getValue();
 
             const payload = {
                 title,
@@ -58,7 +61,8 @@ sap.ui.define([
                 releaseYear,
                 runtimeMin,
                 numReviews,
-                cast: cast
+                cast: cast,
+                currency
             }
 
             var oModel = this.getView().getModel();
@@ -73,10 +77,36 @@ sap.ui.define([
                 this.getView().byId("_IDGenInput4").setValue(null);
                 this.getView().byId("_IDGenInput5").setValue(null);
                 this.getView().byId("_IDGenInput6").setValue(null);
+                this.getView().byId("_IDGenInput7").setValue(null);
             }).catch((err) => {
                 MessageBox.error("error adding new movie");
                 console.error("Error adding Item : " + err);
             });
+        },
+        
+        formatCast: function (aCast) {
+            return Array.isArray(aCast) ? aCast.join(', ') : '';
+        },
+
+        onActionPress: function (oEvent) {
+            var oBtn = oEvent.getSource();
+            var oContext = oBtn.getBindingContext();
+            this._oSelectedContext = oContext;
+
+            if(!this._oActionSheet) {
+                Fragment.load({
+                    id: this.getView().getId(),
+                    name: "movies.view.ActionSheet",
+                    controller: this
+                })
+                .then (function (oActionSheet) {
+                    this._oActionSheet = oActionSheet;
+                    this.getView().addDependent(this._oActionSheet);
+                    this._oActionSheet.openBy(oBtn);
+                }.bind(this));
+            } else {
+                this._oActionSheet.openBy(oBtn);
+            }
         }
 
     });
