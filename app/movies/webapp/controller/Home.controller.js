@@ -107,6 +107,25 @@ sap.ui.define([
             } else {
                 this._oActionSheet.openBy(oBtn);
             }
+        },
+
+        onDeletePress: function () {
+            var oContext = this._oSelectedContext;
+            var sMovieId = oContext.getProperty("ID");
+            MessageBox.confirm("Are you sure to delete this movie with ID: " + sMovieId + " ?", {
+                actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+                onClose: function (oAction) {
+                    if (oAction === MessageBox.Action.YES) {
+                        // ---- to delete ---
+                        oContext.delete("$direct").then(function () {
+                            MessageBox.success("Movie ID: " + sMovieId + " successfully Deleted!!");
+                        })
+                        .catch(function (e) {
+                            MessageBox.error("Error deleting the movie with ID: " + sMovieId + " err :" + e + " Try again!");
+                        })
+                    }
+                }
+            });
         }
 
     });
