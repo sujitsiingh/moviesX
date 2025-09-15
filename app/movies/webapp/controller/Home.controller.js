@@ -1,6 +1,3 @@
-const { update } = require("@sap/cds");
-const { func } = require("@sap/cds/lib/ql/cds-ql");
-
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
@@ -74,7 +71,7 @@ sap.ui.define([
                 runtimeMin,
                 numReviews,
                 cast: cast,
-                currency
+                currency: currency
             }
 
             var oModel = this.getView().getModel();
@@ -188,7 +185,8 @@ sap.ui.define([
 
             var update_oModel = this.getView().getModel();
             var sPath = "/Movies('"+itemCode+"')";
-            var oContext = update_oModel.BindContext(sPath).getBoundContext();
+            var oBinding = update_oModel.bindContext(sPath);
+            var oContext = oBinding.getBoundContext();
 
             var oView = this.getView();
             function resetBusy() {

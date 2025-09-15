@@ -1,1 +1,51 @@
 code,symbol,minorUnit,name,descr
+USD,$,2,Dollar,United States Dollar
+EUR,€,2,Euro,European Euro
+JPY,¥,0,Yen,Japanese Yen
+GBP,£,2,Pound,British Pound Sterling
+AUD,A$,2,Dollar,Australian Dollar
+CAD,C$,2,Dollar,Canadian Dollar
+CHF,CHF,2,Franc,Swiss Franc
+CNY,¥,2,Yuan,Chinese Yuan Renminbi
+HKD,HK$,2,Dollar,Hong Kong Dollar
+NZD,NZ$,2,Dollar,New Zealand Dollar
+SEK,kr,2,Krona,Swedish Krona
+KRW,₩,0,Won,South Korean Won
+SGD,S$,2,Dollar,Singapore Dollar
+NOK,kr,2,Kroner,Norwegian Krone
+MXN,$,2,Peso,Mexican Peso
+INR,₹,2,Rupee,Indian Rupee
+RUB,₽,2,Ruble,Russian Ruble
+ZAR,R,2,Rand,South African Rand
+TRY,₺,2,Lira,Turkish Lira
+BRL,R$,2,Real,Brazilian Real
+TWD,NT$,2,Dollar,New Taiwan Dollar
+DKK,kr,2,Krone,Danish Krone
+PLN,zł,2,Zloty,Polish Zloty
+THB,฿,2,Baht,Thai Baht
+IDR,Rp,2,Rupiah,Indonesian Rupiah
+HUF,Ft,2,Forint,Hungarian Forint
+CZK,Kč,2,Koruna,Czech Koruna
+ILS,₪,2,Shekel,Israeli New Shekel
+CLP,$,0,Peso,Chilean Peso
+PHP,₱,2,Peso,Philippine Peso
+AED,د.إ,2,Dirham,United Arab Emirates Dirham
+COP,$,2,Peso,Colombian Peso
+SAR,﷼,2,Riyal,Saudi Riyal
+MYR,RM,2,Ringgit,Malaysian Ringgit
+RON,lei,2,Leu,Romanian Leu
+ARS,$,2,Peso,Argentine Peso
+VND,₫,0,Dong,Vietnamese Dong
+EGP,£,2,Pound,Egyptian Pound
+BDT,৳,2,Taka,Bangladeshi Taka
+PKR,₨,2,Rupee,Pakistani Rupee
+NGN,₦,2,Naira,Nigerian Naira
+KZT,₸,2,Tenge,Kazakhstani Tenge
+QAR,﷼,2,Riyal,Qatari Riyal
+DZD,دج,2,Dinar,Algerian Dinar
+MAD,د.م.,2,Dirham,Moroccan Dirham
+LKR,Rs,2,Rupee,Sri Lankan Rupee
+UAH,₴,2,Hryvnia,Ukrainian Hryvnia
+KWD,د.ك,3,Dinar,Kuwaiti Dinar
+BHD,ب.د,3,Dinar,Bahraini Dinar
+OMR,﷼,3,Rial,Omani Rial
