@@ -10,5 +10,6 @@
             icon="sap-icon://delete"
             press="onDeletePress"
         />
+        <Button id="_IDGenButton7" text="Edit" icon="sap-icon://edit" press=".onEditPress"></Button>
     </ActionSheet>
 </core:FragmentDefinition>

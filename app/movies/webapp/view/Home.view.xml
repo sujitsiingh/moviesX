@@ -401,7 +401,7 @@
                         <VBox id="_IDGenVBox">
                             <Label
                                 id="_IDGenLabel7"
-                                text="Currency"
+                                text="currency"
                             />
                             <Input
                                 id="_IDGenInput7"
@@ -475,6 +475,121 @@
                         </items>
                     </Table>
                 </Panel>
+
+                <!-- Panel 3 -->
+                <Panel
+                    id="panel3"
+                    width="50rem"
+                    class="sapUiResponsiveMargin"
+                    accessibleRole="Region"
+                    visible="false"
+                >
+                    <headerToolbar>
+                        <OverflowToolbar id="_IDGenOverflowToolbar3">
+                            <Title
+                                id="_IDGenTitle3"
+                                text="Movies.."
+                            />
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <Breadcrumbs
+                        id="_IDGenBreadcrumbs3"
+                        currentLocationText="Edit the Entries.."
+                    >
+                        <Link
+                            id="_IDGenLink3"
+                            text="Home"
+                        />
+                    </Breadcrumbs>
+
+                    <HBox id="_IDGenHBoxP3">
+                        <VBox id="itemCodeBox">
+                            <Label
+                                id="icLabel"
+                                text="title"
+                            />
+                            <Input
+                                id="itemCode"
+                                placeholder="Title of the movie" editable="false"
+                            />
+                        </VBox>
+                        <VBox id="_IDGenVBoxP3">
+                            <Label
+                                id="_IDGenLabelP3"
+                                text="title"
+                            />
+                            <Input
+                                id="editTitle"
+                                placeholder="Title of the movie"
+                            />
+                        </VBox>
+                        <VBox id="_IDGenVBox11" >
+                            <Label
+                                id="_IDGenLabelP03"
+                                text="overview"
+                            />
+                            <Input id="editOverview"
+                                placeholder="Enter Overview of the movie"
+                            />
+                        </VBox>
+                        <VBox id="_IDGenVBox12" >
+                            <Label id="_IDGenLabel"                                
+                                text="releaseYear"
+                            />
+                            <Input id="editReleaseYear"                                
+                                placeholder="Enter release year of the movie"
+                            />
+                        </VBox>
+                    </HBox>
+
+                    <HBox id="_IDGenHBox4" >
+                        <VBox id="_IDGenVBox13" >
+                            <Label id="_IDGenLabel8"                                
+                                text="runtimeMin"
+                            />
+                            <Input id="editRunTime"                                
+                                placeholder="Enter run time(mins)"
+                            />
+                        </VBox>
+                        <VBox id="_IDGenVBox14" >
+                            <Label id="_IDGenLabel9"                                
+                                text="Reviews"
+                            />
+                            <Input id="editReviews"                                
+                                placeholder="Enter reviews"
+                            />
+                        </VBox>
+                        <VBox id="_IDGenVBox15" >
+                            <Label id="_IDGenLabel10"                                
+                                text="cast"
+                            />
+                            <Input id="editCast"                                
+                                placeholder="Enter cast name"
+                            />
+                        </VBox>
+                    </HBox>
+
+                    <HBox id="_IDGenHBox6" >
+                        <VBox id="_IDGenVBox16">
+                            <Label id="_IDGenLabel11"                                
+                                text="currency"
+                            />
+                            <Input id="editCurrency"                                
+                                placeholder="Enter currency"
+                            />
+                        </VBox>
+                    </HBox>
+                    <HBox id="_IDGenHBox7" >
+                        <VBox id="_IDGenVBox17" >
+                            <Button id="_IDGenButton8"                                
+                                text="Edit"
+                                press=".onEditMe"
+                            />
+                        </VBox>
+                    </HBox>
+                </Panel>
+
+
 
             </VBox>
         </HBox>
