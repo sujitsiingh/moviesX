@@ -5,8 +5,10 @@ sap.ui.define([
     "sap/m/MessageToast",
     "sap/ui/model/Sorter",
     "sap/m/MessageBox",
-    "sap/ui/core/Fragment"
-], (Controller, Filter, FilterOperator, MessageToast, Sorter, MessageBox, Fragment) => {
+    "sap/ui/core/Fragment",
+    "sap/m/SelectDialog",
+    "sap/m/StandardListItem"
+], (Controller, Filter, FilterOperator, MessageToast, Sorter, MessageBox, Fragment, SelectDialog, StandardListItem) => {
     "use strict";
 
     return Controller.extend("movies.controller.Home", {
@@ -16,11 +18,11 @@ sap.ui.define([
 
         // side toggle
         onCollapseExpandPress() {
-			const oSideNavigation = this.byId("sideNavigation"),
-				bExpanded = oSideNavigation.getExpanded();
+            const oSideNavigation = this.byId("sideNavigation"),
+                bExpanded = oSideNavigation.getExpanded();
 
-			oSideNavigation.setExpanded(!bExpanded);
-		},
+            oSideNavigation.setExpanded(!bExpanded);
+        },
 
         onAddMoviesPress: function () {
             this.hideAllPanels();
@@ -58,11 +60,13 @@ sap.ui.define([
             var releaseYear = this.getView().byId("_IDGenInput3").getValue();
             var runtimeMin = this.getView().byId("_IDGenInput4").getValue();
             var numReviews = this.getView().byId("_IDGenInput5").getValue();
-            
+
             const castRaw = this.byId("_IDGenInput6").getValue();
             const cast = castRaw ? castRaw.split(",").map(s => s.trim()).filter(Boolean) : [];
-            
-            var currency = this.getView().byId("_IDGenInput7").getValue();
+
+            // var currency = this.getView().byId("_IDGenInput7").getValue().toUpperCase();
+            const currency = (this.getView().byId("_IDGenInput7").getValue() || "").trim().toUpperCase();
+
 
             const payload = {
                 title,
@@ -71,7 +75,7 @@ sap.ui.define([
                 runtimeMin,
                 numReviews,
                 cast: cast,
-                currency: currency
+                currency: { code: currency }
             }
 
             var oModel = this.getView().getModel();
@@ -92,27 +96,89 @@ sap.ui.define([
                 console.error("Error adding Item : " + err);
             });
         },
-        
+
         formatCast: function (aCast) {
             return Array.isArray(aCast) ? aCast.join(', ') : '';
         },
+
+        // currency filtering f4 help
+        onCurrencyVH: function (oEvent) {
+            const oModel = this.getView().getModel();
+
+            if (!this._oCurrencyDlg) {
+                this._oCurrencyDlg = new SelectDialog({
+                    title: "Select Currency",
+                    // Filter as user types
+                    liveChange: this.onCurrencySearch.bind(this),
+                    search: this.onCurrencySearch.bind(this),
+                    confirm: (e) => {
+                        const oItem = e.getParameter("selectedItem");
+                        if (oItem) {
+                            const sCode = oItem.getBindingContext().getProperty("code");
+                            this.byId("_IDGenInput7").setValue(sCode);
+                        }
+                        e.getSource.close();
+                    },
+                    cancel: (e) => e.getSource.close()
+                });
+
+                this._oCurrencyDlg.setBusyIndicatorDelay(0);
+                this.getView().addDependent(this._oCurrencyDlg);
+
+
+                // Bind items to /Currencies with minimal $select
+                this._oCurrencyDlg.bindAggregation("items", {
+                    path: "/Currencies",
+                    parameters: { $select: "code,name,symbol" },
+                    template: new StandardListItem({
+                        title: "{code}",
+                        description: "{name}", // shows currency name
+                        info: "{symbol}"       // e.g., ₹, $, €
+                    }),
+                    templateShareable: false
+                });
+            }
+            this._oCurrencyDlg.open();
+        },
+
+        onCurrencySearch: function (oEvent) {
+            const sQuery = (oEvent.getParameter("value") || "").trim();
+            const oBinding = oEvent.getSource().getBinding("items");
+            const aFilters = [];
+
+            if (sQuery) {
+                aFilters.push(
+                    new Filter({
+                        filters: [
+                            new Filter("code", FilterOperator.Contains, sQuery.toUpperCase()),
+                            new Filter("name", FilterOperator.Contains, sQuery)
+                        ],
+                        and: false // OR
+                    })
+                );
+            }
+
+            oBinding.filter(aFilters);
+        },
+
+
 
         onActionPress: function (oEvent) {
             var oBtn = oEvent.getSource();
             var oContext = oBtn.getBindingContext();
             this._oSelectedContext = oContext;
 
-            if(!this._oActionSheet) {
+            if (!this._oActionSheet) {
                 Fragment.load({
                     id: this.getView().getId(),
                     name: "movies.view.ActionSheet",
                     controller: this
                 })
-                .then (function (oActionSheet) {
-                    this._oActionSheet = oActionSheet;
-                    this.getView().addDependent(this._oActionSheet);
-                    this._oActionSheet.openBy(oBtn);
-                }.bind(this));
+                    .then(function (oActionSheet) {
+                        this._oActionSheet = oActionSheet;
+                        this.getView().addDependent(this._oActionSheet);
+                        this._oActionSheet.openBy(oBtn);
+                    }.bind(this));
             } else {
                 this._oActionSheet.openBy(oBtn);
             }
@@ -129,9 +195,9 @@ sap.ui.define([
                         oContext.delete("$direct").then(function () {
                             MessageBox.success("Movie ID: " + sMovieId + " successfully Deleted!!");
                         })
-                        .catch(function (e) {
-                            MessageBox.error("Error deleting the movie with ID: " + sMovieId + " err :" + e + " Try again!");
-                        })
+                            .catch(function (e) {
+                                MessageBox.error("Error deleting the movie with ID: " + sMovieId + " err :" + e + " Try again!");
+                            })
                     }
                 }
             });
@@ -139,7 +205,7 @@ sap.ui.define([
 
         onEditPress: function () {
             var oData = this._oSelectedContext.getObject();
-            MessageToast.show("Edit your entries for Movie ID: " +oData.ID);
+            MessageToast.show("Edit your entries for Movie ID: " + oData.ID);
             this.onEditPressed();  // ->panel func will triger
             var pdt_model = this.getOwnerComponent().getModel();
             let aFilters = [
@@ -150,7 +216,7 @@ sap.ui.define([
 
             oBind.requestContexts().then((aContexts) => {
                 // handle retrieved contexts..
-                if(aContexts.length > 0) {
+                if (aContexts.length > 0) {
                     aContexts.forEach(oContext => {
                         let oUser = oContext.getObject();
                         this.getView().byId("editTitle").setValue(oUser.title);
@@ -166,9 +232,9 @@ sap.ui.define([
                     MessageBox.error("No Movie found with specified ID");
                 }
             })
-            .catch(e => {
-                MessageBox.error("Error retrieving Movies details: " + e)
-            });
+                .catch(e => {
+                    MessageBox.error("Error retrieving Movies details: " + e)
+                });
 
         },
 
@@ -184,7 +250,7 @@ sap.ui.define([
             var currency = this.getView().byId("editCurrency").getValue();
 
             var update_oModel = this.getView().getModel();
-            var sPath = "/Movies('"+itemCode+"')";
+            var sPath = "/Movies('" + itemCode + "')";
             var oBinding = update_oModel.bindContext(sPath);
             var oContext = oBinding.getBoundContext();
 
@@ -206,10 +272,10 @@ sap.ui.define([
                 resetBusy();
                 MessageBox.success("Movie details updated successfully!");
             })
-            .catch(function (e) {
-                resetBusy();
-                MessageBox.error("An error occured while updating details..:" +e);
-            })
+                .catch(function (e) {
+                    resetBusy();
+                    MessageBox.error("An error occured while updating details..:" + e);
+                })
         }
 
 

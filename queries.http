@@ -20,3 +20,8 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:4004/odata/v4/catalog/Movies(203a4704-0272-4761-9fb5-38c0def33655)
+
+
+###
+# to test currency
+GET http://localhost:4004/odata/v4/catalog/Currencies?$filter=code eq 'INR'

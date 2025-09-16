@@ -405,7 +405,11 @@
                             />
                             <Input
                                 id="_IDGenInput7"
-                                placeholder="Enter currency"
+                                value="{currency}"
+                                showValueHelp="true"
+                                valueHelpRequest=".onCurrencyVH"                                
+                                maxLength="3"
+                                placeholder="Select currency"
                             />
                         </VBox>
                     </HBox>
