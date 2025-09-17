@@ -102,6 +102,13 @@ sap.ui.define([
             oPanel.setVisible(true);
         },
 
+        // < ---- movie slate panel 4 ---->
+        onViewMovieSlatePress: function () {
+            this.hideAllPanels();
+            var oPanel = this.byId("panel4");
+            oPanel.setVisible(true);
+        },
+
         // <---- edit press => open a panel 3 ---->
         onEditPressed: function () {
             this.hideAllPanels();
@@ -116,6 +123,8 @@ sap.ui.define([
             oPanel2.setVisible(false);
             const oPanel3 = this.byId("panel3");
             oPanel3.setVisible(false);
+            const oPanel4 = this.byId("panel4");
+            oPanel4.setVisible(false);
         },
 
 
@@ -158,7 +167,7 @@ sap.ui.define([
                 this.getView().byId("_IDGenInput6").setValue(null);
                 this.getView().byId("_IDGenInput7").setValue(null);
             }).catch((err) => {
-                MessageBox.error("error adding new movie");
+                // MessageBox.error("error adding new movie");
                 console.error("Error adding Item : " + err);
             });
         },
@@ -291,7 +300,7 @@ sap.ui.define([
                         this.getView().byId("editRunTime").setValue(oUser.runtimeMin);
                         this.getView().byId("editReviews").setValue(oUser.numReviews);
                         this.getView().byId("editCast").setValue(oUser.cast);
-                        this.getView().byId("editCurrency").setValue(oUser.currency_code);
+                        this.getView().byId("editCurrency").setValue(oUser.currency);
                         this.getView().byId("itemCode").setValue(oUser.ID);
                     });
                 } else {
@@ -350,7 +359,15 @@ sap.ui.define([
         //         columnSize: "14rem",
         //         gap: "1rem"
         //     });
-        // }
+        // },
+
+        onReviewsPress: function (oEvent) {
+            const sKey = oEvent.getParameter("item").getKey();
+            if (sKey === "reviews") {
+                this.getOwnerComponent().getRouter().navTo("_IDGenPage1");
+            }
+
+        }
 
 
 

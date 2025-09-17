@@ -20,13 +20,8 @@ entity Users: cuid, managed {
 
 entity Genres: cuid, managed {
     name: localized String(60);
-    // descr: localized Text;
 }
 
-// entity Roles: cuid, managed {
-//     name: localized String(50);
-//     descr: localized Text;
-// }
 
 entity Movies: cuid, managed {
     title: localized String(100);
@@ -49,17 +44,3 @@ entity Reviews: cuid, managed {
     comment: Text;
     user: Association to Users @mandatory;
 }
-
-
-
-// Many-to-many relationships
-// entity MovieGenres {
-//     key movie: Association to Movies;
-//     key genre: Association to Genres;
-// }
-
-// entity Crew: cuid, managed {
-//     movie: Association to Movies;
-//     role: Association to Roles;   // dir, prod
-//     department: String(50);
-// }

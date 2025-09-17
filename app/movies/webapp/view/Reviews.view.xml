@@ -1,0 +1,108 @@
+<mvc:View
+  controllerName="movies.controller.Reviews"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+
+  <Page id="_IDGenPage1" title="Reviews">
+    <content>
+      <VBox id="_IDGenVBox18" class="sapUiSmallMargin">
+
+        <!-- Panel 1: List of Reviews -->
+        <Panel id="_IDGenPanel" headerText="All Reviews" expandable="true" expanded="true">
+          <headerToolbar>
+            <OverflowToolbar id="_IDGenOverflowToolbar1">
+              <SearchField id="_IDGenSearchField1" width="18rem" liveChange="onSearch" placeholder="Search by reviewer or movie"/>
+              <ToolbarSpacer id="_IDGenToolbarSpacer2" />
+              <Button id="_IDGenButton9" text="New Review" type="Emphasized" icon="sap-icon://add" press="onNew"/>
+              <Button id="_IDGenButton10" text="Delete" type="Negative" icon="sap-icon://delete" press="onDelete" enabled="{= !!${view>/hasSelection} }"/>
+              <Button id="_IDGenButton11" text="Refresh" icon="sap-icon://refresh" press="onRefresh"/>
+            </OverflowToolbar>
+          </headerToolbar>
+
+          <Table id="reviewsTable" mode="SingleSelectMaster" growing="true" growingScrollToLoad="true"
+                 selectionChange="onTableSelectionChange"
+                 items="{
+                   path: '/Reviews'
+                 }">
+            <columns>
+              <Column id="_IDGenColumn6" width="12rem"><Text id="_IDGenText7" text="Movie"/></Column>
+              <Column id="_IDGenColumn8" width="10rem"><Text id="_IDGenText14" text="Reviewer"/></Column>
+              <Column id="_IDGenColumn9" width="6rem"><Text id="_IDGenText15" text="Rating"/></Column>
+              <Column id="_IDGenColumn10" width="12rem"><Text id="_IDGenText16" text="User"/></Column>
+              <Column id="_IDGenColumn11" width="12rem"><Text id="_IDGenText17" text="Created At"/></Column>
+            </columns>
+            <items>
+              <ColumnListItem id="_IDGenColumnListItem1" type="Active" press="onRowPress">
+                <cells>
+                  <!-- Navigation property texts (lazy-load if not expanded) -->
+                  <ObjectIdentifier id="_IDGenObjectIdentifier" title="{movie/title}" text="{movie/releaseYear}"/>
+                  <Text id="_IDGenText18" text="{name}"/>
+                  <ObjectNumber id="_IDGenObjectNumber1" number="{path: 'rating', type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 1, maxFractionDigits: 1 }}" unit=" / 10"/>
+                  <Text id="_IDGenText19" text="{user/username}"/>
+                  <Text id="_IDGenText20" text="{path: 'createdAt', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'medium' }}"/>
+                </cells>
+              </ColumnListItem>
+            </items>
+          </Table>
+        </Panel>
+
+        <!-- Panel 2: Create / Edit Review Form -->
+        <Panel id="editPanel" headerText="Create / Edit Review" expandable="true" expanded="true">
+          <content>
+            <HBox id="_IDGenHBox9" renderType="Bare" width="100%" justifyContent="SpaceBetween">
+              <!-- Left column -->
+              <VBox id="_IDGenVBox19" width="48%" class="sapUiSmallMarginEnd">
+                <Label id="_IDGenLabel12" text="Movie" required="true"/>
+                <Select id="selMovie"
+                        selectedKey="{movie_ID}"
+                        items="{
+                          path: '/Movies',
+                          parameters: { $select: 'ID,title,releaseYear' }
+                        }"
+                        forceSelection="true">
+                  <core:Item id="_IDGenItem1" key="{ID}" text="{= ${title} + ' (' + ${releaseYear} + ')' }"/>
+                </Select>
+
+                <Label id="_IDGenLabel13" text="Reviewer Name" required="true"/>
+                <Input id="inpName" value="{name}" placeholder="Enter your name" required="true"/>
+
+                <HBox id="_IDGenHBox10" alignItems="Center">
+                  <VBox id="_IDGenVBox20" width="100%">
+                    <Label id="_IDGenLabel14" text="Rating (0.0 - 10.0)" required="true"/>
+                    <Slider id="sldRating" min="0" max="10" step="0.1" value="{rating}" liveChange="onRatingLiveChange"/>
+                    <Text id="_IDGenText21" text="{ path: 'rating', type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 1, maxFractionDigits: 1 } }"/>
+                  </VBox>
+                </HBox>
+              </VBox>
+
+              <!-- Right column -->
+              <!-- <VBox id="_IDGenVBox21" width="48%">
+                <Label id="_IDGenLabel15" text="User" required="true"/>
+                <Select id="selUser"
+                        selectedKey="{user_ID}"
+                        items="{
+                          path: '/Users',
+                          parameters: { $select: 'ID,username,email' }
+                        }"
+                        forceSelection="true">
+                  <core:Item id="_IDGenItem2" key="{ID}" text="{= ${username} + ' <' + ${email} + '>' }"/>
+                </Select>
+
+                <Label id="_IDGenLabel16" text="Comment"/>
+                <TextArea id="taComment" value="{comment}" rows="7" placeholder="Write your review..."/>
+              </VBox> -->
+            </HBox>
+
+            <HBox id="_IDGenHBox11" class="sapUiSmallMarginTop" justifyContent="End" alignItems="Center">
+              <Button id="_IDGenButton12" text="Reset" press="onReset"/>
+              <Button id="_IDGenButton13" class="sapUiTinyMarginBegin" text="Save" type="Emphasized" icon="sap-icon://save" press="onSave"/>
+              <Button id="_IDGenButton14" class="sapUiTinyMarginBegin" text="Cancel" type="Transparent" press="onCancel"/>
+            </HBox>
+          </content>
+        </Panel>
+
+      </VBox>
+    </content>
+  </Page>
+</mvc:View>

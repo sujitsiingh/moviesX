@@ -1,22 +1,91 @@
 /* for cast */
-.commaSeparated .sapMText:not(:last-child)::after {
+/* .commaSeparated .sapMText:not(:last-child)::after {
   content: ", ";
+} */
+#panel4 {
+  margin-left: 10rem;
+  max-width: 757px;
 }
+
+
+#grid {
+  padding: 5rem;
+  margin-top: -5rem;
+}
+
+
 
 .movieTile {
-  background-color: #111;
-  border-radius: 8px;
+  background-color: #151515;
+  border-radius: 0.5rem;
   overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.4);
   transition: transform .2s ease, box-shadow .2s ease;
-}
-.movieTile:hover { transform: scale(1.03); box-shadow: 0 8px 20px rgba(0,0,0,0.6); }
+  border: 1px solid var(--sapTile_BorderColor, rgba(0, 0, 0, 0.08));
+  display: flex;
+  /* flex-direction: column; */
+  height: 100%;
 
-.moviePoster { object-fit: cover; background: #222; }
-.movieTitleBar {
-  padding: 0.5rem 0.75rem;
-  background: linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.65));
-  margin-top: -2rem; /* overlay effect */
 }
-.movieTitle { color: #fff; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.6); }
+
+
+.sap-desktop .movieTile:hover {
+  box-shadow: var(--sapContent_Shadow2, 0 4px 16px rgba(0,0,0,.16));
+  transform: translateY(-1px);
+  border-color: var(--sapList_BorderColor, rgba(0,0,0,.12));
+}
+
+
+.sapMListFocus .sapMLIBFocused .movieTile,
+.sapMLIBFocusable:focus-within .movieTile {
+  box-shadow: var(--sapContent_Shadow2, 0 4px 16px rgba(0,0,0,.16));
+  outline: none;
+}
+
+
+.moviePoster {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--sapShell_Background, #f5f6f7);
+  display: block;
+}
+
+
+
+
+.movieTile:hover { transform: scale(5.1); box-shadow: 9px 10px 25px rgba(0,0,0,0.9); }
+
+.moviePoster { object-fit: fill; background: #222; }
+.movieTitleBar {
+  padding: 1.02rem 0.8rem;
+  background: linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.65));
+  margin-top: 1.02rem;
+  margin-bottom: 1rem;  /*overlay effect */
+}
+/* .movieTitle { color: #fff; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.6); } */
+
+
+.movieTitle {
+  font-weight: 700;
+  color: var(--sapTextColor, #32363a);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  line-height: 2.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.movieYear .sapMObjectNumberText {
+  font-weight: 600;
+  color: var(--sapContent_LabelColor, #6a6d70);
+}
+
+
+@media (prefers-color-scheme: dark) {
+  .movieTile {
+    border-color: var(--sapList_BorderColor, rgba(255,255,255,.08));
+  }
+}
 

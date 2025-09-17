@@ -96,8 +96,7 @@
         "type": "View",
         "viewType": "XML",
         "path": "movies.view",
-        "async": true,
-        "Path": "movies.view"
+        "async": true
       },
       "routes": [
         {
