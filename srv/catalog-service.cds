@@ -8,4 +8,5 @@ service CatalogService {
         createdAt, createdBy, modifiedAt, modifiedBy
     };
     entity Reviews as projection on movies.Reviews;
+    entity Users as projection on movies.Users;
 }

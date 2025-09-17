@@ -7,13 +7,32 @@ sap.ui.define([
     "sap/m/MessageBox",
     "sap/ui/core/Fragment",
     "sap/m/SelectDialog",
-    "sap/m/StandardListItem"
-], (Controller, Filter, FilterOperator, MessageToast, Sorter, MessageBox, Fragment, SelectDialog, StandardListItem) => {
+    "sap/m/StandardListItem",
+    "sap/ui/core/Theming",
+    "sap/ui/model/json/JSONModel"
+], (Controller, Filter, FilterOperator, MessageToast, Sorter, MessageBox, Fragment, SelectDialog, StandardListItem, Theming, JSONModel) => {
     "use strict";
 
     return Controller.extend("movies.controller.Home", {
         onInit: function () {
 
+            // const aThemes = [
+            //     { id: "sap_horizon", text: "Morning Horizon (Light)", icon: "sap-icon://light-mode" },
+            //     { id: "sap_horizon_dark", text: "Evening Horizon (Dark)", icon: "sap-icon://dark-mode" },
+            //     { id: "sap_horizon_hcw", text: "High Contrast White", icon: "sap-icon://contrast" },
+            //     { id: "sap_horizon_hcb", text: "High Contrast Black", icon: "sap-icon://contrast" }
+            // ];
+
+            // const saved = localStorage.getItem("themeId");
+            // if (saved && saved !== Theming.getTheme()) {
+            //     Theming.setTheme(saved);
+            // }
+
+
+            // this.getView().setModel(new JSONModel({
+            //     themes: aThemes,
+            //     current: Theming.getTheme()
+            // }), "theming");
         },
 
         // side toggle
@@ -23,6 +42,53 @@ sap.ui.define([
 
             oSideNavigation.setExpanded(!bExpanded);
         },
+
+        // theme switching..
+        onMenuItem: function (oEvent) {
+            var oItem = oEvent.getParameter("item");
+            if (!oItem) {
+                MessageToast.show("No Item");
+                return;
+            }
+            var sKey = oItem && oItem.getKey ? oItem.getKey() : "";
+            var sText = oItem && oItem.getText ? oItem.getText() : "";
+            if (!sKey && oItem && oItem.data) {
+                sKey = oItem.data("action") || oItem.data("action1") || oItem.data("action2") || oItem.data("action3") || "";
+            }
+            console.log("menu selected:", { key: sKey, text: sText });
+
+            if (!sKey) {
+                MessageToast.show("No actions");
+                return;
+            }
+
+            switch (sKey || sText) {
+
+                case "onThemeMH": this._setTheme("sap_horizon");
+                    MessageToast.show("Theme: Morning Horizon");
+                    break;
+
+                case "onThemeEve": this._setTheme("sap_horizon_dark");
+                    MessageToast.show("Theme: Evening Horizon");
+                    break;
+
+                case "onThemeQL": this._setTheme("sap_fiori_3");
+                    MessageToast.show("Theme: Quartz Light");
+                    break;
+
+                case "onThemeQD": this._setTheme("sap_fiori_3_dark");
+                    MessageToast.show("Theme: Quartz Dark");
+                    break;
+
+                default: MessageToast.show("Unknown action: " + sKey);
+            }
+        },
+
+        _setTheme: function (sThemeId) {
+            Theming.setTheme(sThemeId);
+        },
+
+
 
         onAddMoviesPress: function () {
             this.hideAllPanels();
@@ -271,12 +337,21 @@ sap.ui.define([
             update_oModel.submitBatch("auto").then(function () {
                 resetBusy();
                 MessageBox.success("Movie details updated successfully!");
+            }).catch(function (e) {
+                resetBusy();
+                MessageBox.error("An error occured while updating details..:" + e);
             })
-                .catch(function (e) {
-                    resetBusy();
-                    MessageBox.error("An error occured while updating details..:" + e);
-                })
-        }
+        },
+
+        // (layout helper)
+        // createGridLayout: function () {
+        //     return new sap.f.GridContainerSettings({
+        //         rowSize: "5rem",
+        //         columnSize: "14rem",
+        //         gap: "1rem"
+        //     });
+        // }
+
 
 
     });

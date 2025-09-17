@@ -1,6 +1,9 @@
 <mvc:View
     controllerName="movies.controller.Home"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
     xmlns="sap.m"
     xmlns:tnt="sap.tnt"
 >
@@ -44,7 +47,7 @@
                 </layoutData>
             </Image>
             <Title
-                text="Prоduct Name"
+                text="MoviesX"
                 wrapping="false"
                 id="productName"
             >
@@ -55,18 +58,6 @@
                     />
                 </layoutData>
             </Title>
-            <Text
-                text="Second title"
-                wrapping="false"
-                id="secondTitle"
-            >
-                <layoutData>
-                    <OverflowToolbarLayoutData
-                        id="_IDGenOverflowToolbarLayoutData3"
-                        priority="Disappear"
-                    />
-                </layoutData>
-            </Text>
             <ToolbarSpacer id="_IDGenToolbarSpacer1" />
             <SearchField
                 width="25rem"
@@ -137,9 +128,10 @@
             />
             <Button
                 id="_IDGenButton4"
-                icon="sap-icon://bell"
+                icon="sap-icon://palette"
                 type="Transparent"
-                tooltip="Notification"
+                tooltip="Theme"
+                press=".onThemetoggle"
             >
                 <layoutData>
                     <OverflowToolbarLayoutData
@@ -148,6 +140,73 @@
                     />
                 </layoutData>
             </Button>
+
+            <!-- menu items for theme -->
+            <MenuButton
+                id="_IDGenMenuButton"
+                text="Theme"
+                type="Transparent"
+                buttonMode="Split"
+            >
+                <menu>
+                    <Menu
+                        id="_IDGenMenu"
+                        itemSelected=".onMenuItem"
+                    >
+                        <items>
+                            <MenuItem
+                                id="_IDGenMenuItem6"
+                                text="Morning Horizon"
+                            >
+                                <customData>
+                                    <core:CustomData
+                                        id="_IDGenCustomData1"
+                                        key="action"
+                                        value="onThemeMH"
+                                    />
+                                </customData>
+                            </MenuItem>
+                            <MenuItem
+                                id="_IDGenMenuItem7"
+                                text="Evening Horizon (dark)"
+                            >
+                                <customData>
+                                    <core:CustomData
+                                        id="_IDGenCustomData2"
+                                        key="action1"
+                                        value="onThemeEve"
+                                    />
+                                </customData>
+                            </MenuItem>
+                            <MenuItem
+                                id="_IDGenMenuItem3"
+                                text="Quartz Light"
+                            >
+                                <customData>
+                                    <core:CustomData
+                                        id="_IDGenCustomData3"
+                                        key="action2"
+                                        value="onThemeQL"
+                                    />
+                                </customData>
+                            </MenuItem>
+                            <MenuItem
+                                id="_IDGenMenuItem4"
+                                text="Quartz Dark"
+                            >
+                                <customData>
+                                    <core:CustomData
+                                        id="_IDGenCustomData4"
+                                        key="action3"
+                                        value="onThemeQD"
+                                    />
+                                </customData>
+                            </MenuItem>
+                        </items>
+                    </Menu>
+                </menu>
+            </MenuButton>
+
             <tnt:ToolHeaderUtilitySeparator
                 id="_IDGenToolHeaderUtilitySeparator"
             />
@@ -407,7 +466,7 @@
                                 id="_IDGenInput7"
                                 value="{currency}"
                                 showValueHelp="true"
-                                valueHelpRequest=".onCurrencyVH"                                
+                                valueHelpRequest=".onCurrencyVH"
                                 maxLength="3"
                                 placeholder="Select currency"
                             />
@@ -425,55 +484,105 @@
                 </Panel>
 
                 <!-- Panel 2 -->
-                <Panel id="panel2" headerText="All Moviews View" visible="false">
+                <Panel
+                    id="panel2"
+                    headerText="All Moviews View"
+                    visible="false"
+                >
                     <!-- <Label id="_IDGenLabel" text="Enter the details of the movie" /> -->
-                    <Table id="booksTable" items="{/Movies}">
+                    <Table
+                        id="booksTable"
+                        items="{/Movies}"
+                    >
                         <columns>
                             <Column id="_IDGenColumn">
-                                <Text id="_IDGenText1" text="Title"/>
+                                <Text
+                                    id="_IDGenText1"
+                                    text="Title"
+                                />
                             </Column>
                             <Column id="_IDGenColumn1">
-                                <Text id="_IDGenText2" text="Overview"/>
+                                <Text
+                                    id="_IDGenText2"
+                                    text="Overview"
+                                />
                             </Column>
                             <Column id="_IDGenColumn2">
-                                <Text id="_IDGenText3" text="Release Year"/>
+                                <Text
+                                    id="_IDGenText3"
+                                    text="Release Year"
+                                />
                             </Column>
                             <Column id="_IDGenColumn3">
-                                <Text id="_IDGenText4" text="Runtime (min)"/>
+                                <Text
+                                    id="_IDGenText4"
+                                    text="Runtime (min)"
+                                />
                             </Column>
                             <Column id="_IDGenColumn4">
-                                <Text id="_IDGenText5" text="Currency"/>
+                                <Text
+                                    id="_IDGenText5"
+                                    text="Currency"
+                                />
                             </Column>
                             <Column id="_IDGenColumn5">
-                                <Text id="_IDGenText6"  text="Reviews"/>
+                                <Text
+                                    id="_IDGenText6"
+                                    text="Reviews"
+                                />
                             </Column>
                             <!-- <Column id="_IDGenColumn6">
                                 <Text id="_IDGenText7"  text="Cast"/>
                             </Column> -->
                             <Column id="_IDGenColumn7">
-                                <Text id="actionText"  text="Action"/>
+                                <Text
+                                    id="actionText"
+                                    text="Action"
+                                />
                             </Column>
                         </columns>
                         <items>
                             <ColumnListItem id="_IDGenColumnListItem">
                                 <cells>
-                                    <Text id="_IDGenText8" text="{title}"/>
-                                    <Text id="_IDGenText9" text="{overview}"/>
-                                    <Text id="_IDGenText10" text="{releaseYear}"/>
-                                    <Text id="_IDGenText11" text="{runtimeMin}"/>
-                                    <Text id="_IDGenText12" text="{currency_code}"/>
-                                    <Text id="_IDGenText13" text="{numReviews}"/>
+                                    <Text
+                                        id="_IDGenText8"
+                                        text="{title}"
+                                    />
+                                    <Text
+                                        id="_IDGenText9"
+                                        text="{overview}"
+                                    />
+                                    <Text
+                                        id="_IDGenText10"
+                                        text="{releaseYear}"
+                                    />
+                                    <Text
+                                        id="_IDGenText11"
+                                        text="{runtimeMin}"
+                                    />
+                                    <Text
+                                        id="_IDGenText12"
+                                        text="{currency_code}"
+                                    />
+                                    <Text
+                                        id="_IDGenText13"
+                                        text="{numReviews}"
+                                    />
                                     <!-- <Text id="_IDGenText12" text="{= ${cast} ? ${cast}.join(', ') : ''}"/> -->
                                     <!-- <Text id="_IDGenText14" text="{ path: 'cast', formatter: '.formatCast' }"/> -->
                                     <!-- <VBox id="_IDGenVBox10" items="{path: 'cast'}"><items><Text id="_IDGenText" text="{.}"/></items></VBox> -->
-                                    
+
                                     <!-- <HBox id="_IDGenHBox4" class="commaSeparated" items="{path: 'cast'}">
                                         <items>
                                             <Text id="_IDGenText14" text="{.}" />
                                         </items>
                                     </HBox> -->
-                                    <Button id="_IDGenButton2" icon="sap-icon://action" text="Click Me" press="onActionPress($event)"></Button>
-
+                                    <Button
+                                        id="_IDGenButton2"
+                                        icon="sap-icon://action"
+                                        text="Click Me"
+                                        press="onActionPress($event)"
+                                    />
                                 </cells>
                             </ColumnListItem>
                         </items>
@@ -514,7 +623,8 @@
                             />
                             <Input
                                 id="itemCode"
-                                placeholder="Title of the movie" editable="false"
+                                placeholder="Title of the movie"
+                                editable="false"
                             />
                         </VBox>
                         <VBox id="_IDGenVBoxP3">
@@ -527,74 +637,83 @@
                                 placeholder="Title of the movie"
                             />
                         </VBox>
-                        <VBox id="_IDGenVBox11" >
+                        <VBox id="_IDGenVBox11">
                             <Label
                                 id="_IDGenLabelP03"
                                 text="overview"
                             />
-                            <Input id="editOverview"
+                            <Input
+                                id="editOverview"
                                 placeholder="Enter Overview of the movie"
                             />
                         </VBox>
-                        <VBox id="_IDGenVBox12" >
-                            <Label id="_IDGenLabel"                                
+                        <VBox id="_IDGenVBox12">
+                            <Label
+                                id="_IDGenLabel"
                                 text="releaseYear"
                             />
-                            <Input id="editReleaseYear"                                
+                            <Input
+                                id="editReleaseYear"
                                 placeholder="Enter release year of the movie"
                             />
                         </VBox>
                     </HBox>
 
-                    <HBox id="_IDGenHBox4" >
-                        <VBox id="_IDGenVBox13" >
-                            <Label id="_IDGenLabel8"                                
+                    <HBox id="_IDGenHBox4">
+                        <VBox id="_IDGenVBox13">
+                            <Label
+                                id="_IDGenLabel8"
                                 text="runtimeMin"
                             />
-                            <Input id="editRunTime"                                
+                            <Input
+                                id="editRunTime"
                                 placeholder="Enter run time(mins)"
                             />
                         </VBox>
-                        <VBox id="_IDGenVBox14" >
-                            <Label id="_IDGenLabel9"                                
+                        <VBox id="_IDGenVBox14">
+                            <Label
+                                id="_IDGenLabel9"
                                 text="Reviews"
                             />
-                            <Input id="editReviews"                                
+                            <Input
+                                id="editReviews"
                                 placeholder="Enter reviews"
                             />
                         </VBox>
-                        <VBox id="_IDGenVBox15" >
-                            <Label id="_IDGenLabel10"                                
+                        <VBox id="_IDGenVBox15">
+                            <Label
+                                id="_IDGenLabel10"
                                 text="cast"
                             />
-                            <Input id="editCast"                                
+                            <Input
+                                id="editCast"
                                 placeholder="Enter cast name"
                             />
                         </VBox>
                     </HBox>
 
-                    <HBox id="_IDGenHBox6" >
+                    <HBox id="_IDGenHBox6">
                         <VBox id="_IDGenVBox16">
-                            <Label id="_IDGenLabel11"                                
+                            <Label
+                                id="_IDGenLabel11"
                                 text="currency"
                             />
-                            <Input id="editCurrency"                                
+                            <Input
+                                id="editCurrency"
                                 placeholder="Enter currency"
                             />
                         </VBox>
                     </HBox>
-                    <HBox id="_IDGenHBox7" >
-                        <VBox id="_IDGenVBox17" >
-                            <Button id="_IDGenButton8"                                
+                    <HBox id="_IDGenHBox7">
+                        <VBox id="_IDGenVBox17">
+                            <Button
+                                id="_IDGenButton8"
                                 text="Edit"
                                 press=".onEditMe"
                             />
                         </VBox>
                     </HBox>
                 </Panel>
-
-
-
             </VBox>
         </HBox>
 
@@ -658,27 +777,55 @@
             </Toolbar>
         </subHeader>
 
-        <!-- <content>
-            <List
-                id="movieList"
-                mode="SingleSelectMaster"
-                itemPress=".onItemPress"
-                growing="true"
-                growingScrollToLoad="true"
-            >
-                <items>
-                    <StandardListItem
-                        id="_IDGenStandardListItem"
-                        title="{title}"
-                        description="{overview}"
-                        iconDensityAware="true"
-                        icon="{posterUrl}"
-                        info="{= ${rating} ? ${rating}.toFixed(1) : '' }"
-                        infoState="Success"
-                        type="Navigation"
-                    />
-                </items>
-            </List>
-        </content> -->
+        <content />
+
+        <HBox id="_IDGenHBox9">
+            <VBox id="_IDGenVBox18">
+                <Panel id="panel4">
+                    <f:GridList
+                        id="grid"
+                        items="{/Movies}"
+                        inset="false"
+                        growing="true"
+                        growingScrollToLoad="true"
+                    >
+                        <f:items>
+                            <f:GridListItem
+                                id="_IDGenGridListItem1"
+                                type="Active"
+                                press=".onTilePress"
+                            >
+                                <VBox
+                                    id="_IDGenVBox10"
+                                    class="movieTile"
+                                >
+                                    <!-- <Text
+                                        id="_IDGenText7"
+                                        text="{overview}"
+                                    /> -->
+                                    <HBox
+                                        id="_IDGenHBox8"
+                                        class="movieTitleBar"
+                                        justifyContent="SpaceBetween"
+                                        alignItems="Center"
+                                    >
+                                        <Text
+                                            id="_IDGenText"
+                                            text="{title}"
+                                            class="movieTitle"
+                                        />
+                                        <ObjectNumber
+                                            id="_IDGenObjectNumber"
+                                            number="{releaseYear}"
+                                            unit="Year"
+                                        />
+                                    </HBox>
+                                </VBox>
+                            </f:GridListItem>
+                        </f:items>
+                    </f:GridList>
+                </Panel>
+            </VBox>
+        </HBox>
     </Page>
 </mvc:View>
