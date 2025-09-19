@@ -760,7 +760,7 @@
             </Panel>
         </HBox>
 
-        <subHeader>
+        <!-- <subHeader>
             <Toolbar id="_IDGenToolbar1">
                 <SearchField
                     id="_IDGenSearchField"
@@ -783,17 +783,17 @@
                             text="All Genres"
                         />
                     </items>
-                    <!-- <items>
+                    <items>
                         <core:Item
                             id="_IDGenItem1"
                             xmlns:core="sap.ui.core"
                             key="{ID}"
                             text="{name}"
                         />
-                    </items> -->
-                    <!-- <dependents>
+                    </items>
+                    <dependents>
                         <JSONModel id="genreModel" />
-                    </dependents> -->
+                    </dependents>
                 </Select>
                 <Button
                     id="_IDGenButton"
@@ -818,6 +818,8 @@
                     />
                 </Menu>
             </Toolbar>
-        </subHeader>
+        </subHeader> -->
+
+
     </Page>
 </mvc:View>
