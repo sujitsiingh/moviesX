@@ -1,0 +1,29 @@
+{
+  "generationParameters": {
+    "generationDate": "Fri Sep 19 2025 11:22:44 GMT+0000 (Coordinated Universal Time)",
+    "generatorPlatform": "SAP Business Application Studio",
+    "serviceType": "Local CAP",
+    "metadataFilename": "",
+    "serviceUrl": "http://localhost:4004/odata/v4/catalog/",
+    "appName": "movies_ovp",
+    "appTitle": "MoviesX",
+    "appDescription": "An SAP Fiori application.",
+    "appNamespace": "ns",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.140.0",
+    "enableCodeAssist": false,
+    "enableEslint": false,
+    "enableTypeScript": false,
+    "showMockDataInfo": false,
+    "generatorVersion": "1.18.7",
+    "template": "Overview Page V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [
+      {
+        "type": "Filter Entity Type",
+        "value": "Movies"
+      }
+    ],
+    "launchText": "To launch the generated app, start your CAP project:  and navigate to the following location in your browser:\n\nhttp://localhost:4004/ns.moviesovp/index.html"
+  }
+}

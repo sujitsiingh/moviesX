@@ -26,7 +26,8 @@
     "watch-movies": "cds watch --open movies/index.html?sap-ui-xx-viewCache=false --livereload false",
     "undeploy": "cf undeploy moviesX --delete-services --delete-service-keys --delete-service-brokers",
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
-    "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "watch-movies_ovp": "cds watch --open ns.moviesovp/index.html?sap-ui-xx-viewCache=false --livereload false"
   },
   "cds": {
     "requires": {
@@ -43,6 +44,7 @@
     "app/*"
   ],
   "sapux": [
-    "app/movies"
+    "app/movies",
+    "app/movies_ovp"
   ]
 }
