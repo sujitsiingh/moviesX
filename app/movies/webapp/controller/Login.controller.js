@@ -12,10 +12,9 @@ sap.ui.define([
     'sap/ui/export/library'
 ], (Controller, MessageBox, Fragment, JSONModel, Sorter, Filter, FilterOperator, FilterType, MessageToast, Spreadsheet, exportLibrary) => {
     "use strict";
-    var EdmType = exportLibrary.EdmType;
     return Controller.extend("movies.controller.Login", {
         onInit: function () {
-            sap.ui.getCore().applyTheme("sap_horizon");
+            // sap.ui.getCore().applyTheme("sap_horizon");
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             oRouter.getRoute("RouteHome").attachPatternMatched(this._onObjectMatched, this);
 
@@ -41,21 +40,23 @@ sap.ui.define([
             let username = this.getView().byId("un").getValue();
             let password = this.getView().byId("pwd").getValue();
 
-            if (username === '' || password === '') MessageBox.error("Username/Password cant be empty!");
+            if ( !username || !password ) MessageBox.error("Username/Password cant be empty!");
             else {
                 var oModel2 = this.getOwnerComponent().getModel();
                 let aFilters = [
                     new Filter("username", FilterOperator.EQ, username),
                     new Filter("password", FilterOperator.EQ, password)
                 ];
-                let oBinding = oModel2.bindList("/Users");
+                let oBinding = oModel2.bindList("/Users", undefined, undefined, undefined, {
+                    $$groupId: "$direct"
+                });
                 oBinding.filter(aFilters);
                 oBinding.requestContexts().then((aContexts) => {
                     if (aContexts.length > 0) {
                         aContexts.forEach((oContext) => {
                             let oUser = oContext.getObject();
                             console.log("User found:", oUser);
-                            alert("Welcome, " + oUser.username);
+                            // alert("Welcome, " + oUser.username);
                         });
                         // Navigate to the next view if credentials are valid
                         sessionStorage.setItem("loggedIn", "true");
@@ -73,7 +74,7 @@ sap.ui.define([
                     MessageBox.error("An error occurred while fetching data. Please try again.");
                 });
             }
-        },
+        }
 
 
 

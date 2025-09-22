@@ -6,9 +6,10 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@cap-js/hana": "^2",
     "@sap/cds": "^9",
-    "express": "^4",
-    "@cap-js/hana": "^2"
+    "express": "^4.21.2",
+    "express-fileupload": "^1.5.2"
   },
   "engines": {
     "node": ">=20"
@@ -18,8 +19,8 @@
     "@cap-js/sqlite": "^2",
     "@sap/cds-dk": ">=8",
     "cds-plugin-ui5": "^0.13.0",
-    "rimraf": "^5.0.5",
-    "mbt": "^1.2.29"
+    "mbt": "^1.2.29",
+    "rimraf": "^5.0.5"
   },
   "scripts": {
     "start": "cds-serve",

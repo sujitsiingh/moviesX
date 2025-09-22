@@ -1,10 +1,10 @@
 <mvc:View controllerName="movies.controller.Login" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:form="sap.ui.layout.form" >
     <Page id="loginPage" title="{i18n>title}">
         <content>
-            <VBox id="vBox1" class="pageConatiner">
+            <VBox id="vBox1" class="pageContainer">
                 <HBox id="hBox1" class="loginHBox">
                     <VBox id="image" class="imageContainer">
-                        <Image id="_IDGenImage2" src="../../assets/loginImage.jpg" alt="Login Image" class="loginImage" width="100%" />
+                        <Image id="_IDGenImage2" src="../../uploads/loginImage.jpg" alt="Login Image" class="loginImage" width="100%" />
                     </VBox>
                     <VBox id="form" class="formContainer">
                         <form:SimpleForm id="adressForm" title="Login" editable="true" layout="ResponsiveGridLayout" class="customForm">
@@ -28,7 +28,7 @@
                     <Text class="redtext" id="copyRigjt" text="copyright@SKS"/>
                 </contentLeft>
                 <contentRight>
-                    <Text id="text-sks" text="SKS"/>
+                    <Text id="text-sks" class="text-content" text="SKS"/>
                 </contentRight>
             </Bar>
         </footer>
