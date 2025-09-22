@@ -9,3 +9,4 @@ ID,username,email,password,isAdmin,createdAt,createdBy,modifiedAt,modifiedBy
 8,hannah,hannah@example.com,hannah222,False
 9,ian,ian@example.com,ian333,True
 10,julia,julia@example.com,julia444,False
+11,sk,sk@sks.com,sk12345,True

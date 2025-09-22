@@ -2,6 +2,7 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/ui/model/FilterType",
     "sap/m/MessageToast",
     "sap/ui/model/Sorter",
     "sap/m/MessageBox",
@@ -9,31 +10,17 @@ sap.ui.define([
     "sap/m/SelectDialog",
     "sap/m/StandardListItem",
     "sap/ui/core/Theming",
-    "sap/ui/model/json/JSONModel"
-], (Controller, Filter, FilterOperator, MessageToast, Sorter, MessageBox, Fragment, SelectDialog, StandardListItem, Theming, JSONModel) => {
+    "sap/ui/model/json/JSONModel",
+    'sap/ui/export/Spreadsheet',
+    'sap/ui/export/library'
+], (Controller, Filter, FilterOperator, FilterType, MessageToast, Sorter, MessageBox, Fragment, SelectDialog, StandardListItem, Theming, JSONModel, Spreadsheet, library) => {
     "use strict";
 
     return Controller.extend("movies.controller.Home", {
         onInit: function () {
-
-            // const aThemes = [
-            //     { id: "sap_horizon", text: "Morning Horizon (Light)", icon: "sap-icon://light-mode" },
-            //     { id: "sap_horizon_dark", text: "Evening Horizon (Dark)", icon: "sap-icon://dark-mode" },
-            //     { id: "sap_horizon_hcw", text: "High Contrast White", icon: "sap-icon://contrast" },
-            //     { id: "sap_horizon_hcb", text: "High Contrast Black", icon: "sap-icon://contrast" }
-            // ];
-
-            // const saved = localStorage.getItem("themeId");
-            // if (saved && saved !== Theming.getTheme()) {
-            //     Theming.setTheme(saved);
-            // }
-
-
-            // this.getView().setModel(new JSONModel({
-            //     themes: aThemes,
-            //     current: Theming.getTheme()
-            // }), "theming");
         },
+
+
 
         // side toggle
         onCollapseExpandPress() {
