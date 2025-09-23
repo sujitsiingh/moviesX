@@ -43,7 +43,7 @@ sap.ui.define([
             let username = this.getView().byId("un").getValue();
             let password = this.getView().byId("pwd").getValue();
 
-            if ( !username || !password ) MessageBox.error("Username/Password cant be empty!");
+            if (!username || !password) MessageBox.error("Username/Password cant be empty!");
             else {
                 var oModel2 = this.getOwnerComponent().getModel();
                 let aFilters = [
@@ -78,6 +78,23 @@ sap.ui.define([
                 });
             }
         },
+
+        // <------- Logout ------->
+        logout: function () {
+            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            MessageBox.confirm("Are you sure, you want to logout?", {
+                actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                emphasizedAction: MessageBox.Action.OK,
+                onClose: function (oAction) {
+                    if (oAction === MessageBox.Action.OK) {
+                        sessionStorage.removeItem("loggedIn");
+                        oRouter.navTo("RouteLogin", {}, true);
+                    }
+                }
+            });
+        },
+
+
 
         // side toggle
         onCollapseExpandPress() {
@@ -171,24 +188,25 @@ sap.ui.define([
             oPanel4.setVisible(false);
         },
 
-        // <---- Profile dropdown ---->
-        profile_dropdown: function () {
+        // <------- Profile dropdown ------->
+        profile_dropdown: async function () {
             var oView = this.getView(),
-            oBtn = oView.byId("profile_button");
-            if(!this._oMenuFragment) {
-                this._oMenuFragment = Fragment.load({
+                oBtn = oView.byId("profile_button");
+            if (!this._oMenuFragment) {
+                this._oMenuFragment = await Fragment.load({
                     id: oView.getId(),
                     name: "movies.view.profile_dropdown",
-                    Controller: this
+                    controller: this
                 })
-                .then(function (oMenu) {
-                    oMenu.openBy(oBtn);
-                    this._oMenuFragment = oMenu;
-                    return this._oMenuFragment;
-                }.bind(this));
+                    // .then(function (oMenu) {
+                    //     oMenu.openBy(oBtn);
+                    //     this._oMenuFragment = oMenu;
+                    //     return this._oMenuFragment;
+                    // }.bind(this));
+                 oView.addDependent(this._oMenuFragment);
             } else {
                 this._oMenuFragment.openBy(oBtn);
-            } 
+            }
         },
 
 
@@ -219,13 +237,13 @@ sap.ui.define([
 
             var oModel = this.getView().getModel();
 
-            var oContext = oModel.bindList("/Movies", null, null, null, { $$updateGroupId: "$direct"});
+            var oContext = oModel.bindList("/Movies", null, null, null, { $$updateGroupId: "$direct" });
             var oCtx = oContext.create(payload);
 
             oCtx.created().then(() => {
-                MessageBox.success("Movie Added Successfully");                
-                ["_IDGenInput1","_IDGenInput2","_IDGenInput3","_IDGenInput4","_IDGenInput5","_IDGenInput6","_IDGenInput7"]
-                .forEach(id => this.byId(id).setValue(null));
+                MessageBox.success("Movie Added Successfully");
+                ["_IDGenInput1", "_IDGenInput2", "_IDGenInput3", "_IDGenInput4", "_IDGenInput5", "_IDGenInput6", "_IDGenInput7"]
+                    .forEach(id => this.byId(id).setValue(null));
 
             }).catch((err) => {
                 // MessageBox.error("error adding new movie");
@@ -265,7 +283,7 @@ sap.ui.define([
                 // Bind items to /Currencies with minimal $select
                 this._oCurrencyDlg.bindAggregation("items", {
                     path: "/Currencies",
-                    parameters: { 
+                    parameters: {
                         $select: ["code", "name", "symbol"],
                         $$groupId: "$direct"
                     },
