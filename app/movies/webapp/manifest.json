@@ -122,7 +122,15 @@
           "target": [
             "TargetHome"
           ]
+        },
+        {
+          "name": "RouteReviews",
+          "pattern": "reviews/{movie_Id}",
+          "target":[
+            "TargetReviews"
+          ]
         }
+
       ],
       "targets": {
         "TargetLogin": {
@@ -138,6 +146,13 @@
           "clearControlAggregation": false,
           "id": "Home",
           "name": "Home"
+        },
+        "TargetReviews": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "id": "Reviews",
+          "name": "Reviews"
         }
       }
     },

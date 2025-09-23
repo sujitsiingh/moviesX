@@ -94,6 +94,11 @@ sap.ui.define([
             });
         },
 
+        myReview: function () {
+            const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.navTo("RouteReviews", {}, true);
+        },
+
 
 
         // side toggle
@@ -188,6 +193,7 @@ sap.ui.define([
             oPanel4.setVisible(false);
         },
 
+
         // <------- Profile dropdown ------->
         profile_dropdown: async function () {
             var oView = this.getView(),
@@ -198,12 +204,12 @@ sap.ui.define([
                     name: "movies.view.profile_dropdown",
                     controller: this
                 })
-                    // .then(function (oMenu) {
-                    //     oMenu.openBy(oBtn);
-                    //     this._oMenuFragment = oMenu;
-                    //     return this._oMenuFragment;
-                    // }.bind(this));
-                 oView.addDependent(this._oMenuFragment);
+                // .then(function (oMenu) {
+                //     oMenu.openBy(oBtn);
+                //     this._oMenuFragment = oMenu;
+                //     return this._oMenuFragment;
+                // }.bind(this));
+                oView.addDependent(this._oMenuFragment);
             } else {
                 this._oMenuFragment.openBy(oBtn);
             }
