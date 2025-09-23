@@ -6,7 +6,7 @@ POST http://localhost:4004/odata/v4/catalog/Movies
 Content-Type: application/json
 
 {
-    "title": "Gladiator",
+    "title": "Gladiator3",
     "overview": "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family.",
     "releaseYear": 2000,
     "runtimeMin": 2000,

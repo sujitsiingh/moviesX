@@ -1,5 +1,5 @@
 <mvc:View controllerName="movies.controller.Login" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:form="sap.ui.layout.form" >
-    <Page id="loginPage" title="{i18n>title}">
+    <Page id="loginPage" title="MoviesX">
         <content>
             <VBox id="vBox1" class="pageContainer">
                 <HBox id="hBox1" class="loginHBox">

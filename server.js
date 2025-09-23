@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 cds.on('bootstrap', app => {
-    app.use(fileUpload());
+    // app.use(fileUpload());
     app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 

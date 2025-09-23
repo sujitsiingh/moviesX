@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="movies.controller.Home"
+    controllerName="movies.controller.Login"
     xmlns:core="sap.ui.core"
     displayBlock="true"
     xmlns:mvc="sap.ui.core.mvc"
@@ -30,22 +30,6 @@
                     />
                 </layoutData>
             </Button>
-            <Image
-                id="_IDGenImage"
-                src="test-resources/sap/tnt/images/SAP_Logo.png"
-                decorative="false"
-                press="onLogoPressed"
-                tooltip="SAP Logo"
-                width="60px"
-                height="30px"
-            >
-                <layoutData>
-                    <OverflowToolbarLayoutData
-                        id="_IDGenOverflowToolbarLayoutData1"
-                        priority="NeverOverflow"
-                    />
-                </layoutData>
-            </Image>
             <Title
                 text="MoviesX"
                 wrapping="false"
@@ -59,87 +43,6 @@
                 </layoutData>
             </Title>
             <ToolbarSpacer id="_IDGenToolbarSpacer1" />
-            <SearchField
-                width="25rem"
-                id="searchField"
-            >
-                <layoutData>
-                    <OverflowToolbarLayoutData
-                        id="_IDGenOverflowToolbarLayoutData4"
-                        priority="Low"
-                        group="1"
-                    />
-                </layoutData>
-            </SearchField>
-            <Button
-                visible="false"
-                icon="sap-icon://search"
-                type="Transparent"
-                id="searchButton"
-                tooltip="Search"
-            />
-            <OverflowToolbarButton
-                id="_IDGenOverflowToolbarButton"
-                icon="sap-icon://da"
-                type="Transparent"
-                tooltip="Joule"
-                text="Joule"
-            >
-                <layoutData>
-                    <OverflowToolbarLayoutData
-                        id="_IDGenOverflowToolbarLayoutData5"
-                        group="2"
-                    />
-                </layoutData>
-            </OverflowToolbarButton>
-            <OverflowToolbarButton
-                id="_IDGenOverflowToolbarButton1"
-                icon="sap-icon://source-code"
-                type="Transparent"
-                tooltip="Action 1"
-                text="Action 1"
-            >
-                <layoutData>
-                    <OverflowToolbarLayoutData
-                        id="_IDGenOverflowToolbarLayoutData6"
-                        group="2"
-                    />
-                </layoutData>
-            </OverflowToolbarButton>
-            <OverflowToolbarButton
-                id="_IDGenOverflowToolbarButton2"
-                icon="sap-icon://card"
-                type="Transparent"
-                tooltip="Action 2"
-                text="Action 2"
-            >
-                <layoutData>
-                    <OverflowToolbarLayoutData
-                        id="_IDGenOverflowToolbarLayoutData7"
-                        group="2"
-                    />
-                </layoutData>
-            </OverflowToolbarButton>
-            <OverflowToolbarButton
-                id="_IDGenOverflowToolbarButton3"
-                icon="sap-icon://action-settings"
-                type="Transparent"
-                text="Settings"
-            />
-            <Button
-                id="_IDGenButton4"
-                icon="sap-icon://palette"
-                type="Transparent"
-                tooltip="Theme"
-                press=".onThemetoggle"
-            >
-                <layoutData>
-                    <OverflowToolbarLayoutData
-                        id="_IDGenOverflowToolbarLayoutData8"
-                        priority="NeverOverflow"
-                    />
-                </layoutData>
-            </Button>
 
             <!-- menu items for theme -->
             <MenuButton
@@ -210,27 +113,9 @@
             <tnt:ToolHeaderUtilitySeparator
                 id="_IDGenToolHeaderUtilitySeparator"
             />
-            <OverflowToolbarButton
-                id="_IDGenOverflowToolbarButton4"
-                icon="sap-icon://grid"
-                type="Transparent"
-                text="My Products"
-                tooltip="My Products"
-            />
-            <Avatar
-                id="_IDGenAvatar"
-                src="test-resources/sap/tnt/images/Woman_avatar_01.png"
-                displaySize="XS"
-                press=".onAvatarPressed"
-                tooltip="Profile"
-            >
-                <layoutData>
-                    <OverflowToolbarLayoutData
-                        id="_IDGenOverflowToolbarLayoutData9"
-                        priority="NeverOverflow"
-                    />
-                </layoutData>
-            </Avatar>
+            <VBox id="profileDropdown"  class="sapUiSmallMargin">
+                <Button id="profile_button" text="Welcome, {userModel>/username}" press=".profile_dropdown"></Button>
+            </VBox>
         </tnt:ToolHeader>
 
         <!-- side navigation -->
@@ -467,7 +352,10 @@
                     <!-- <Label id="_IDGenLabel" text="Enter the details of the movie" /> -->
                     <Table
                         id="booksTable"
-                        items="{/Movies}"
+                        items="{path: '/Movies', parameters: {
+                            $count: false,
+                            $$groupId: '$direct'
+                        }}"
                     >
                         <columns>
                             <Column id="_IDGenColumn">

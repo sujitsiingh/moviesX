@@ -5,7 +5,9 @@
     "type": "application",
     "i18n": {
       "bundleUrl": "i18n/i18n.properties",
-      "supportedLocales": ["en"],
+      "supportedLocales": [
+        "en"
+      ],
       "fallbackLocale": "en"
     },
     "applicationVersion": {
@@ -25,7 +27,13 @@
         "type": "OData",
         "settings": {
           "annotations": [],
-          "odataVersion": "4.0"
+          "odataVersion": "4.0",
+          "groupId": "$auto",
+          "updateGroupId": "$direct",
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
         }
       }
     }
@@ -66,7 +74,9 @@
         "preload": true,
         "settings": {
           "bundleName": "movies.i18n.i18n",
-          "supportedLocales": ["en"],
+          "supportedLocales": [
+            "en"
+          ],
           "fallbackLocale": "en"
         }
       },
@@ -122,7 +132,6 @@
           "viewId": "Login",
           "viewName": "Login"
         },
-
         "TargetHome": {
           "viewType": "XML",
           "transition": "slide",

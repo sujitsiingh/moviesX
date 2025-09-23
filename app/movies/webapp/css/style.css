@@ -268,23 +268,3 @@
   display: none;
   /* Safari and Chrome */
 }
-
-#application-project1-display-component---Home--listPage-cont {
-  -ms-overflow-style: none;
-  /* Internet Explorer 10+ */
-  scrollbar-width: none;
-}
-
-@media (min-width: 80rem) {
-  .sapUiMedia-Std-Desktop .sapUShellApplicationContainer.sapUShellApplicationContainerLimitedWidth {
-    width: auto !important;
-  }
-}
-
-#application-project1-display-component---Home--Panel3-content {
-  background: none !important;
-}
-
-.v-m-title {
-  display: none;
-}
