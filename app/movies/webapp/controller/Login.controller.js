@@ -20,6 +20,8 @@ sap.ui.define([
             // sap.ui.getCore().applyTheme("sap_horizon");
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             oRouter.getRoute("RouteHome").attachPatternMatched(this._onObjectMatched, this);
+            // oRouter.getRoute("RouteReviews").attachPatternMatched(this._onMatched, this);
+            oRouter.getRoute("RouteMyReviews").attachPatternMatched(this._onMatched, this);
 
             // Initialize the model
             var oUserModel = new JSONModel();
@@ -32,6 +34,27 @@ sap.ui.define([
             oUserModel.setProperty("/username", un);
             oUserModel.setProperty("/password", pwd);
         },
+        _onMatched: function (oEvent) {
+            // const oArgs = oEvent.getParameter("arguments") || {};
+            // const smovieId = oArgs.movie_Id;
+            // if (smovieId) {
+            //     this.byId("movie").setSelectedKey(smovieId);
+            // }
+            const sUserId = sessionStorage.getItem("userId");
+            const bLoggedIn = sessionStorage.getItem("loggedIn") === "true";
+            if (!bLoggedIn || !sUserId) {
+                MessageBox.error("Please login to see your reviews.");
+                this.oRouter.navTo("RouteLogin", {}, true);
+                return;
+            }
+
+            const oList = this.byId("reviewsList");
+            const oBinding = oList.getBinding("items");
+            // Filter by current user
+            oBinding.filter([new Filter("user_ID", FilterOperator.EQ, sUserId)]);
+        },
+
+
         alertButton: function () {
             let username = this.getView().byId("un").getValue();
             let password = this.getView().byId("pwd").getValue();
@@ -51,15 +74,22 @@ sap.ui.define([
                     new Filter("password", FilterOperator.EQ, password)
                 ];
                 let oBinding = oModel2.bindList("/Users", undefined, undefined, undefined, {
-                    $$groupId: "$direct"
+                    $$groupId: "$direct",
+                    $select: [ "ID", "username" ]
                 });
                 oBinding.filter(aFilters);
                 oBinding.requestContexts().then((aContexts) => {
                     if (aContexts.length > 0) {
                         aContexts.forEach((oContext) => {
                             let oUser = oContext.getObject();
+                            // sessionStorage.setItem("loggedIn", "true");
                             console.log("User found:", oUser);
                             // alert("Welcome, " + oUser.username);
+                            console.log("UserId (should be GUID):", sessionStorage.getItem("userId"));
+
+                            sessionStorage.setItem("userId", oUser.ID);
+                            this.getView().getModel("userModel").setProperty("/id", oUser.ID);
+                            this.getView().getModel("userModel").setProperty("/username", oUser.username);
                         });
                         // Navigate to the next view if credentials are valid
                         sessionStorage.setItem("loggedIn", "true");
@@ -96,7 +126,8 @@ sap.ui.define([
 
         myReview: function () {
             const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            oRouter.navTo("RouteReviews", {}, true);
+            // oRouter.navTo("RouteReviews", {}, true);
+            oRouter.navTo("RouteMyReviews", {}, true);
         },
 
 
@@ -440,13 +471,173 @@ sap.ui.define([
             })
         },
 
-        onReviewsPress: function (oEvent) {
-            const sKey = oEvent.getParameter("item").getKey();
-            if (sKey === "reviews") {
-                this.getOwnerComponent().getRouter().navTo("_IDGenPage1");
+        // <------- Reviews ------->
+        onSubmit: async function () {
+            const oModel = this.getOwnerComponent().getModel();
+            const sMovieId = this.byId("movie").getSelectedKey();
+            const fRating = this.byId("rating").getValue();
+            const sComment = this.byId("comment").getValue().trim();
+
+            // Retrieve current logged-in user ID
+            const sUserId = sessionStorage.getItem("userId") ||
+                this.getView().getModel("userModel")?.getProperty("/id");
+
+            // Validations
+            if (!sMovieId) {
+                MessageBox.error("Please select a movie.");
+                return;
+            }
+            if (!fRating || fRating <= 0) {
+                MessageBox.error("Please provide a rating.");
+                return;
+            }
+            if (!sUserId) {
+                MessageBox.error("User session missing. Please login again.");
+                const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("RouteLogin", {}, true);
+                return;
             }
 
+            // Build payload
+            const oPayload = {
+                movie_ID: sMovieId,
+                rating: fRating,
+                comment: sComment,
+                user_ID: sUserId
+            };
+
+            try {
+                const oList = oModel.bindList("/Reviews", undefined, undefined, undefined, {
+                    $$groupId: "$direct"
+                });
+
+                const oContext = oList.create(oPayload);
+                await oContext.created();
+
+                MessageToast.show("Review submitted!");
+                this._clearForm();
+                this.onNavBack();
+            } catch (e) {
+                MessageBox.error(e?.message || "Failed to submit review.");
+            }
+        },
+        _clearForm: function () {
+            this.byId("movie").setSelectedKey("");
+            this.byId("rating").setValue(1);
+            this.byId("comment").setValue("");
+        },
+
+        onCancel: function () {
+            this.onNavBack();
+        },
+        onNavBack: function () {
+            // const oHistory = History.getInstance();
+            // const sPreviousHash = oHistory.getPreviousHash();
+            const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.navTo("RouteHome", {}, true);
+
+            // if (sPreviousHash !== undefined) {
+            //     window.history.go(-1);
+            // } else {
+            //     oRouter.navTo("RouteHome", {}, true);
+            // }
+        },
+
+
+
+
+
+        // <------- MyReviews page ------->
+        _formatCommentAttr: function (sComment) {
+            return sComment ? [{ text: sComment }] : [];
+        },
+
+        onAddPress: function () {
+            // EITHER: Navigate to a Create page
+            // this.oRouter.navTo("RouteReviews");
+
+            // OR: Open a create dialog
+            this._openCreateDialog();
+        },
+
+        _openCreateDialog: async function () {
+            const oView = this.getView();
+
+            if (!this._oCreateDialog) {
+                this._oCreateDialog = await Fragment.load({
+                    id: oView.getId(),
+                    name: "movies.view.AddReview",
+                    controller: this
+                });
+                oView.addDependent(this._oCreateDialog);
+            }
+            this._oCreateDialog.open();
+        },
+
+        onCreateSubmit: async function () {
+            const sUserId = sessionStorage.getItem("userId");
+            const isGuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(sUserId);
+
+            if (!isGuid) {
+                MessageBox.error("User session missing. Please login again.");
+                this._oCreateDialog.close();
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("RouteLogin", {}, true);
+                return;
+            }
+
+            const sMovieId = this.byId("movieSel").getSelectedKey();
+            const sTitle = this.byId("title").getValue().trim();
+            const fRating = this.byId("ratingInp").getValue();
+            const sComment = this.byId("commentInp").getValue().trim();
+
+            if (!sMovieId) { MessageBox.error("Please select a movie."); return; }
+            if (!sTitle) { MessageBox.error("Please enter a review title."); return; }
+            if (!fRating || fRating <= 0) { MessageBox.error("Please provide a rating."); return; }
+
+            const oModel = this.getOwnerComponent().getModel();
+            try {
+                const oListBinding = oModel.bindList("/Reviews", undefined, undefined, undefined, { $$groupId: "$direct" });
+                const oContext = oListBinding.create({
+                    name: sTitle,
+                    rating: fRating,
+                    comment: sComment,
+                    movie_ID: sMovieId,
+                    user_ID: sUserId
+                });
+                await oContext.created();
+
+                MessageToast.show("Review added");
+                this._oCreateDialog.close();
+                // refresh the list to include the new item
+                const oBinding = this.byId("reviewsList").getBinding("items");
+                oBinding.refresh();
+            } catch (e) {
+                MessageBox.error(e?.message || "Failed to add review.");
+            }
+        },
+
+        onCreateCancel: function () {
+            this._oCreateDialog.close();
+        },
+
+        // onNavBack: function () {
+        //     const sPrev = History.getInstance().getPreviousHash();
+        //     if (sPrev !== undefined) {
+        //         window.history.go(-1);
+        //     } else {
+        //         this.oRouter.navTo("RouteHome", {}, true);
+        //     }
+        // },
+
+        onExit: function () {
+            if (this._oCreateDialog) {
+                this._oCreateDialog.destroy();
+                this._oCreateDialog = null;
+            }
         }
+
+
 
     });
 });

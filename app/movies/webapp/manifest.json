@@ -61,7 +61,8 @@
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
-        "sap.f": {}
+        "sap.f": {},
+        "sap.ui.layout": {}
       }
     },
     "contentDensities": {
@@ -125,9 +126,16 @@
         },
         {
           "name": "RouteReviews",
-          "pattern": "reviews/{movie_Id}",
+          "pattern": "reviews",
           "target":[
             "TargetReviews"
+          ]
+        },
+        {
+          "name": "RouteMyReviews",
+          "pattern": "my-reviews",
+          "target": [
+            "TargetMyReviews"
           ]
         }
 
@@ -153,6 +161,13 @@
           "clearControlAggregation": false,
           "id": "Reviews",
           "name": "Reviews"
+        },
+        "TargetMyReviews": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "id": "MyReviews",
+          "name": "MyReviews"
         }
       }
     },

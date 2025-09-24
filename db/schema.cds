@@ -39,7 +39,7 @@ entity Movies: cuid, managed {
 
 entity Reviews: cuid, managed {
     movie: Association to Movies;
-    name: Name @mandatory;
+    name: Name;
     rating: Decimal(2, 1) @mandatory;
     comment: Text;
     user: Association to Users @mandatory;
