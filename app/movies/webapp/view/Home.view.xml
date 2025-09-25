@@ -6,6 +6,13 @@
     xmlns:f="sap.f"
     xmlns="sap.m"
     xmlns:tnt="sap.tnt"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:table="sap.ui.table"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:unified="sap.ui.unified"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:l="sap.ui.layout"
 >
     <Page
         id="page"
@@ -113,8 +120,15 @@
             <tnt:ToolHeaderUtilitySeparator
                 id="_IDGenToolHeaderUtilitySeparator"
             />
-            <VBox id="profileDropdown"  class="sapUiSmallMargin">
-                <Button id="profile_button" text="Welcome, {userModel>/username}" press=".profile_dropdown"></Button>
+            <VBox
+                id="profileDropdown"
+                class="sapUiSmallMargin"
+            >
+                <Button
+                    id="profile_button"
+                    text="Welcome, {userModel>/username}"
+                    press=".profile_dropdown"
+                />
             </VBox>
         </tnt:ToolHeader>
 
@@ -578,75 +592,225 @@
                         </VBox>
                     </HBox>
                 </Panel>
-            </VBox>
 
-            <!-- panel 4 -->
-            <Panel
-                id="panel4"
-                visible="false"
-                headerText="MoviesX"
-                expandable="true"
-            >
-                <f:GridList
-                    id="grid"
-                    items="{/Movies}"
-                    inset="false"
-                    growing="true"
-                    growingScrollToLoad="true"
-                    mode="None"
-                    width="100%"
-                    xmlns:cssgrid="sap.ui.layout.cssgrid"
+                <!-- panel 4 -->
+                <Panel
+                    id="panel4"
+                    visible="false"
+                    headerText="MoviesX"
+                    expandable="true"
                 >
-                    <f:customLayout>
-                        <!-- Define how many columns per size -->
-                        <cssgrid:GridBasicLayout id="_IDGenGridBasicLayout" />
-                    </f:customLayout>
+                    <f:GridList
+                        id="grid"
+                        items="{/Movies}"
+                        inset="false"
+                        growing="true"
+                        growingScrollToLoad="true"
+                        mode="None"
+                        width="100%"
+                        xmlns:cssgrid="sap.ui.layout.cssgrid"
+                    >
+                        <f:customLayout>
+                            <!-- Define how many columns per size -->
+                            <cssgrid:GridBasicLayout
+                                id="_IDGenGridBasicLayout"
+                            />
+                        </f:customLayout>
 
-                    <f:items>
-                        <f:GridListItem
-                            id="_IDGenGridListItem1"
-                            type="Active"
-                            press=".onTilePress"
-                            ariaLabelledBy="movieTitle"
-                        >
-                            <VBox
-                                id="_IDGenVBox10"
-                                class="movieTile"
+                        <f:items>
+                            <f:GridListItem
+                                id="_IDGenGridListItem1"
+                                type="Active"
+                                press=".onTilePress"
+                                ariaLabelledBy="movieTitle"
                             >
-                                <Image
-                                    id="_IDGenImage1"
-                                    src="{homepage}"
-                                    class="MoviePoster"
-                                    densityAware="false"
-                                    decorative="true"
-                                />
-                                <!-- <Text
+                                <VBox
+                                    id="_IDGenVBox10"
+                                    class="movieTile"
+                                >
+                                    <Image
+                                        id="_IDGenImage1"
+                                        src="{homepage}"
+                                        class="MoviePoster"
+                                        densityAware="false"
+                                        decorative="true"
+                                    />
+                                    <!-- <Text
                                 id="_IDGenText7"
                                 text="{title}"
                             /> -->
-                                <HBox
-                                    id="_IDGenHBox8"
-                                    class="movieTitleBar"
-                                    justifyContent="SpaceBetween"
-                                    alignItems="Center"
-                                >
-                                    <Text
-                                        id="_IDGenText"
-                                        text="{title}"
-                                        class="movieTitle"
-                                    />
-                                    <ObjectNumber
-                                        id="_IDGenObjectNumber"
-                                        number="{releaseYear}"
-                                        class="movieYear"
-                                        unit="Year"
-                                    />
-                                </HBox>
-                            </VBox>
-                        </f:GridListItem>
-                    </f:items>
-                </f:GridList>
-            </Panel>
+                                    <HBox
+                                        id="_IDGenHBox8"
+                                        class="movieTitleBar"
+                                        justifyContent="SpaceBetween"
+                                        alignItems="Center"
+                                    >
+                                        <Text
+                                            id="_IDGenText"
+                                            text="{title}"
+                                            class="movieTitle"
+                                        />
+                                        <ObjectNumber
+                                            id="_IDGenObjectNumber"
+                                            number="{releaseYear}"
+                                            class="movieYear"
+                                            unit="Year"
+                                        />
+                                    </HBox>
+                                </VBox>
+                            </f:GridListItem>
+                        </f:items>
+                    </f:GridList>
+                </Panel>
+
+                <!-- Panel 5 -->
+                <Panel
+                    id="panel5"
+                    visible="true"
+                    width="55rem"
+                    class="sapUiResponsiveMargin"
+                    accessibleRole="Region"
+                >
+                    <content>
+                        <VBox id="_IDGenHBox14" width="100%">
+                            <f:GridList id="gridList">
+                                <f:GridListItem id="_IDGenGridListItem6">
+                                    <VBox
+                                        height="100%"
+                                        justifyContent="SpaceBetween"
+                                        id="_IDGenVBox20"
+                                        class="sapUiSmallMargin"
+                                    >
+                                        <layoutData>
+                                            <FlexItemData
+                                                id="_IDGenFlexItemData"
+                                                growFactor="1"
+                                                shrinkFactor="0"
+                                            />
+                                        </layoutData>
+                                        <VBox
+                                            id="_IDGenVBox21"
+                                            class="sapUiSmallMargin"
+                                        >
+                                            <Title
+                                                id="_IDGenTitle2"
+                                                text="Movies"
+                                                wrapping="true"
+                                            />
+                                            <Label
+                                                id="_IDGenLabel19"
+                                                text="{/Movies/$count}"
+                                                wrapping="true"
+                                            />
+                                        </VBox>
+                                    </VBox>
+                                </f:GridListItem>
+                                <f:GridListItem id="_IDGenGridListIt2">
+                                    <VBox
+                                        height="100%"
+                                        justifyContent="SpaceBetween"
+                                        id="_IDGeBox4"
+                                        class="sapUiSmallMargin"
+                                    >
+                                        <layoutData>
+                                            <FlexItemData
+                                                id="_IDGenFlexemData2"
+                                                growFactor="1"
+                                                shrinkFactor="0"
+                                            />
+                                        </layoutData>
+
+                                        <VBox
+                                            id="_IDGenVBox22"
+                                            class="sapUiSmallMargin"
+                                        >
+                                            <Title
+                                                id="_IDGentle4"
+                                                text="Genres"
+                                                wrapping="true"
+                                            />
+                                            <Label
+                                                id="_IDGenLel2"
+                                                text="{ path: '/Genres/$count' }"
+                                                wrapping="true"
+                                            />
+                                        </VBox>
+                                    </VBox>
+                                </f:GridListItem>
+                            </f:GridList>
+                        </VBox>
+                        <VBox id="_IDGenHBox15">
+                            <f:GridList id="_IDGenGridList2">
+                                <f:GridListItem id="_IDGenGridListItem4">
+                                    <commons:ChartContainer
+                                        id="chartContainer"
+                                        showFullScreen="true"
+                                        showPersonalization="false"
+                                        personalizationPress="attachPersonalizationPress"
+                                        contentChange="attachContentChange"
+                                        title="Rating TO Movies"
+                                    >
+                                        <commons:content>
+                                            <commons:ChartContainerContent
+                                                id="_IDGenChartContainerContent"
+                                                icon="sap-icon://line-chart"
+                                                title="Chart"
+                                            >
+                                                <commons:content>
+                                                    <viz:VizFrame
+                                                        id="chartContainerVizFrame"
+                                                        width="100%"
+                                                        uiConfig="{applicationSet:'fiori'}"
+                                                        vizType="line"
+                                                    >
+                                                        <viz:dataset>
+                                                            <viz.data:FlattenedDataset
+                                                                id="_IDGenFlattenedDataset"
+                                                                data="{/Movies}"
+                                                            >
+                                                                <viz.data:dimensions
+                                                                >
+                                                                    <viz.data:DimensionDefinition
+                                                                        id="_IDGenDimensionDefinition"
+                                                                        name="MovieName"
+                                                                        value="{title}"
+                                                                    />
+                                                                </viz.data:dimensions>
+                                                                <viz.data:measures>
+                                                                    <viz.data:MeasureDefinition
+                                                                        id="_IDGenMeasureDefinition1"
+                                                                        name="Reviews"
+                                                                        value="{numReviews}"
+                                                                    />
+                                                                </viz.data:measures>
+                                                            </viz.data:FlattenedDataset>
+                                                        </viz:dataset>
+                                                        <viz:feeds>
+                                                            <viz.feeds:FeedItem
+                                                                id="valueAxisFeed"
+                                                                uid="valueAxis"
+                                                                type="Measure"
+                                                                values="Reviews"
+                                                            />
+                                                            <viz.feeds:FeedItem
+                                                                id="categoryAxisFeed"
+                                                                uid="categoryAxis"
+                                                                type="Dimension"
+                                                                values="MovieName"
+                                                            />
+                                                        </viz:feeds>
+                                                    </viz:VizFrame>
+                                                </commons:content>
+                                            </commons:ChartContainerContent>
+                                        </commons:content>
+                                    </commons:ChartContainer>
+                                </f:GridListItem>
+                                <!-- <f:GridListItem id="_IDGenGridListItem5" /> -->
+                            </f:GridList>
+                        </VBox>
+                    </content>
+                </Panel>
+            </VBox>
         </HBox>
 
         <!-- <subHeader>
@@ -708,7 +872,5 @@
                 </Menu>
             </Toolbar>
         </subHeader> -->
-
-
     </Page>
 </mvc:View>

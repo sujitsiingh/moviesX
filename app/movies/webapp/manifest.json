@@ -62,7 +62,9 @@
         "sap.m": {},
         "sap.ui.core": {},
         "sap.f": {},
-        "sap.ui.layout": {}
+        "sap.ui.layout": {},
+        "sap.viz": {},
+        "sap.suite.ui.commons": {}
       }
     },
     "contentDensities": {
@@ -127,7 +129,7 @@
         {
           "name": "RouteReviews",
           "pattern": "reviews",
-          "target":[
+          "target": [
             "TargetReviews"
           ]
         },
@@ -145,7 +147,6 @@
             "TargetHome1"
           ]
         }
-
       ],
       "targets": {
         "TargetLogin": {

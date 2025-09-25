@@ -78,11 +78,11 @@ sap.ui.define([
                         aContexts.forEach((oContext) => {
                             let oUser = oContext.getObject();
                             sessionStorage.setItem("loggedIn", "true");
+                            sessionStorage.setItem("userId", oUser.ID);
                             console.log("User found:", oUser);
                             // alert("Welcome, " + oUser.username);
                             console.log("UserId (should be GUID):", sessionStorage.getItem("userId"));
 
-                            sessionStorage.setItem("userId", oUser.ID);
                             this.getView().getModel("userModel").setProperty("/id", oUser.ID);
                             this.getView().getModel("userModel").setProperty("/username", oUser.username);
                         });
@@ -181,7 +181,11 @@ sap.ui.define([
             Theming.setTheme(sThemeId);
         },
 
-
+        onHomePress: function () {
+            this.hideAllPanels();
+            var oPanel = this.byId("panel5");
+            oPanel.setVisible(true);
+        },
 
         onAddMoviesPress: function () {
             this.hideAllPanels();
@@ -218,6 +222,8 @@ sap.ui.define([
             oPanel3.setVisible(false);
             const oPanel4 = this.byId("panel4");
             oPanel4.setVisible(false);
+            const oPanel5 = this.byId("panel5");
+            oPanel5.setVisible(false);
         },
 
 
