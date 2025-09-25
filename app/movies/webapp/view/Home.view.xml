@@ -672,7 +672,10 @@
                     accessibleRole="Region"
                 >
                     <content>
-                        <VBox id="_IDGenHBox14" width="100%">
+                        <VBox
+                            id="_IDGenHBox14"
+                            width="100%"
+                        >
                             <f:GridList id="gridList">
                                 <f:GridListItem id="_IDGenGridListItem6">
                                     <VBox
@@ -776,7 +779,8 @@
                                                                         value="{title}"
                                                                     />
                                                                 </viz.data:dimensions>
-                                                                <viz.data:measures>
+                                                                <viz.data:measures
+                                                                >
                                                                     <viz.data:MeasureDefinition
                                                                         id="_IDGenMeasureDefinition1"
                                                                         name="Reviews"
@@ -808,6 +812,56 @@
                                 <!-- <f:GridListItem id="_IDGenGridListItem5" /> -->
                             </f:GridList>
                         </VBox>
+                    </content>
+                </Panel>
+
+                <!-- panel 6 -->
+                <Panel
+                    id="panel6"
+                    width="50rem"
+                    class="sapUiResponsiveMargin"
+                    accessibleRole="Region"
+                    visible="false"
+                >
+                    <content>
+                        <List
+                            id="reviewsList"
+                            mode="None"
+                            items="{
+              path: '/Reviews',
+              parameters: { 
+                $expand: {
+                  movie: {
+                    $select: ['ID','title']
+                  }
+                },
+                $select: ['ID','name','rating','comment','modifiedAt', 'movie_ID','user_ID']
+              }
+            }"
+                        >
+                            <ObjectListItem
+                                id="_IDGenObjectListItem1"
+                                title="{name}"
+                                number="{path: 'rating'}"
+                                numberUnit="★"
+                                intro="{= ${movie/title} ? 'Movie: ' + ${movie/title} : '' }"
+                            >
+                                <firstStatus>
+                                    <ObjectStatus
+                                        id="_IDGenObjectStatus5"
+                                        text="Updated: {path: 'modifiedAt', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'medium' }}"
+                                    />
+                                </firstStatus>
+
+                                <attributes>
+                                    <ObjectAttribute
+                                        id="_IDGenObjectAttribute1"
+                                        title="Comment"
+                                        text="{ path: 'comment', formatter: '._formatCommentAttr' }"
+                                    />
+                                </attributes>
+                            </ObjectListItem>
+                        </List>
                     </content>
                 </Panel>
             </VBox>

@@ -224,6 +224,8 @@ sap.ui.define([
             oPanel4.setVisible(false);
             const oPanel5 = this.byId("panel5");
             oPanel5.setVisible(false);
+            const oPanel6 = this.byId("panel6");
+            oPanel6.setVisible(false);
         },
 
 
