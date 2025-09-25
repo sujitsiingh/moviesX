@@ -132,6 +132,7 @@
                             id="_IDGenNavigationListItem1"
                             text="Home"
                             icon="sap-icon://home"
+                            press=".onHomePress"
                         />
                         <tnt:NavigationListGroup
                             id="_IDGenNavigationListGroup"

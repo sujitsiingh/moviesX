@@ -268,3 +268,22 @@
   display: none;
   /* Safari and Chrome */
 }
+
+/* mivie card home1 */
+.movieCard {
+  padding: 12px;
+  border: 1px solid rgba(0,0,0,.07);
+  border-radius: 8px;
+  background: var(--sapTile_Background, #fff);
+  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+
+.chip {
+  display: inline-block;
+  padding: 2px 8px;
+  margin: 2px 6px 0 0;
+  border-radius: 12px;
+  background: var(--sapList_SelectionBackgroundColor, #eef2f7);
+  color: var(--sapTextColor, #32363a);
+  font-size: 0.75rem;
+}

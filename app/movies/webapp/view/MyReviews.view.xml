@@ -22,7 +22,8 @@
                 },
                 $select: ['ID','name','rating','comment','modifiedAt', 'movie_ID','user_ID']
               }
-            }">
+            }"
+        >
             
         <ObjectListItem id="_IDGenObjectListItem"
           title="{name}"

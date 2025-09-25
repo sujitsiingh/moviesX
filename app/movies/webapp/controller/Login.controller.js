@@ -34,12 +34,7 @@ sap.ui.define([
             oUserModel.setProperty("/username", un);
             oUserModel.setProperty("/password", pwd);
         },
-        _onMatched: function (oEvent) {
-            // const oArgs = oEvent.getParameter("arguments") || {};
-            // const smovieId = oArgs.movie_Id;
-            // if (smovieId) {
-            //     this.byId("movie").setSelectedKey(smovieId);
-            // }
+        _onMatched: function () {
             const sUserId = sessionStorage.getItem("userId");
             const bLoggedIn = sessionStorage.getItem("loggedIn") === "true";
             if (!bLoggedIn || !sUserId) {
@@ -75,14 +70,14 @@ sap.ui.define([
                 ];
                 let oBinding = oModel2.bindList("/Users", undefined, undefined, undefined, {
                     $$groupId: "$direct",
-                    $select: [ "ID", "username" ]
+                    $select: ["ID", "username"]
                 });
                 oBinding.filter(aFilters);
                 oBinding.requestContexts().then((aContexts) => {
                     if (aContexts.length > 0) {
                         aContexts.forEach((oContext) => {
                             let oUser = oContext.getObject();
-                            // sessionStorage.setItem("loggedIn", "true");
+                            sessionStorage.setItem("loggedIn", "true");
                             console.log("User found:", oUser);
                             // alert("Welcome, " + oUser.username);
                             console.log("UserId (should be GUID):", sessionStorage.getItem("userId"));
@@ -92,12 +87,13 @@ sap.ui.define([
                             this.getView().getModel("userModel").setProperty("/username", oUser.username);
                         });
                         // Navigate to the next view if credentials are valid
-                        sessionStorage.setItem("loggedIn", "true");
+                        // sessionStorage.setItem("loggedIn", "true");
                         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                         oRouter.navTo("RouteHome", {
                             name: username,
                             pass: password
-                        });
+
+                        }, true);
 
                     } else {
                         MessageBox.error("Invalid Username/Password");
