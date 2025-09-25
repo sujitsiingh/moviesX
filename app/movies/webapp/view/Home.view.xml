@@ -818,12 +818,22 @@
                 <!-- panel 6 -->
                 <Panel
                     id="panel6"
-                    width="50rem"
+                    width="70rem"
                     class="sapUiResponsiveMargin"
                     accessibleRole="Region"
                     visible="false"
                 >
                     <content>
+                        <HBox id="_IDGenHBox17">
+                            <Button
+                                id="_IDGenButton9"
+                                icon="sap-icon://add"
+                                text="Add"
+                                type="Emphasized"
+                                press=".onAddPress"
+                            />
+                        </HBox>
+
                         <List
                             id="reviewsList"
                             mode="None"

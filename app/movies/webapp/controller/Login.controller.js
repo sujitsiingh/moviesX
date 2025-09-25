@@ -21,7 +21,7 @@ sap.ui.define([
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             oRouter.getRoute("RouteHome").attachPatternMatched(this._onObjectMatched, this);
             // oRouter.getRoute("RouteReviews").attachPatternMatched(this._onMatched, this);
-            oRouter.getRoute("RouteMyReviews").attachPatternMatched(this._onMatched, this);
+            // oRouter.getRoute("RouteMyReviews").attachPatternMatched(this._onMatched, this);
 
             // Initialize the model
             var oUserModel = new JSONModel();
@@ -34,20 +34,20 @@ sap.ui.define([
             oUserModel.setProperty("/username", un);
             oUserModel.setProperty("/password", pwd);
         },
-        _onMatched: function () {
-            const sUserId = sessionStorage.getItem("userId");
-            const bLoggedIn = sessionStorage.getItem("loggedIn") === "true";
-            if (!bLoggedIn || !sUserId) {
-                MessageBox.error("Please login to see your reviews.");
-                this.oRouter.navTo("RouteLogin", {}, true);
-                return;
-            }
+        // _onMatched: function () {
+        //     const sUserId = sessionStorage.getItem("userId");
+        //     const bLoggedIn = sessionStorage.getItem("loggedIn") === "true";
+        //     if (!bLoggedIn || !sUserId) {
+        //         MessageBox.error("Please login to see your reviews.");
+        //         this.oRouter.navTo("RouteLogin", {}, true);
+        //         return;
+        //     }
 
-            const oList = this.byId("reviewsList");
-            const oBinding = oList.getBinding("items");
-            // Filter by current user
-            oBinding.filter([new Filter("user_ID", FilterOperator.EQ, sUserId)]);
-        },
+        //     const oList = this.byId("reviewsList");
+        //     const oBinding = oList.getBinding("items");
+        //     // Filter by current user
+        //     oBinding.filter([new Filter("user_ID", FilterOperator.EQ, sUserId)]);
+        // },
 
 
         alertButton: function () {
@@ -121,9 +121,12 @@ sap.ui.define([
         },
 
         myReview: function () {
-            const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            // const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             // oRouter.navTo("RouteReviews", {}, true);
-            oRouter.navTo("RouteMyReviews", {}, true);
+            // oRouter.navTo("RouteMyReviews", {}, true);
+            this.hideAllPanels();
+            var oPanel = this.byId("panel6");
+            oPanel.setVisible(true);
         },
 
 
