@@ -15,6 +15,8 @@ sap.ui.define([
     'sap/ui/export/library'
 ], (Controller, MessageBox, MessageToast, Fragment, JSONModel, Sorter, Filter, FilterOperator, FilterType, SelectDialog, StandardListItem, Theming, Spreadsheet, exportLibrary) => {
     "use strict";
+    var EdmType = exportLibrary.EdmType;
+
     return Controller.extend("movies.controller.Login", {
         onInit: function () {
             // sap.ui.getCore().applyTheme("sap_horizon");
@@ -360,6 +362,123 @@ sap.ui.define([
             }
 
             oBinding.filter(aFilters);
+        },
+
+        // <--------- View Movies section --------->
+        onRefresh: function (tableName = '') {
+            if (tableName != '') {
+                var oBinding = this.byId(tableName).getBinding("items");
+            }
+            else {
+                var oBinding = this.byId("moviesTable").getBinding("items");
+            }
+
+            if (oBinding.hasPendingChanges()) {
+                MessageBox.error("Before refreshing, please save or revert your changes");
+                return;
+            }
+            oBinding.refresh();
+            MessageToast.show("Data Refreshed");
+        },
+
+        onSearchMovie: function () {
+            var oView = this.getView(),
+                sValue = oView.byId("searchField").getValue();
+            if (sValue) {
+                var oFilter = new Filter("title", FilterOperator.Contains, sValue);
+                var oCombinedFilter = new Filter({
+                    filters: [oFilter],
+                    and: true
+                });
+                oView.byId("moviesTable").getBinding("items").filter(oCombinedFilter, FilterType.Application);
+            } else {
+                oView.byId("moviesTable").getBinding("items").filter([], FilterType.Application);
+            }
+        },
+
+        // createColumnConfig: function() {
+        //         var aCols = [];
+        //         aCols.push({ label: 'Id', property: 'ID', type: EdmType.String, template: '{0}' });
+        //         aCols.push({ label: 'Title', property: 'title', type: EdmType.String });
+        //         aCols.push({ label: 'Overview', property: 'overview', type: EdmType.String });
+        //         aCols.push({ label: 'Warrenty', property: 'stock', type: EdmType.Number, scale: 0 });
+        //         return aCols;
+        //     },
+        createColumnConfig: function () {
+            return [
+                {
+                    label: 'Title',
+                    property: 'title',
+                    type: EdmType.String
+                },
+                {
+                    label: 'Overview',
+                    property: 'overview',
+                    type: EdmType.String
+                },
+                {
+                    label: 'Release Year',
+                    property: 'releaseYear',
+                    type: EdmType.Number
+                },
+                {
+                    label: 'Runtime (min)',
+                    property: 'runtimeMin',
+                    type: EdmType.Number
+                },
+                {
+                    label: 'Currency',
+                    property: 'currency',
+                    type: EdmType.String
+                },
+                {
+                    label: 'Number of Reviews',
+                    property: 'numReviews',
+                    type: EdmType.Number
+                },
+                {
+                    label: 'Genres',
+                    property: 'genres.name',
+                    type: EdmType.String
+                },
+                {
+                    label: 'Cast',
+                    property: 'cast',
+                    type: EdmType.String
+                }
+            ];
+        },
+
+
+        onExport: function () {
+            var aCols, oRowBinding, oSettings, oSheet, oTable;
+            if (!this._oTable) {
+                this._oTable = this.byId('moviesTable');
+            }
+            oTable = this._oTable;
+            oRowBinding = oTable.getBinding('items');
+            console.log("Row Binding Data:", oRowBinding);
+            if (!oRowBinding) {
+                MessageBox.error("No data available for export.");
+                return;
+            }
+            var aData = oRowBinding.getContexts().map(context => context.getObject());
+            console.log("Data to be exported:", aData);
+            if (aData.length === 0) {
+                MessageBox.error("No data available for export.");
+                return;
+            }
+            aCols = this.createColumnConfig();
+            oSettings = {
+                workbook: {
+                    columns: aCols, hierarchyLevel: 'Level'
+                },
+                dataSource: aData, fileName: 'Table export movieSample.xlsx', worker: false
+            };
+            oSheet = new Spreadsheet(oSettings);
+            oSheet.build().finally(function () {
+                oSheet.destroy();
+            });
         },
 
 

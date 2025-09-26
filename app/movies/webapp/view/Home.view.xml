@@ -176,33 +176,7 @@
                                 key="reviews"
                                 press=".onReviewsPress"
                             />
-                            <tnt:NavigationListItem
-                                id="_IDGenNavigationListItem10"
-                                text="Map"
-                                icon="sap-icon://map-2"
-                            />
                         </tnt:NavigationListGroup>
-                        <tnt:NavigationListGroup
-                            id="_IDGenNavigationListGroup2"
-                            text="Restricted"
-                            enabled="false"
-                        >
-                            <tnt:NavigationListItem
-                                id="_IDGenNavigationListItem11"
-                                text="Running"
-                                icon="sap-icon://physical-activity"
-                            />
-                            <tnt:NavigationListItem
-                                id="_IDGenNavigationListItem12"
-                                text="Scissors"
-                                icon="sap-icon://scissors"
-                            />
-                        </tnt:NavigationListGroup>
-                        <tnt:NavigationListItem
-                            id="_IDGenNavigationListItem13"
-                            text="Transport"
-                            icon="sap-icon://passenger-train"
-                        />
                     </tnt:NavigationList>
                     <tnt:fixedItem>
                         <tnt:NavigationList id="_IDGenNavigationList1">
@@ -363,15 +337,44 @@
                     id="panel2"
                     headerText="All Moviews View"
                     visible="false"
+                    class="sapUiResponsiveMargin"
+                    width="100%"
                 >
                     <!-- <Label id="_IDGenLabel" text="Enter the details of the movie" /> -->
                     <Table
-                        id="booksTable"
+                        id="moviesTable"
                         items="{path: '/Movies', parameters: {
-                            $count: false,
+                            $count: true,
                             $$groupId: '$direct'
                         }}"
                     >
+                        <headerToolbar>
+                        <OverflowToolbar id="_IDGenOverflowToolbar2">
+                            <content>
+                            <ToolbarSpacer id="_IDGenToolbarSpacer4"/>
+                            <SearchField
+                                id="searchField"
+                                width="20%"
+                                placeholder="Search this table"
+                                search=".onSearchMovie"/>
+                            <Button
+                                id="refreshUsersButton"
+                                icon="sap-icon://refresh"
+                                tooltip="Refresh"
+                                press="onRefresh('moviesTable')"/>
+                            <Button id="_IDGenButton10" icon="sap-icon://excel-attachment" press=".onExport"/>
+                            <Button
+                                id="deleteUserButton"
+                                icon="sap-icon://delete"
+                                tooltip="Delete Row"
+                                press=".onDelete">
+                                <layoutData>
+                                    <OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData1" priority="NeverOverflow"/>
+                                </layoutData>
+                            </Button>
+                            </content>
+                        </OverflowToolbar>
+                    </headerToolbar>
                         <columns>
                             <Column id="_IDGenColumn">
                                 <Text
@@ -598,69 +601,70 @@
                     id="panel4"
                     visible="false"
                     headerText="MoviesX"
-                    expandable="true"
+                    expandable="false"
+                    width="65rem"
+                    class="sapUiResponsiveMargin"
+                    
                 >
-                    <f:GridList
-                        id="grid"
-                        items="{/Movies}"
-                        inset="false"
-                        growing="true"
-                        growingScrollToLoad="true"
-                        mode="None"
-                        width="100%"
-                        xmlns:cssgrid="sap.ui.layout.cssgrid"
-                    >
-                        <f:customLayout>
-                            <!-- Define how many columns per size -->
-                            <cssgrid:GridBasicLayout
-                                id="_IDGenGridBasicLayout"
-                            />
-                        </f:customLayout>
-
-                        <f:items>
-                            <f:GridListItem
-                                id="_IDGenGridListItem1"
-                                type="Active"
-                                press=".onTilePress"
-                                ariaLabelledBy="movieTitle"
+                    <content>
+                        <VBox
+                            id="_IDGenVBox23"
+                            class="gridVbox"
+                        >
+                            <f:GridList
+                                id="grid"
+                                class="sapUiResponsiveMargin"
+                                items="{/Movies}"
+                                inset="false"
+                                growing="true"
+                                growingScrollToLoad="true"
+                                mode="None"
+                                width="85rem"                            
+                                xmlns:cssgrid="sap.ui.layout.cssgrid"
                             >
-                                <VBox
-                                    id="_IDGenVBox10"
-                                    class="movieTile"
+                                <f:GridListItem
+                                    id="_IDGenGridListItem1"
+                                    class="gridItem"
+                                    type="Active"
+                                    press=".onTilePress"
+                                    ariaLabelledBy="movieTitle"
                                 >
-                                    <Image
-                                        id="_IDGenImage1"
-                                        src="{homepage}"
-                                        class="MoviePoster"
-                                        densityAware="false"
-                                        decorative="true"
-                                    />
-                                    <!-- <Text
-                                id="_IDGenText7"
-                                text="{title}"
-                            /> -->
-                                    <HBox
-                                        id="_IDGenHBox8"
-                                        class="movieTitleBar"
-                                        justifyContent="SpaceBetween"
-                                        alignItems="Center"
+                                    <VBox
+                                        id="_IDGenVBox10"
+                                        class="movieTile"
                                     >
-                                        <Text
-                                            id="_IDGenText"
-                                            text="{title}"
-                                            class="movieTitle"
-                                        />
-                                        <ObjectNumber
-                                            id="_IDGenObjectNumber"
-                                            number="{releaseYear}"
-                                            class="movieYear"
-                                            unit="Year"
-                                        />
-                                    </HBox>
-                                </VBox>
-                            </f:GridListItem>
-                        </f:items>
-                    </f:GridList>
+                                        <Image
+                                                id="_IDGenImage1"
+                                                src="{= ${homepage} ? ${homepage} : '../../uploads/loginImage.jpg'}"
+                                                class="MoviePoster"
+                                                densityAware="false"
+                                                decorative="true"
+                                            />
+                                        
+                                        <HBox
+                                            id="_IDGenHBox8"
+                                            class="movieTitleBar"
+                                            justifyContent="SpaceBetween"
+                                            alignItems="Center"
+                                        >
+                                            <Text
+                                                id="_IDGenText"
+                                                text="{title}"
+                                                class="movieTitle"
+                                            />
+                                            <ObjectNumber
+                                                id="_IDGenObjectNumber"
+                                                number="{releaseYear}"
+                                                class="movieYear"
+                                                unit="Year"
+                                            />
+                                        </HBox>
+                                    </VBox>
+
+                                </f:GridListItem>
+                            </f:GridList>
+                        </VBox>
+                    </content>
                 </Panel>
 
                 <!-- Panel 5 -->
@@ -818,7 +822,7 @@
                 <!-- panel 6 -->
                 <Panel
                     id="panel6"
-                    width="70rem"
+                    width="auto"
                     class="sapUiResponsiveMargin"
                     accessibleRole="Region"
                     visible="false"
@@ -874,6 +878,8 @@
                         </List>
                     </content>
                 </Panel>
+
+                <!-- Panel 7 -->
             </VBox>
         </HBox>
 
