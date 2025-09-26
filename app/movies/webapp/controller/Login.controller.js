@@ -404,6 +404,7 @@ sap.ui.define([
         //         aCols.push({ label: 'Warrenty', property: 'stock', type: EdmType.Number, scale: 0 });
         //         return aCols;
         //     },
+
         createColumnConfig: function () {
             return [
                 {
@@ -428,11 +429,11 @@ sap.ui.define([
                 },
                 {
                     label: 'Currency',
-                    property: 'currency',
+                    property: 'currency_code',
                     type: EdmType.String
                 },
                 {
-                    label: 'Number of Reviews',
+                    label: 'Reviews in number',
                     property: 'numReviews',
                     type: EdmType.Number
                 },
@@ -462,7 +463,21 @@ sap.ui.define([
                 MessageBox.error("No data available for export.");
                 return;
             }
-            var aData = oRowBinding.getContexts().map(context => context.getObject());
+            // var aData = oRowBinding.getContexts().map(context => context.getObject());
+            var aData = oRowBinding.getContexts().map(context => {
+                const obj = context.getObject();
+
+                return {
+                    ...obj,
+                    // Convert cast array to comma-separated string
+                    cast: Array.isArray(obj.cast) ? obj.cast.join(', ') : '',
+
+                    // Safely access genres name (assuming it's resolved in the binding)
+                    genres: obj.genres?.name || ''
+                };
+            });
+
+
             console.log("Data to be exported:", aData);
             if (aData.length === 0) {
                 MessageBox.error("No data available for export.");
