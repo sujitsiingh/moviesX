@@ -1,4 +1,4 @@
-using { cuid, managed, Currency } from '@sap/cds/common';
+using { managed, Currency } from '@sap/cds/common';
 
 namespace my.movies;
 
@@ -11,19 +11,22 @@ type Url: String(2048);
     uniqueEmail: [ email ]
 }
 
-entity Users: cuid, managed {
+entity Users: managed {
+    key ID: UUID;
     username: String(60);
     email: String(60) @mandatory @assert.format:'email';
     password: String(255) @mandatory;
     isAdmin: Boolean default false @mandatory;
 }
 
-entity Genres: cuid, managed {
+entity Genres: managed {
+    key ID: UUID;
     name: localized String(60);
 }
 
 
-entity Movies: cuid, managed {
+entity Movies: managed {
+    key ID: UUID;
     title: localized String(100);
     overview: localized Text;
     releaseYear: Year;
@@ -37,7 +40,8 @@ entity Movies: cuid, managed {
     reviews: Composition of many Reviews on reviews.movie = $self;
 }
 
-entity Reviews: cuid, managed {
+entity Reviews: managed {
+    key ID: UUID;
     movie: Association to Movies;
     name: Name;
     rating: Decimal(2, 1) @mandatory;
