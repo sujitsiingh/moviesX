@@ -2,6 +2,10 @@
 GET http://localhost:4004/odata/v4/catalog/Movies
 
 ###
+bob
+securepass456
+
+###
 POST http://localhost:4004/odata/v4/catalog/Movies
 Content-Type: application/json
 
@@ -11,20 +15,56 @@ Content-Type: application/json
     "releaseYear": 2000,
     "runtimeMin": 2000,
     "numReviews": 1100,
-    "cast": [
+    "currency_code": "INR",
+    "casting": [
       "Russell Crowe",
       "Joaquin Phoenix",
       "Connie Nielsen"
     ]
 }
 
+
+###
+
+# fetch("/odata/v4/catalog/Movies", {
+#   method: "POST",
+#   headers: {
+#     "Content-Type": "application/json"
+#   },
+#   body: JSON.stringify(payload)
+# });
+
+
+
 ###
 DELETE http://localhost:4004/odata/v4/catalog/Movies(203a4704-0272-4761-9fb5-38c0def33655)
+
+###
+PATCH http://localhost:4004/odata/v4/catalog/Movies('3bc9a472-a88d-48fc-8e82-48c56734404f')
+Content-Type: application/json
+
+{
+    "title": "Gladiator3",
+    "overview": "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family.",
+    "releaseYear": 2000,
+    "runtimeMin": 2000,
+    "numReviews": 1100,
+    "currency_code": "USD",
+    "casting": [
+      "Russell Crowe",
+      "Joaquin Phoenix",
+      "Connie Nielsen"
+    ]
+}
 
 
 ###
 # to test currency
 GET http://localhost:4004/odata/v4/catalog/Currencies?$filter=code eq 'INR'
+
+
+###
+GET http://localhost:4004/odata/v4/catalog/Currencies
 
 ###
 GET http://localhost:4004/odata/v4/catalog/Users

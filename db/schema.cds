@@ -36,7 +36,7 @@ entity Movies: managed {
     numReviews: Integer default 0;
     // Relationships -->
     genres: Association to Genres;
-    ![cast]: array of String;
+    casting: array of String;
     reviews: Composition of many Reviews on reviews.movie = $self;
 }
 

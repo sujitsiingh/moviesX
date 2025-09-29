@@ -126,8 +126,23 @@ sap.ui.define([
             // const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             // oRouter.navTo("RouteReviews", {}, true);
             // oRouter.navTo("RouteMyReviews", {}, true);
+            const sUserId = sessionStorage.getItem("userId");
+            const isGuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(sUserId);
+            
+            if (!isGuid) {
+                MessageBox.error("User session missing. Please login again.");
+                this._oCreateDialog.close();
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("RouteLogin", {}, true);
+                return;
+            }
+            const oBinding = this.byId("reviewsList1").getBinding("items");
+            
+            if (oBinding) {
+                oBinding.filter(new Filter("user_ID", FilterOperator.EQ, sUserId));
+            }
             this.hideAllPanels();
-            var oPanel = this.byId("panel6");
+            var oPanel = this.byId("panel7");
             oPanel.setVisible(true);
         },
 
@@ -204,6 +219,12 @@ sap.ui.define([
             oPanel.setVisible(true);
         },
 
+        onReviewsPress: function () {
+            this.hideAllPanels();
+            var oPanel = this.byId("panel6");
+            oPanel.setVisible(true);
+        },
+
         // < ---- movie slate panel 4 ---->
         onViewMovieSlatePress: function () {
             this.hideAllPanels();
@@ -231,6 +252,8 @@ sap.ui.define([
             oPanel5.setVisible(false);
             const oPanel6 = this.byId("panel6");
             oPanel6.setVisible(false);
+            const oPanel7 = this.byId("panel7");
+            oPanel7.setVisible(false);
         },
 
 
@@ -265,7 +288,7 @@ sap.ui.define([
             var numReviews = this.getView().byId("_IDGenInput5").getValue();
 
             const castRaw = this.byId("_IDGenInput6").getValue();
-            const cast = castRaw ? castRaw.split(",").map(s => s.trim()).filter(Boolean) : [];
+            const casting = castRaw ? castRaw.split(",").map(s => s.trim()).filter(Boolean) : [];
 
             // var currency = this.getView().byId("_IDGenInput7").getValue().toUpperCase();
             const currency = (this.getView().byId("_IDGenInput7").getValue() || "").trim().toUpperCase();
@@ -277,7 +300,7 @@ sap.ui.define([
                 releaseYear,
                 runtimeMin,
                 numReviews,
-                cast: cast,
+                casting: casting,
                 currency: { code: currency }
             }
 
@@ -385,7 +408,7 @@ sap.ui.define([
             var oView = this.getView(),
                 sValue = oView.byId("searchField").getValue();
             if (sValue) {
-                var oFilter = new Filter("title", FilterOperator.Contains, sValue);
+                var oFilter = new Filter("title", FilterOperator.Contains, sValue.toLowerCase());
                 var oCombinedFilter = new Filter({
                     filters: [oFilter],
                     and: true
@@ -444,7 +467,7 @@ sap.ui.define([
                 },
                 {
                     label: 'Cast',
-                    property: 'cast',
+                    property: 'casting',
                     type: EdmType.String
                 }
             ];
@@ -470,7 +493,7 @@ sap.ui.define([
                 return {
                     ...obj,
                     // Convert cast array to comma-separated string
-                    cast: Array.isArray(obj.cast) ? obj.cast.join(', ') : '',
+                    casting: Array.isArray(obj.casting) ? obj.casting.join(', ') : '',
 
                     // Safely access genres name (assuming it's resolved in the binding)
                     genres: obj.genres?.name || ''
@@ -559,8 +582,8 @@ sap.ui.define([
                         this.getView().byId("editReleaseYear").setValue(oUser.releaseYear);
                         this.getView().byId("editRunTime").setValue(oUser.runtimeMin);
                         this.getView().byId("editReviews").setValue(oUser.numReviews);
-                        this.getView().byId("editCast").setValue(oUser.cast);
-                        this.getView().byId("editCurrency").setValue(oUser.currency);
+                        this.getView().byId("editCast").setValue(oUser.casting);
+                        this.getView().byId("editCurrency").setValue(oUser.currency_code);
                         this.getView().byId("itemCode").setValue(oUser.ID);
                     });
                 } else {
@@ -581,7 +604,10 @@ sap.ui.define([
             var releaseYear = this.getView().byId("editReleaseYear").getValue();
             var runtimeMin = this.getView().byId("editRunTime").getValue();
             var numReviews = this.getView().byId("editReviews").getValue();
-            var cast = this.getView().byId("editCast").getValue();
+            // var casting = this.getView().byId("editCast").getValue();
+            var castInput = this.getView().byId("editCast").getValue();
+            var castArray = castInput.split(",").map(s => s.trim());
+
             var currency = this.getView().byId("editCurrency").getValue();
 
             var update_oModel = this.getView().getModel();
@@ -600,8 +626,9 @@ sap.ui.define([
             oContext.setProperty("releaseYear", releaseYear);
             oContext.setProperty("runtimeMin", runtimeMin);
             oContext.setProperty("numReviews", numReviews);
-            oContext.setProperty("cast", cast);
-            oContext.setProperty("currency", currency);
+            // oContext.setProperty("cast", cast);
+            oContext.setProperty("casting", castArray.toString());
+            oContext.setProperty("currency_code", currency);
 
             update_oModel.submitBatch("auto").then(function () {
                 resetBusy();
@@ -690,7 +717,20 @@ sap.ui.define([
 
         // <------- MyReviews page ------->
         _formatCommentAttr: function (sComment) {
-            return sComment ? [{ text: sComment }] : [];
+            // return sComment ? [{ text: sComment }] : [];
+
+            if (!sComment) {
+                return "No comment provided.";
+            }
+
+            // Optionally truncate long comments
+            const maxLength = 100;
+            if (sComment.length > maxLength) {
+                return sComment.substring(0, maxLength) + "...";
+            }
+
+            return sComment;
+
         },
 
         onAddPress: function () {
@@ -751,7 +791,12 @@ sap.ui.define([
                 MessageToast.show("Review added");
                 this._oCreateDialog.close();
                 // refresh the list to include the new item
-                const oBinding = this.byId("reviewsList").getBinding("items");
+                const oBinding = this.byId("reviewsList1").getBinding("items");
+
+                if (oBinding) {
+                    oBinding.filter(new Filter("user_ID", FilterOperator.EQ, sUserId));
+                }
+
                 oBinding.refresh();
             } catch (e) {
                 MessageBox.error(e?.message || "Failed to add review.");

@@ -172,7 +172,7 @@
                             <tnt:NavigationListItem
                                 id="_IDGenNavigationListItem9"
                                 text="Reviews"
-                                icon="sap-icon://flight"
+                                icon="sap-icon://present"
                                 key="reviews"
                                 press=".onReviewsPress"
                             />
@@ -296,7 +296,7 @@
                         <VBox id="_IDGenVBox6">
                             <Label
                                 id="_IDGenLabel6"
-                                text="cast"
+                                text="casting"
                             />
                             <Input
                                 id="_IDGenInput6"
@@ -349,32 +349,42 @@
                         }}"
                     >
                         <headerToolbar>
-                        <OverflowToolbar id="_IDGenOverflowToolbar2">
-                            <content>
-                            <ToolbarSpacer id="_IDGenToolbarSpacer4"/>
-                            <SearchField
-                                id="searchField"
-                                width="20%"
-                                placeholder="Search this table"
-                                search=".onSearchMovie"/>
-                            <Button
-                                id="refreshUsersButton"
-                                icon="sap-icon://refresh"
-                                tooltip="Refresh"
-                                press="onRefresh('moviesTable')"/>
-                            <Button id="_IDGenButton10" icon="sap-icon://excel-attachment" press=".onExport"/>
-                            <Button
-                                id="deleteUserButton"
-                                icon="sap-icon://delete"
-                                tooltip="Delete Row"
-                                press=".onDelete">
-                                <layoutData>
-                                    <OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData1" priority="NeverOverflow"/>
-                                </layoutData>
-                            </Button>
-                            </content>
-                        </OverflowToolbar>
-                    </headerToolbar>
+                            <OverflowToolbar id="_IDGenOverflowToolbar2">
+                                <content>
+                                    <ToolbarSpacer id="_IDGenToolbarSpacer4" />
+                                    <SearchField
+                                        id="searchField"
+                                        width="20%"
+                                        placeholder="Search this table"
+                                        search=".onSearchMovie"
+                                    />
+                                    <Button
+                                        id="refreshUsersButton"
+                                        icon="sap-icon://refresh"
+                                        tooltip="Refresh"
+                                        press="onRefresh('moviesTable')"
+                                    />
+                                    <Button
+                                        id="_IDGenButton10"
+                                        icon="sap-icon://excel-attachment"
+                                        press=".onExport"
+                                    />
+                                    <Button
+                                        id="deleteUserButton"
+                                        icon="sap-icon://delete"
+                                        tooltip="Delete Row"
+                                        press=".onDelete"
+                                    >
+                                        <layoutData>
+                                            <OverflowToolbarLayoutData
+                                                id="_IDGenOverflowToolbarLayoutData1"
+                                                priority="NeverOverflow"
+                                            />
+                                        </layoutData>
+                                    </Button>
+                                </content>
+                            </OverflowToolbar>
+                        </headerToolbar>
                         <columns>
                             <Column id="_IDGenColumn">
                                 <Text
@@ -500,11 +510,11 @@
                         <VBox id="itemCodeBox">
                             <Label
                                 id="icLabel"
-                                text="title"
+                                text="id"
                             />
                             <Input
                                 id="itemCode"
-                                placeholder="Title of the movie"
+                                placeholder="ID of the movie"
                                 editable="false"
                             />
                         </VBox>
@@ -564,7 +574,7 @@
                         <VBox id="_IDGenVBox15">
                             <Label
                                 id="_IDGenLabel10"
-                                text="cast"
+                                text="casting"
                             />
                             <Input
                                 id="editCast"
@@ -604,7 +614,6 @@
                     expandable="false"
                     width="65rem"
                     class="sapUiResponsiveMargin"
-                    
                 >
                     <content>
                         <VBox
@@ -619,7 +628,7 @@
                                 growing="true"
                                 growingScrollToLoad="true"
                                 mode="None"
-                                width="85rem"                            
+                                width="85rem"
                                 xmlns:cssgrid="sap.ui.layout.cssgrid"
                             >
                                 <f:GridListItem
@@ -634,13 +643,13 @@
                                         class="movieTile"
                                     >
                                         <Image
-                                                id="_IDGenImage1"
-                                                src="{= ${homepage} ? ${homepage} : '../../uploads/loginImage.jpg'}"
-                                                class="MoviePoster"
-                                                densityAware="false"
-                                                decorative="true"
-                                            />
-                                        
+                                            id="_IDGenImage1"
+                                            src="{= ${homepage} ? ${homepage} : '../../uploads/loginImage.jpg'}"
+                                            class="MoviePoster"
+                                            densityAware="false"
+                                            decorative="true"
+                                        />
+
                                         <HBox
                                             id="_IDGenHBox8"
                                             class="movieTitleBar"
@@ -660,7 +669,6 @@
                                             />
                                         </HBox>
                                     </VBox>
-
                                 </f:GridListItem>
                             </f:GridList>
                         </VBox>
@@ -819,39 +827,30 @@
                     </content>
                 </Panel>
 
-                <!-- panel 6 -->
+                <!-- panel 6 REVIEWS PANEL-->
                 <Panel
                     id="panel6"
-                    width="auto"
+                    width="55rem"
                     class="sapUiResponsiveMargin"
                     accessibleRole="Region"
                     visible="false"
                 >
                     <content>
-                        <HBox id="_IDGenHBox17">
-                            <Button
-                                id="_IDGenButton9"
-                                icon="sap-icon://add"
-                                text="Add"
-                                type="Emphasized"
-                                press=".onAddPress"
-                            />
-                        </HBox>
-
                         <List
                             id="reviewsList"
+                            headerText="All Reviews"
                             mode="None"
                             items="{
-              path: '/Reviews',
-              parameters: { 
-                $expand: {
-                  movie: {
-                    $select: ['ID','title']
-                  }
-                },
-                $select: ['ID','name','rating','comment','modifiedAt', 'movie_ID','user_ID']
-              }
-            }"
+                                path: '/Reviews',
+                                parameters: { 
+                                    $expand: {
+                                        movie: {
+                                            $select: ['ID','title']
+                                        }
+                                    },
+                                    $select: ['ID','name','rating','comment', 'movie_ID','user_ID']
+                                }
+                            }"
                         >
                             <ObjectListItem
                                 id="_IDGenObjectListItem1"
@@ -860,12 +859,12 @@
                                 numberUnit="★"
                                 intro="{= ${movie/title} ? 'Movie: ' + ${movie/title} : '' }"
                             >
-                                <firstStatus>
+                                <!-- <firstStatus>
                                     <ObjectStatus
                                         id="_IDGenObjectStatus5"
                                         text="Updated: {path: 'modifiedAt', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'medium' }}"
                                     />
-                                </firstStatus>
+                                </firstStatus> -->
 
                                 <attributes>
                                     <ObjectAttribute
@@ -879,7 +878,68 @@
                     </content>
                 </Panel>
 
-                <!-- Panel 7 -->
+
+                <!-- Panel 7 User REVIEW PAGE-->
+                <Panel
+                    id="panel7"
+                    width="auto"
+                    class="sapUiResponsiveMargin"
+                    accessibleRole="Region"
+                    visible="false"
+                    headerText="User Reviews"
+                >
+                    <content>
+                        <HBox id="_IDGenHBox17" justifyContent="End">
+                            <Button
+                                id="_IDGenButton9"
+                                icon="sap-icon://add"
+                                text="Add"
+                                type="Emphasized"
+                                press=".onAddPress"
+                            />
+                        </HBox>
+
+                        <List
+                            id="reviewsList1"
+                            mode="None"
+                            items="{
+              path: '/Reviews',
+              parameters: { 
+                $expand: {
+                  movie: {
+                    $select: ['ID','title']
+                  }
+                },
+                $select: ['ID','name','rating','comment', 'movie_ID','user_ID']
+              }
+            }"
+                        >
+                            <ObjectListItem
+                                id="_IDGenObjectListItem2"
+                                title="{name}"
+                                number="{path: 'rating'}"
+                                numberUnit="★"
+                                intro="{= ${movie/title} ? 'Movie: ' + ${movie/title} : '' }"
+                            >
+                                <!-- <firstStatus>
+                                    <ObjectStatus
+                                        id="_IDGenObjectStatus5"
+                                        text="Updated: {path: 'modifiedAt', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'medium' }}"
+                                    />
+                                </firstStatus> -->
+
+                                <attributes>
+                                    <ObjectAttribute
+                                        id="_IDGenObjectAttribute2"
+                                        title="Comment"
+                                        text="{ path: 'comment', formatter: '._formatCommentAttr' }"
+                                    />
+                                </attributes>
+                            </ObjectListItem>
+                        </List>
+                    </content>
+                </Panel>
+
             </VBox>
         </HBox>
 
