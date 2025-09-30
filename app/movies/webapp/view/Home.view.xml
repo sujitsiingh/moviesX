@@ -344,7 +344,7 @@
                     <Table
                         id="moviesTable"
                         items="{path: '/Movies', parameters: {
-                            $count: true,
+                            $count: false,
                             $$groupId: '$direct'
                         }}"
                     >

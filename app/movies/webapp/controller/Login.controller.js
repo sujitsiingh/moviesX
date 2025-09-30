@@ -220,6 +220,23 @@ sap.ui.define([
         },
 
         onReviewsPress: function () {
+            const sUserId = sessionStorage.getItem("userId");
+            const isGuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(sUserId);
+
+            if (!isGuid) {
+                MessageBox.error("User session missing. Please login again.");
+                // this._oCreateDialog.close();
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("RouteLogin", {}, true);
+                return;
+            }
+            const oBinding = this.byId("reviewsList").getBinding("items");
+
+            // if (oBinding) {
+            //     oBinding.filter(new Filter("user_ID", FilterOperator.EQ, sUserId));
+            // }
+            oBinding.refresh();
+
             this.hideAllPanels();
             var oPanel = this.byId("panel6");
             oPanel.setVisible(true);
@@ -408,7 +425,7 @@ sap.ui.define([
             var oView = this.getView(),
                 sValue = oView.byId("searchField").getValue();
             if (sValue) {
-                var oFilter = new Filter("title", FilterOperator.Contains, sValue.toLowerCase());
+                var oFilter = new Filter("title", FilterOperator.Contains, sValue);
                 var oCombinedFilter = new Filter({
                     filters: [oFilter],
                     and: true
