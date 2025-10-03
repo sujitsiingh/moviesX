@@ -16,7 +16,7 @@
 >
     <Page
         id="page"
-        title="{i18n>title}"
+        title="MoviesX"
     >
         <!-- tool header of the page -->
         <tnt:ToolHeader
@@ -189,9 +189,9 @@
                             <tnt:NavigationListItem
                                 id="_IDGenNavigationListItem15"
                                 selectable="false"
-                                href="https://sap.com"
+                                href="https://www.imdb.com/chart/top/"
                                 target="_blank"
-                                text="External Link"
+                                text="IMDB Page"
                                 icon="sap-icon://attachment"
                             />
                             <tnt:NavigationListItem
@@ -480,7 +480,7 @@
                     </Table>
                 </Panel>
 
-                <!-- Panel 3 -->
+                <!-- Panel 3 EDITING PANEL-->
                 <Panel
                     id="panel3"
                     width="50rem"
@@ -606,76 +606,84 @@
                     </HBox>
                 </Panel>
 
-                <!-- panel 4 -->
+                <!-- panel 4 CHARTS-->
                 <Panel
                     id="panel4"
                     visible="false"
-                    headerText="MoviesX"
+                    headerText="MoviesX Charts"
                     expandable="false"
-                    width="65rem"
+                    width="55rem"
                     class="sapUiResponsiveMargin"
                 >
+                    <VBox id="_IDGenVBox18">
+                        <Title
+                            id="_IDGenTitle1"
+                            text="MoviesX Top { path: '/Movies/$count' } movies"
+                            level="H1"
+                        />
+                        <Text
+                            id="_IDGenText7"
+                            text="As rated by regular MoviesX voters."
+                        />
+                    </VBox>
+
+                    <VBox id="_IDGenVBox24">
+                        <Text
+                            id="_IDGenText14"
+                            text="0 of { path: '/Movies/$count' } WATCHED"
+                        />
+                        <ProgressIndicator
+                            id="_IDGenProgressIndicator"
+                            percentValue="0"
+                            displayValue="0%"
+                            showValue="true"
+                        />
+                    </VBox>
+
                     <content>
                         <VBox
                             id="_IDGenVBox23"
                             class="gridVbox"
                         >
-                            <f:GridList
-                                id="grid"
-                                class="sapUiResponsiveMargin"
-                                items="{/Movies}"
-                                inset="false"
-                                growing="true"
-                                growingScrollToLoad="true"
-                                mode="None"
-                                width="85rem"
-                                xmlns:cssgrid="sap.ui.layout.cssgrid"
+                            <List
+                                id="moviesXList"
+                                items="{
+                                path: '/Reviews',
+                                parameters: { 
+                                    $expand: {
+                                        movie: {
+                                            $select: ['ID','title', 'releaseYear', 'runtimeMin']
+                                        }
+                                    },
+                                    $select: ['ID','name','rating','comment', 'movie_ID','user_ID']
+                                }
+                            }"
                             >
-                                <f:GridListItem
-                                    id="_IDGenGridListItem1"
-                                    class="gridItem"
-                                    type="Active"
-                                    press=".onTilePress"
-                                    ariaLabelledBy="movieTitle"
+                                <ObjectListItem
+                                    id="_IDGenObjectListItem3"
+                                    title="{movie_ID}"
+                                    number="{rating}"
+                                    numberUnit="★"
+                                    press="onListItemPress"
                                 >
-                                    <VBox
-                                        id="_IDGenVBox10"
-                                        class="movieTile"
-                                    >
-                                        <Image
-                                            id="_IDGenImage1"
-                                            src="{= ${homepage} ? ${homepage} : '../../uploads/loginImage.jpg'}"
-                                            class="MoviePoster"
-                                            densityAware="false"
-                                            decorative="true"
+                                    <attributes>
+                                        <ObjectAttribute
+                                            id="_IDGenObjectAttribute3"
+                                            text="Release Year: {movie/releaseYear}"
                                         />
-
-                                        <HBox
-                                            id="_IDGenHBox8"
-                                            class="movieTitleBar"
-                                            justifyContent="SpaceBetween"
-                                            alignItems="Center"
-                                        >
-                                            <Text
-                                                id="_IDGenText"
-                                                text="{title}"
-                                                class="movieTitle"
-                                            />
-                                            <ObjectNumber
-                                                id="_IDGenObjectNumber"
-                                                number="{releaseYear}"
-                                                class="movieYear"
-                                                unit="Year"
-                                            />
-                                        </HBox>
-                                    </VBox>
-                                </f:GridListItem>
-                            </f:GridList>
+                                        <ObjectAttribute
+                                            id="_IDGenObjectAttribute4"
+                                            text="{movie/runtimeMin} minutes Run time"
+                                        />
+                                    </attributes>
+                                                                        
+                                </ObjectListItem>
+                            </List>
                         </VBox>
                     </content>
                 </Panel>
 
-                <!-- Panel 5 -->
+                <!-- Panel 5 HOME PANEL-->
                 <Panel
                     id="panel5"
                     visible="true"
@@ -878,7 +886,6 @@
                     </content>
                 </Panel>
 
-
                 <!-- Panel 7 User REVIEW PAGE-->
                 <Panel
                     id="panel7"
@@ -889,7 +896,10 @@
                     headerText="User Reviews"
                 >
                     <content>
-                        <HBox id="_IDGenHBox17" justifyContent="End">
+                        <HBox
+                            id="_IDGenHBox17"
+                            justifyContent="End"
+                        >
                             <Button
                                 id="_IDGenButton9"
                                 icon="sap-icon://add"
@@ -939,7 +949,6 @@
                         </List>
                     </content>
                 </Panel>
-
             </VBox>
         </HBox>
 

@@ -5,6 +5,9 @@ GET http://localhost:4004/odata/v4/catalog/Movies
 bob
 securepass456
 
+hank
+hankpass222
+
 ###
 POST http://localhost:4004/odata/v4/catalog/Movies
 Content-Type: application/json
@@ -68,3 +71,9 @@ GET http://localhost:4004/odata/v4/catalog/Currencies
 
 ###
 GET http://localhost:4004/odata/v4/catalog/Users
+
+###
+GET http://localhost:4004/odata/v4/catalog/Reviews
+
+###
+GET http://localhost:4004/odata/v4/catalog/Reviews?$select=ID,movie_ID&$expand=movie($select=ID,title)
