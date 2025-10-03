@@ -1,0 +1,17 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog id="movieDetailsDialog" class="sapUiResponsivePadding">
+        <VBox id="_IDGenVBox10">
+            <Text id="_IDGenText" text="{overview}" wrapping="true"/>
+            <Text id="_IDGenText15" text="Release Year: {releaseYear}"/>
+            <Text id="_IDGenText16" text="Runtime: {runtimeMin} minutes"/>
+            <!-- <Text id="_IDGenText17" text="Casting: {casting}"/> -->
+            <!-- <Text id="_IDGenText18" text="Rating: {
+                path: 'reviews/rating'
+                
+            } ★"/> -->
+        </VBox>
+        <endButton>
+            <Button id="_IDGenButton4" text="Close" press="onCloseDialog"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

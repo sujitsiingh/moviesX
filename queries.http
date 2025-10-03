@@ -2,6 +2,9 @@
 GET http://localhost:4004/odata/v4/catalog/Movies
 
 ###
+GET http://localhost:4004/odata/v4/catalog/Movies?$expand=reviews($select=rating)
+
+###
 bob
 securepass456
 
@@ -47,7 +50,7 @@ PATCH http://localhost:4004/odata/v4/catalog/Movies('3bc9a472-a88d-48fc-8e82-48c
 Content-Type: application/json
 
 {
-    "title": "Gladiator3",
+    "title": "Gladiator2",
     "overview": "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family.",
     "releaseYear": 2000,
     "runtimeMin": 2000,
@@ -76,4 +79,4 @@ GET http://localhost:4004/odata/v4/catalog/Users
 GET http://localhost:4004/odata/v4/catalog/Reviews
 
 ###
-GET http://localhost:4004/odata/v4/catalog/Reviews?$select=ID,movie_ID&$expand=movie($select=ID,title)
+GET http://localhost:4004/odata/v4/catalog/Reviews?$select=ID,movie_ID

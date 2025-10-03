@@ -128,7 +128,7 @@ sap.ui.define([
             // oRouter.navTo("RouteMyReviews", {}, true);
             const sUserId = sessionStorage.getItem("userId");
             const isGuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(sUserId);
-            
+
             if (!isGuid) {
                 MessageBox.error("User session missing. Please login again.");
                 this._oCreateDialog.close();
@@ -137,7 +137,7 @@ sap.ui.define([
                 return;
             }
             const oBinding = this.byId("reviewsList1").getBinding("items");
-            
+
             if (oBinding) {
                 oBinding.filter(new Filter("user_ID", FilterOperator.EQ, sUserId));
             }
@@ -838,7 +838,81 @@ sap.ui.define([
                 this._oCreateDialog.destroy();
                 this._oCreateDialog = null;
             }
+        },
+
+
+        // MOVIES CHART PAGE
+        onListItemPress: async function (oEvent) {
+            const oView = this.getView();
+            const oItem = oEvent.getSource();
+            const oContext = oItem.getBindingContext();
+            const oData = oContext.getObject();
+
+            if (!this._oMovieDialog) {
+                this._oMovieDialog = await Fragment.load({
+                    id: oView.getId(),
+                    name: "movies.view.MovieDetails",
+                    controller: this
+                });
+                oView.addDependent(this._oMovieDialog);
+            }
+
+            this._oMovieDialog.setBindingContext(oContext);
+            this._oMovieDialog.open();
+        },
+
+        onCloseDialog: function () {
+            this._oMovieDialog.close();
+        },
+
+
+        // Progress Bar----
+        onShowProgress: function () {
+            const oView = this.getView();
+            const oList = oView.byId("moviesXList");
+            const aItems = oList.getItems();
+
+            let total = aItems.length;
+            let watched = 0;
+
+            aItems.forEach(item => {
+                const oCtx = item.getBindingContext();
+                const data = oCtx.getObject();
+                if (data.watched) {
+                    watched++;
+                }
+            });
+
+            const percent = total === 0 ? 0 : Math.round((watched / total) * 100);
+
+            const oProgressModel = new sap.ui.model.json.JSONModel({
+                progressPercent: percent,
+                progressText: `${watched} of ${total} movies watched`
+            });
+
+            oView.setModel(oProgressModel, "progress");
+
+            if (!this._oProgressDialog) {
+                Fragment.load({
+                    id: oView.getId(),
+                    name: "movies.view.ProgressDialog",
+                    controller: this
+                }).then(function (oDialog) {
+                    this._oProgressDialog = oDialog;
+                    oView.addDependent(oDialog);
+                    oDialog.setModel(oProgressModel, "progress");
+                    oDialog.open();
+                }.bind(this));
+            } else {
+                this._oProgressDialog.setModel(oProgressModel, "progress");
+                this._oProgressDialog.open();
+            }
+        },
+        onCloseProgressDialog: function () {
+            this._oProgressDialog.close();
         }
+
+
 
 
 

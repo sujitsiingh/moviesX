@@ -606,7 +606,7 @@
                     </HBox>
                 </Panel>
 
-                <!-- panel 4 CHARTS-->
+                <!-- panel 4 CHARTS PANEL-->
                 <Panel
                     id="panel4"
                     visible="false"
@@ -638,6 +638,12 @@
                             displayValue="0%"
                             showValue="true"
                         />
+                        <Button
+                            id="_IDGenButton"
+                            text="Show Progress"
+                            icon="sap-icon://status-positive"
+                            press="onShowProgress"
+                        />
                     </VBox>
 
                     <content>
@@ -648,35 +654,36 @@
                             <List
                                 id="moviesXList"
                                 items="{
-                                path: '/Reviews',
+                                path: '/Movies',
                                 parameters: { 
                                     $expand: {
-                                        movie: {
-                                            $select: ['ID','title', 'releaseYear', 'runtimeMin']
+                                        reviews: {
+                                            $select: ['ID','movie_ID','rating']
                                         }
                                     },
-                                    $select: ['ID','name','rating','comment', 'movie_ID','user_ID']
+                                    $select: ['ID','title','overview','releaseYear', 'runtimeMin','currency_code','numReviews']
                                 }
                             }"
                             >
                                 <ObjectListItem
                                     id="_IDGenObjectListItem3"
-                                    title="{movie_ID}"
-                                    number="{rating}"
+                                    title="{title}"
                                     numberUnit="★"
                                     press="onListItemPress"
                                 >
                                     <attributes>
                                         <ObjectAttribute
                                             id="_IDGenObjectAttribute3"
-                                            text="Release Year: {movie/releaseYear}"
+                                            text="Release Year: {releaseYear}"
                                         />
                                         <ObjectAttribute
                                             id="_IDGenObjectAttribute4"
-                                            text="{movie/runtimeMin} minutes Run time"
+                                            text="{runtimeMin} minutes Run time"
                                         />
+                                        <ObjectAttribute id="_IDGenObjectAttribute" >
+                                            <Button id="_IDGenButton13" text="Mark as Watched" press="onMarkAsWatched"/>
+                                        </ObjectAttribute>
                                     </attributes>
-                                                                        
                                 </ObjectListItem>
                             </List>
                         </VBox>

@@ -1,0 +1,16 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog id="progressDialog" title="Your Movie Progress">
+        <VBox id="_IDGenVBox19" class="sapUiSmallMargin">
+            <Text id="_IDGenText17" text="Movies Watched:"/>
+            <ProgressIndicator id="_IDGenProgressIndicator1"
+                percentValue="{progressPercent}"
+                displayValue="{progressPercent}%"
+                showValue="true"
+            />
+            <Text id="_IDGenText18" text="{progressText}" />
+        </VBox>
+        <endButton>
+            <Button id="_IDGenButton14" text="Close" press="onCloseProgressDialog"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
