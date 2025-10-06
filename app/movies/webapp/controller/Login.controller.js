@@ -107,6 +107,49 @@ sap.ui.define([
             }
         },
 
+        // Sign up
+        onRegisterPress: async function () {
+            var oView = this.getView(),
+                oBtn = oView.byId("register-btn");
+            if (!this._registerDialog) {
+                this._registerDialog = await Fragment.load({
+                    id: oView.getId(),
+                    name: "movies.view.Register",
+                    controller: this
+                });
+                oView.addDependent(this._registerDialog);
+            }
+            this._registerDialog.open();
+        },
+        onRegisterSubmit: async function () {
+            const username = this.getView().byId("regUsername").getValue();
+            const email = this.getView().byId("regEmail").getValue();
+            const password = this.getView().byId("regPassword").getValue();
+
+            try {
+                const newUser = { username, email, password, isAdmin: false };
+
+                await fetch(`/odata/v4/catalog/Users`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(newUser)
+                });
+
+                this.getView().getModel("userModel").setData(newUser);
+
+                MessageToast.show("User registered successfully!");
+                this._registerDialog.close();
+            } catch (error) {
+                MessageBox.error("Registration failed: " + error.message);
+            }
+        },
+
+        onRegisterCancel: function () {
+            this._registerDialog.close();
+        },
+
+
+
         // <------- Logout ------->
         logout: function () {
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);

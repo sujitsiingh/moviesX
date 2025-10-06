@@ -680,9 +680,6 @@
                                             id="_IDGenObjectAttribute4"
                                             text="{runtimeMin} minutes Run time"
                                         />
-                                        <ObjectAttribute id="_IDGenObjectAttribute" >
-                                            <Button id="_IDGenButton13" text="Mark as Watched" press="onMarkAsWatched"/>
-                                        </ObjectAttribute>
                                     </attributes>
                                 </ObjectListItem>
                             </List>

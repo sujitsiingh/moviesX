@@ -14,7 +14,7 @@ type Url: String(2048);
 entity Users: managed {
     key ID: UUID;
     username: String(60);
-    email: String(60) @mandatory @assert.format:'email';
+    email: String(60) @mandatory;
     password: String(255) @mandatory;
     isAdmin: Boolean default false @mandatory;
 }

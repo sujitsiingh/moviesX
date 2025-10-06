@@ -1,21 +1,95 @@
-<mvc:View controllerName="movies.controller.Login" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:form="sap.ui.layout.form" >
-    <Page id="loginPage" title="MoviesX">
+<mvc:View
+    controllerName="movies.controller.Login"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form"
+>
+    <Page
+        id="loginPage"
+        title="MoviesX"
+    >
         <content>
-            <VBox id="vBox1" class="pageContainer">
-                <HBox id="hBox1" class="loginHBox">
-                    <VBox id="image" class="imageContainer">
-                        <Image id="_IDGenImage2" src="../../uploads/loginImage.jpg" alt="Login Image" class="loginImage" width="100%" />
+            <VBox
+                id="vBox1"
+                class="pageContainer"
+            >
+                <HBox
+                    id="hBox1"
+                    class="loginHBox"
+                >
+                    <VBox
+                        id="image"
+                        class="imageContainer"
+                    >
+                        <Image
+                            id="_IDGenImage2"
+                            src="../../uploads/loginImage.jpg"
+                            alt="Login Image"
+                            class="loginImage"
+                            width="100%"
+                        />
                     </VBox>
-                    <VBox id="form" class="formContainer">
-                        <form:SimpleForm id="adressForm" title="Login" editable="true" layout="ResponsiveGridLayout" class="customForm">
-                            <Label text="User Name :" id="labelUser" class="mt-2" />
-                            <Input placeholder="Enter Your User name" id="un" />
+                    <VBox
+                        id="form"
+                        class="formContainer"
+                    >
+                        <form:SimpleForm
+                            id="adressForm"
+                            title="Login"
+                            editable="true"
+                            layout="ResponsiveGridLayout"
+                            class="customForm"
+                        >
+                            <Label
+                                text="User Name :"
+                                id="labelUser"
+                                class="mt-2"
+                            />
+                            <Input
+                                placeholder="Enter Your User name"
+                                id="un"
+                            />
 
-                            <Label text="Password :" id="labelPwd"/>
-                            <Input placeholder="Enter Your Password" id="pwd" type="Password" tooltip="Password Field"/>
-                            
-                            <Button id="login-btn" text="Login" type="Emphasized" class="customButton" press="onNavigateToList" />
-                            <Button id="cred-btn" text="Show Credentials" class="customButton" press="alertButton" />
+                            <Label
+                                text="Password :"
+                                id="labelPwd"
+                            />
+                            <Input
+                                placeholder="Enter Your Password"
+                                id="pwd"
+                                type="Password"
+                                tooltip="Password Field"
+                            />
+
+                            <Button
+                                id="login-btn"
+                                text="Login"
+                                type="Emphasized"
+                                class="customButton"
+                                press="onNavigateToList"
+                            />
+                            <Button
+                                id="cred-btn"
+                                text="Show Credentials"
+                                class="customButton"
+                                press="alertButton"
+                            />
+                            <HBox id="_IDGenHBox8">
+                                <VBox id="_IDGenVBox25">
+                                    <Text
+                                        id="_IDGenText19"
+                                        text="New User?"
+                                    />
+                                    <Button
+                                        id="register-btn"
+                                        text="Register"
+                                        type="Unstyled"
+                                        class="customButton"
+                                        press="onRegisterPress"
+                                    />
+                                </VBox>
+                            </HBox>
                         </form:SimpleForm>
                     </VBox>
                 </HBox>
@@ -25,10 +99,18 @@
         <footer>
             <Bar id="_IDGenBar">
                 <contentLeft>
-                    <Text class="redtext" id="copyRigjt" text="copyright@SKS"/>
+                    <Text
+                        class="redtext"
+                        id="copyRigjt"
+                        text="copyright@SKS"
+                    />
                 </contentLeft>
                 <contentRight>
-                    <Text id="text-sks" class="text-content" text="SKS"/>
+                    <Text
+                        id="text-sks"
+                        class="text-content"
+                        text="SKS"
+                    />
                 </contentRight>
             </Bar>
         </footer>
