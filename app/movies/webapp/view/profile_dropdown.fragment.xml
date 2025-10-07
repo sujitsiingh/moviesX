@@ -4,7 +4,7 @@
 	<Menu id="fragProfileMenu">
 		<MenuItem id="_IDGenMenuItem" text="My Profile" icon="sap-icon://customer"/>
 		<MenuItem id="_IDGenMenuItem14" text="My Reviews" icon="sap-icon://comment" press=".myReview"/>
-		<MenuItem id="_IDGenMenuItem12" text="Properties" icon="sap-icon://action-settings"/>
+		<MenuItem id="_IDGenMenuItem12" text="My Watch List" icon="sap-icon://action-settings" press="onOpenWatchListDialog"/>
 		<MenuItem id="_IDGenMenuItem13" text="Logout" icon="sap-icon://decline" press=".logout"/>
 	</Menu>
 </core:FragmentDefinition>

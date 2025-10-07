@@ -8,7 +8,7 @@
         class="sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer"
         stretch="true"
         draggable="true"
-        resizable="true"        
+        resizable="true"
     >
         <VBox
             id="_IDGenVBox10"
@@ -25,6 +25,11 @@
                 class="sapUiTinyMarginBottom"
             />
             <Text
+                id="_IDGenText31"
+                text="📝 Overview: {overview}"
+                class="sapUiTinyMarginBottom"
+            />
+            <Text
                 id="_IDGenText16"
                 text="⭐ Rating: {avgRating}"
                 class="sapUiTinyMarginBottom"
@@ -36,15 +41,41 @@
             />
             <Text
                 id="_IDGenText27"
-                text="⏱️ Runtime: {runtimeMin} minutes"
+                text="⏱️ Running Time: {runtimeMin} minutes"
                 class="sapUiTinyMarginBottom"
             />
 
-            <Text
+            <SegmentedButton
+                id="watchStatusSelector"
+                selectionChange="onWatchStatusChange"
+                class="sapUiSmallMarginBottom sapUiSmallMarginTop"
+            >
+                <items>
+                    <SegmentedButtonItem
+                        id="_IDGenSegmentedButtonItem1"
+                        text="Watched"
+                        key="watched"
+                        icon="sap-icon://sys-enter"
+                    />
+                    <SegmentedButtonItem
+                        id="_IDGenSegmentedButtonItem2"
+                        text="Want to Watch"
+                        key="wantToWatch"
+                        icon="sap-icon://bookmark-2"
+                    />
+                </items>
+            </SegmentedButton>
+            <Button
+                id="_IDGenButton4"
+                text="Add to My Watchlist"
+                press="onAddToWatchlist"
+            />
+
+            <!-- <Text
                 id="_IDGenText28"
                 text="🎭 Genre: {path: '/Genres/name'}"
                 class="sapUiMediumMarginBottom"
-            />
+            /> -->
             <Link
                 id="_IDGenLink1"
                 text="🔗 Homepage"
@@ -53,12 +84,11 @@
                 class="sapUiTinyMarginBottomapMTitle"
             />
 
-            <OverflowToolbar id="_IDGenOverflowToolbar4">
-                <Label
-                    id="_IDGenLabel12"
-                    text="Reviews by the users"
-                />
-            </OverflowToolbar>
+            <Label
+                id="_IDGenLabel12"
+                text="Reviews by the users"
+                class="sapUiMediumMarginTop"
+            />
 
             <List
                 id="_IDGenList"

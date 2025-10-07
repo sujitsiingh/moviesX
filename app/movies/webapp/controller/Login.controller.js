@@ -28,6 +28,10 @@ sap.ui.define([
             // Initialize the model
             var oUserModel = new JSONModel();
             this.getView().setModel(oUserModel, "userModel");
+
+
+            const oWatchListModel = new JSONModel({ list: [] });
+            this.getView().setModel(oWatchListModel, "myWatchListModel");
         },
         _onObjectMatched: function (oEvent) {
             var un = oEvent.getParameter("arguments").name;
@@ -898,8 +902,8 @@ sap.ui.define([
                     controller: this
                 });
                 oView.addDependent(this._oMovieDialog);
-            }            
-            
+            }
+
             this._oMovieDialog.setBindingContext(oContext);
             this._oMovieDialog.open();
             this.getView().getModel().refresh(true);
@@ -908,6 +912,56 @@ sap.ui.define([
         onCloseDialog: function () {
             this._oMovieDialog.close();
         },
+
+        //WatchList..
+        onWatchStatusChange: function (oEvent) {
+            const selectedKey = oEvent.getParameter("key");
+            this._selectedWatchStatus = selectedKey; // Storing status on keys
+        },
+
+        onAddToWatchlist: function () {
+            const oDialog = this.byId("movieDialog");
+            const oContext = oDialog.getBindingContext();
+            const movieData = oContext.getObject();
+
+            const watchStatus = this._selectedWatchStatus || "wantToWatch";
+
+            const oModel = this.getView().getModel("myWatchListModel");
+            const currentList = oModel.getProperty("/list") || [];
+
+            currentList.push({
+                ...movieData,
+                status: watchStatus
+            });
+
+            oModel.setProperty("/list", currentList);
+
+            MessageToast.show("Movie added to your watchlist!");
+        },
+
+        // watchlist dialog
+        onOpenWatchListDialog: async function () {
+            const oView = this.getView();
+            // const oItem = oEvent.getSource();
+            // const oContext = oItem.getBindingContext();
+
+            if (!this._watchListDialog) {
+                this._watchListDialog = await Fragment.load({
+                    id: oView.getId(),
+                    name: "movies.view.MyWatchList",
+                    controller: this
+                });
+                oView.addDependent(this._watchListDialog);
+            }
+
+            // this._watchListDialog.setBindingContext(oContext);
+            this._watchListDialog.open();
+            this.getView().getModel().refresh(true);
+        },
+        onCloseWatchListDialog: function () {
+            this._watchListDialog.close();
+        },
+
 
 
         // Progress Bar----

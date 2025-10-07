@@ -1,0 +1,36 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        id="myWatchListDialog"
+        title="🎞️ My Watchlist"
+        class="sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer"
+        stretch="true"
+        draggable="true"
+        resizable="true"
+    >
+        <VBox id="_IDGenVBox23" class="sapUiSmallMargin">
+            <List
+                id="watchList"
+                items="{myWatchListModel>/list}"
+                headerText="Movies You Want to Watch or Have Watched"
+            >
+                <StandardListItem id="_IDGenStandardListItem1"
+                    title="{myWatchListModel>title}"
+                    description="{= 'Status: ' + ${myWatchListModel>status} }"
+                    info="{myWatchListModel>avgRating} ⭐"
+                    infoState="Success"
+                />
+            </List>
+        </VBox>
+
+        <endButton>
+            <Button id="_IDGenButton18"
+                text="Close"
+                press="onCloseWatchListDialog"
+            />
+        </endButton>
+    </Dialog>
+
+</core:FragmentDefinition>
