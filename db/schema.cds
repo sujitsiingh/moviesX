@@ -34,6 +34,7 @@ entity Movies: managed {
     currency: Currency;
     homepage: Url;
     numReviews: Integer default 0;
+    avgRating: Decimal(3, 2) @virtual;
     // Relationships -->
     genres: Association to Genres;
     casting: array of String;
