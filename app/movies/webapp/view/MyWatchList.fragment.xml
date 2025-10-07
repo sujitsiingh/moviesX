@@ -10,13 +10,41 @@
         draggable="true"
         resizable="true"
     >
-        <VBox id="_IDGenVBox23" class="sapUiSmallMargin">
+        <VBox
+            id="_IDGenVBox23"
+            class="sapUiSmallMargin"
+        >
+            <SegmentedButton
+                id="watchListFilter"
+                selectionChange="onWatchListFilterChange"
+                class="sapUiSmallMarginBottom"
+            >
+                <items>
+                    <SegmentedButtonItem
+                        id="_IDGenSegmentedButtonItem3"
+                        key="all"
+                        text="All"
+                    />
+                    <SegmentedButtonItem
+                        id="_IDGenSegmentedButtonItem4"
+                        key="watched"
+                        text="Already Watched?"
+                    />
+                    <SegmentedButtonItem
+                        id="_IDGenSegmentedButtonItem5"
+                        key="wantToWatch"
+                        text="Want to Watch"
+                    />
+                </items>
+            </SegmentedButton>
+            
             <List
                 id="watchList"
                 items="{myWatchListModel>/list}"
                 headerText="Movies You Want to Watch or Have Watched"
             >
-                <StandardListItem id="_IDGenStandardListItem1"
+                <StandardListItem
+                    id="_IDGenStandardListItem1"
                     title="{myWatchListModel>title}"
                     description="{= 'Status: ' + ${myWatchListModel>status} }"
                     info="{myWatchListModel>avgRating} ⭐"
@@ -26,11 +54,16 @@
         </VBox>
 
         <endButton>
-            <Button id="_IDGenButton18"
+            <Button
+                id="_IDGenButton18"
                 text="Close"
                 press="onCloseWatchListDialog"
             />
         </endButton>
+        <Button
+            id="_IDGenButton"
+            text="Clear Watchlist"
+            press="onClearWatchlist"
+        />
     </Dialog>
-
 </core:FragmentDefinition>

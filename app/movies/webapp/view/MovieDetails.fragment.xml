@@ -53,7 +53,7 @@
                 <items>
                     <SegmentedButtonItem
                         id="_IDGenSegmentedButtonItem1"
-                        text="Watched"
+                        text="Already Watched?"
                         key="watched"
                         icon="sap-icon://sys-enter"
                     />

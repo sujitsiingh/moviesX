@@ -30,8 +30,16 @@ sap.ui.define([
             this.getView().setModel(oUserModel, "userModel");
 
 
-            const oWatchListModel = new JSONModel({ list: [] });
-            this.getView().setModel(oWatchListModel, "myWatchListModel");
+            const savedList = JSON.parse(localStorage.getItem("myWatchList")) || [];
+            const oModel = new JSONModel({
+                list: savedList,
+                watchedCount: 0,
+                totalCount: 0
+            });
+
+            this.getView().setModel(oModel, "myWatchListModel");
+            this._updateWatchProgress();
+
         },
         _onObjectMatched: function (oEvent) {
             var un = oEvent.getParameter("arguments").name;
@@ -913,6 +921,7 @@ sap.ui.define([
             this._oMovieDialog.close();
         },
 
+
         //WatchList..
         onWatchStatusChange: function (oEvent) {
             const selectedKey = oEvent.getParameter("key");
@@ -920,24 +929,25 @@ sap.ui.define([
         },
 
         onAddToWatchlist: function () {
-            const oDialog = this.byId("movieDialog");
-            const oContext = oDialog.getBindingContext();
-            const movieData = oContext.getObject();
-
-            const watchStatus = this._selectedWatchStatus || "wantToWatch";
-
             const oModel = this.getView().getModel("myWatchListModel");
             const currentList = oModel.getProperty("/list") || [];
 
-            currentList.push({
-                ...movieData,
-                status: watchStatus
-            });
+            const movieData = this.byId("movieDialog").getBindingContext().getObject();
+            const selectedKey = this.byId("watchStatusSelector").getSelectedKey();
+            // const watchStatus = this._selectedWatchStatus || "wantToWatch";
+            const watchStatus = selectedKey || "wantToWatch";
+            console.log("Selected Watch Status:", watchStatus);
 
+            currentList.push({ ...movieData, status: watchStatus });
             oModel.setProperty("/list", currentList);
 
+            // Save to localStorage
+            localStorage.setItem("myWatchList", JSON.stringify(currentList));
+
+            this._updateWatchProgress();
             MessageToast.show("Movie added to your watchlist!");
         },
+
 
         // watchlist dialog
         onOpenWatchListDialog: async function () {
@@ -954,6 +964,7 @@ sap.ui.define([
                 oView.addDependent(this._watchListDialog);
             }
 
+
             // this._watchListDialog.setBindingContext(oContext);
             this._watchListDialog.open();
             this.getView().getModel().refresh(true);
@@ -962,56 +973,28 @@ sap.ui.define([
             this._watchListDialog.close();
         },
 
+        // clear watchlist..
+        onClearWatchlist: function () {
+            localStorage.removeItem("myWatchList");
+            const oModel = this.getView().getModel("myWatchListModel");
+            oModel.setProperty("/list", []);
+            this._updateWatchProgress();
+            MessageToast.show("Watchlist cleared.");
+        },
 
+        
 
         // Progress Bar----
-        onShowProgress: function () {
-            const oView = this.getView();
-            const oList = oView.byId("moviesXList");
-            const aItems = oList.getItems();
+        _updateWatchProgress: function () {
+            const oModel = this.getView().getModel("myWatchListModel");
+            const list = oModel.getProperty("/list") || [];
 
-            let total = aItems.length;
-            let watched = 0;
+            const totalCount = list.length;
+            const watchedCount = list.filter(item => item.status === "watched").length;
 
-            aItems.forEach(item => {
-                const oCtx = item.getBindingContext();
-                const data = oCtx.getObject();
-                if (data.watched) {
-                    watched++;
-                }
-            });
-
-            const percent = total === 0 ? 0 : Math.round((watched / total) * 100);
-
-            const oProgressModel = new sap.ui.model.json.JSONModel({
-                progressPercent: percent,
-                progressText: `${watched} of ${total} movies watched`
-            });
-
-            oView.setModel(oProgressModel, "progress");
-
-            if (!this._oProgressDialog) {
-                Fragment.load({
-                    id: oView.getId(),
-                    name: "movies.view.ProgressDialog",
-                    controller: this
-                }).then(function (oDialog) {
-                    this._oProgressDialog = oDialog;
-                    oView.addDependent(oDialog);
-                    oDialog.setModel(oProgressModel, "progress");
-                    oDialog.open();
-                }.bind(this));
-            } else {
-                this._oProgressDialog.setModel(oProgressModel, "progress");
-                this._oProgressDialog.open();
-            }
+            oModel.setProperty("/totalCount", totalCount);
+            oModel.setProperty("/watchedCount", watchedCount);
         },
-        onCloseProgressDialog: function () {
-            this._oProgressDialog.close();
-        }
-
-
-
 
 
     });

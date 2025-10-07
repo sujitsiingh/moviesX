@@ -628,63 +628,22 @@
                     </VBox>
 
                     <VBox id="_IDGenVBox24">
-                        <Text
-                            id="_IDGenText14"
-                            text="0 of { path: '/Movies/$count' } WATCHED"
-                        />
+                                               
                         <ProgressIndicator
-                            id="_IDGenProgressIndicator"
-                            percentValue="0"
-                            displayValue="0%"
-                            showValue="true"
+                            id="watchProgress"
+                            displayValue="{= ${myWatchListModel>/watchedCount} + ' / ' + ${myWatchListModel>/totalCount} + ' WATCHED' }"
+                            percentValue="{= (${myWatchListModel>/watchedCount} / ${myWatchListModel>/totalCount}) * 100 }"
+                            state="Success"
+                            class="sapUiMediumMarginBottom"
                         />
-                        <Button
-                            id="_IDGenButton"
-                            text="Show Progress"
-                            icon="sap-icon://status-positive"
-                            press="onShowProgress"
+                        <Text
+                            id="_IDGenText28"
+                            text="{= Math.round((${myWatchListModel>/watchedCount} / ${myWatchListModel>/totalCount}) * 100) + '% watched' }"
+                            class="sapUiSmallMarginBottom"
                         />
+                        
                     </VBox>
 
-                    <!-- <content>
-                        <VBox
-                            id="_IDGenVBox23"
-                            class="gridVbox"
-                        >
-                            <List
-                                id="moviesXList"
-                                items="{
-                                path: '/Movies',
-                                parameters: { 
-                                    $expand: {
-                                        reviews: {
-                                            $select: ['ID','movie_ID','rating']
-                                        }
-                                    },
-                                    $select: ['ID','title','overview','releaseYear', 'runtimeMin','currency_code','numReviews']
-                                }
-                            }"
-                            >
-                                <ObjectListItem
-                                    id="_IDGenObjectListItem3"
-                                    title="{title}"
-                                    numberUnit="★"
-                                    press="onListItemPress"
-                                >
-                                    <attributes>
-                                        <ObjectAttribute
-                                            id="_IDGenObjectAttribute3"
-                                            text="Release Year: {releaseYear}"
-                                        />
-                                        <ObjectAttribute
-                                            id="_IDGenObjectAttribute4"
-                                            text="{runtimeMin} minutes Run time"
-                                        />
-                                    </attributes>
-                                </ObjectListItem>
-                            </List>
-                        </VBox>
-                    </content> -->
                     <Table
                         id="moviesxChart"
                         inset="false"
@@ -699,7 +658,7 @@
                 $select: ['ID','title','overview','releaseYear', 'runtimeMin','currency_code','numReviews']
             }
 		}"
-            >
+                    >
                         <columns>
                             <Column
                                 id="_IDGenColumn6"
@@ -709,7 +668,6 @@
                                     id="_IDGenText20"
                                     text="Movies Name"
                                 />
-                                
                             </Column>
                             <Column
                                 id="_IDGenColumn8"
@@ -761,7 +719,12 @@
                                         id="_IDGenText26"
                                         text="{runtimeMin}"
                                     />
-                                    <Button id="i-btn" text="" type="Neutral" press="onIbtnPress"></Button>
+                                    <Button
+                                        id="i-btn"
+                                        text=""
+                                        type="Neutral"
+                                        press="onIbtnPress"
+                                    />
                                 </cells>
                             </ColumnListItem>
                         </items>
