@@ -29,8 +29,9 @@ sap.ui.define([
             var oUserModel = new JSONModel();
             this.getView().setModel(oUserModel, "userModel");
 
-
-            const savedList = JSON.parse(localStorage.getItem("myWatchList")) || [];
+            const sUserId = sessionStorage.getItem("userId");
+            const storageKey = `myWatchList_${sUserId}`;
+            const savedList = JSON.parse(localStorage.getItem(storageKey)) || [];
             const oModel = new JSONModel({
                 list: savedList,
                 watchedCount: 0,
@@ -929,6 +930,9 @@ sap.ui.define([
         },
 
         onAddToWatchlist: function () {
+            const sUserId = sessionStorage.getItem("userId");
+            const storageKey = `myWatchList_${sUserId}`;
+
             const oModel = this.getView().getModel("myWatchListModel");
             const currentList = oModel.getProperty("/list") || [];
 
@@ -942,7 +946,7 @@ sap.ui.define([
             oModel.setProperty("/list", currentList);
 
             // Save to localStorage
-            localStorage.setItem("myWatchList", JSON.stringify(currentList));
+            localStorage.setItem(storageKey, JSON.stringify(currentList));
 
             this._updateWatchProgress();
             MessageToast.show("Movie added to your watchlist!");
@@ -975,14 +979,37 @@ sap.ui.define([
 
         // clear watchlist..
         onClearWatchlist: function () {
-            localStorage.removeItem("myWatchList");
+            const sUserId = sessionStorage.getItem("userId");
+            const storageKey = `myWatchList_${sUserId}`;
+
+            localStorage.removeItem(storageKey);
+
             const oModel = this.getView().getModel("myWatchListModel");
             oModel.setProperty("/list", []);
             this._updateWatchProgress();
-            MessageToast.show("Watchlist cleared.");
+            MessageToast.show("Your Watchlist has been cleared.");
         },
 
-        
+        // filter watch list..
+        onWatchListFilterChange: function (oEvent) {
+            const selectedKey = oEvent.getParameter("key");
+            const oList = this.getView().byId("watchList");
+            const oBinding = oList.getBinding("items");
+
+            if (selectedKey === "all") {
+                oBinding.filter([]); // Show all
+            } else {
+                // const oFilter = new Filter("status", "EQ", selectedKey);
+                const oFilter = new Filter({
+                    path: "status",
+                    operator: "EQ",
+                    value1: selectedKey
+                });
+                oBinding.filter([oFilter]);
+            }
+        },
+
+
 
         // Progress Bar----
         _updateWatchProgress: function () {
