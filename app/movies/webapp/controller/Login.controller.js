@@ -898,10 +898,11 @@ sap.ui.define([
                     controller: this
                 });
                 oView.addDependent(this._oMovieDialog);
-            }
-
+            }            
+            
             this._oMovieDialog.setBindingContext(oContext);
             this._oMovieDialog.open();
+            this.getView().getModel().refresh(true);
         },
 
         onCloseDialog: function () {

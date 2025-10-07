@@ -26,7 +26,7 @@
             />
             <Text
                 id="_IDGenText16"
-                text="⭐ Rating: {reviews/rating}"
+                text="⭐ Rating: {avgRating}"
                 class="sapUiTinyMarginBottom"
             />
             <Text

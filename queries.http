@@ -79,6 +79,18 @@ GET http://localhost:4004/odata/v4/catalog/Currencies
 GET http://localhost:4004/odata/v4/catalog/Users
 
 ###
+POST http://localhost:4004/odata/v4/catalog/Users
+Content-Type: application/json
+
+{
+  "username": "sk",
+  "email": "sk12@sk.com",
+  "password": "sk123",
+  "isAdmin": true
+}
+
+
+###
 GET http://localhost:4004/odata/v4/catalog/Reviews
 
 ###
