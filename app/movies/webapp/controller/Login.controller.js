@@ -885,7 +885,7 @@ sap.ui.define([
 
 
         // MOVIES CHART PAGE
-        onListItemPress: async function (oEvent) {
+        onIbtnPress: async function (oEvent) {
             const oView = this.getView();
             const oItem = oEvent.getSource();
             const oContext = oItem.getBindingContext();

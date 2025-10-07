@@ -2,6 +2,9 @@
 GET http://localhost:4004/odata/v4/catalog/Movies
 
 ###
+GET http://localhost:4004/odata/v4/catalog/Movies?$expand=genres
+
+###
 GET http://localhost:4004/odata/v4/catalog/Movies?$expand=reviews($select=rating)
 
 ###

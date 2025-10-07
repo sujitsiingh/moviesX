@@ -646,7 +646,7 @@
                         />
                     </VBox>
 
-                    <content>
+                    <!-- <content>
                         <VBox
                             id="_IDGenVBox23"
                             class="gridVbox"
@@ -684,7 +684,88 @@
                                 </ObjectListItem>
                             </List>
                         </VBox>
-                    </content>
+                    </content> -->
+                    <Table
+                        id="moviesxChart"
+                        inset="false"
+                        items="{
+			path: '/Movies',
+            parameters: { 
+                $expand: {
+                reviews: {
+                    $select: ['ID','movie_ID','rating']
+                }
+                },
+                $select: ['ID','title','overview','releaseYear', 'runtimeMin','currency_code','numReviews']
+            }
+		}"
+            >
+                        <columns>
+                            <Column
+                                id="_IDGenColumn6"
+                                width="14em"
+                            >
+                                <Text
+                                    id="_IDGenText20"
+                                    text="Movies Name"
+                                />
+                                
+                            </Column>
+                            <Column
+                                id="_IDGenColumn8"
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                            >
+                                <Text
+                                    id="_IDGenText21"
+                                    text="Release Year"
+                                />
+                            </Column>
+                            <Column
+                                id="_IDGenColumn9"
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                                hAlign="End"
+                            >
+                                <Text
+                                    id="_IDGenText22"
+                                    text="Run time (min)"
+                                />
+                            </Column>
+                            <Column
+                                id="_IDGenColumn11"
+                                hAlign="End"
+                            >
+                                <Text
+                                    id="_IDGenText24"
+                                    text="Rating"
+                                />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem
+                                id="_IDGenColumnListItem1"
+                                vAlign="Middle"
+                            >
+                                <cells>
+                                    <ObjectIdentifier
+                                        id="_IDGenObjectIdentifier"
+                                        title="{title}"
+                                        text="{}"
+                                    />
+                                    <Text
+                                        id="_IDGenText25"
+                                        text="{releaseYear}"
+                                    />
+                                    <Text
+                                        id="_IDGenText26"
+                                        text="{runtimeMin}"
+                                    />
+                                    <Button id="i-btn" text="" type="Neutral" press="onIbtnPress"></Button>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
                 </Panel>
 
                 <!-- Panel 5 HOME PANEL-->
