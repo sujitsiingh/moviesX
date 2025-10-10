@@ -21,11 +21,6 @@
             >
                 <items>
                     <SegmentedButtonItem
-                        id="_IDGenSegmentedButtonItem3"
-                        key="all"
-                        text="All"
-                    />
-                    <SegmentedButtonItem
                         id="_IDGenSegmentedButtonItem4"
                         key="watched"
                         text="Already Watched?"

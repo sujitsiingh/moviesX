@@ -22,8 +22,6 @@ sap.ui.define([
             // sap.ui.getCore().applyTheme("sap_horizon");
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             oRouter.getRoute("RouteHome").attachPatternMatched(this._onObjectMatched, this);
-            // oRouter.getRoute("RouteReviews").attachPatternMatched(this._onMatched, this);
-            // oRouter.getRoute("RouteMyReviews").attachPatternMatched(this._onMatched, this);
 
             // Initialize the model
             var oUserModel = new JSONModel();
@@ -49,20 +47,7 @@ sap.ui.define([
             oUserModel.setProperty("/username", un);
             oUserModel.setProperty("/password", pwd);
         },
-        // _onMatched: function () {
-        //     const sUserId = sessionStorage.getItem("userId");
-        //     const bLoggedIn = sessionStorage.getItem("loggedIn") === "true";
-        //     if (!bLoggedIn || !sUserId) {
-        //         MessageBox.error("Please login to see your reviews.");
-        //         this.oRouter.navTo("RouteLogin", {}, true);
-        //         return;
-        //     }
-
-        //     const oList = this.byId("reviewsList");
-        //     const oBinding = oList.getBinding("items");
-        //     // Filter by current user
-        //     oBinding.filter([new Filter("user_ID", FilterOperator.EQ, sUserId)]);
-        // },
+        
 
 
         alertButton: function () {
@@ -178,10 +163,9 @@ sap.ui.define([
             });
         },
 
+
+
         myReview: function () {
-            // const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            // oRouter.navTo("RouteReviews", {}, true);
-            // oRouter.navTo("RouteMyReviews", {}, true);
             const sUserId = sessionStorage.getItem("userId");
             const isGuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(sUserId);
 
@@ -339,12 +323,7 @@ sap.ui.define([
                     id: oView.getId(),
                     name: "movies.view.profile_dropdown",
                     controller: this
-                })
-                // .then(function (oMenu) {
-                //     oMenu.openBy(oBtn);
-                //     this._oMenuFragment = oMenu;
-                //     return this._oMenuFragment;
-                // }.bind(this));
+                })                
                 oView.addDependent(this._oMenuFragment);
             } else {
                 this._oMenuFragment.openBy(oBtn);
@@ -431,8 +410,8 @@ sap.ui.define([
                     },
                     template: new StandardListItem({
                         title: "{code}",
-                        description: "{name}", // shows currency name
-                        info: "{symbol}"       // e.g., ₹, $, €
+                        description: "{name}",
+                        info: "{symbol}"
                     }),
                     templateShareable: false
                 });
@@ -492,14 +471,7 @@ sap.ui.define([
             }
         },
 
-        // createColumnConfig: function() {
-        //         var aCols = [];
-        //         aCols.push({ label: 'Id', property: 'ID', type: EdmType.String, template: '{0}' });
-        //         aCols.push({ label: 'Title', property: 'title', type: EdmType.String });
-        //         aCols.push({ label: 'Overview', property: 'overview', type: EdmType.String });
-        //         aCols.push({ label: 'Warrenty', property: 'stock', type: EdmType.Number, scale: 0 });
-        //         return aCols;
-        //     },
+        
 
         createColumnConfig: function () {
             return [
@@ -615,6 +587,8 @@ sap.ui.define([
             }
         },
 
+
+
         onDeletePress: function () {
             var oContext = this._oSelectedContext;
             var sMovieId = oContext.getProperty("ID");
@@ -633,6 +607,8 @@ sap.ui.define([
                 }
             });
         },
+
+
 
         onEditPress: function () {
             var oData = this._oSelectedContext.getObject();
@@ -720,38 +696,8 @@ sap.ui.define([
                     oView.setBusy(false);
                     MessageBox.error("An error occurred while updating details: " + error.message);
                 });
-
-
-
-
-            // var update_oModel = this.getView().getModel();
-            // var sPath = "/Movies('" + itemCode + "')";
-            // var oBinding = update_oModel.bindContext(sPath);
-            // var oContext = oBinding.getBoundContext();
-
-            // var oView = this.getView();
-            // function resetBusy() {
-            //     oView.setBusy(false);
-            // }
-            // oView.setBusy(true);
-
-            // oContext.setProperty("title", title);
-            // oContext.setProperty("overview", overview);
-            // oContext.setProperty("releaseYear", releaseYear);
-            // oContext.setProperty("runtimeMin", runtimeMin);
-            // oContext.setProperty("numReviews", numReviews);
-            // // oContext.setProperty("cast", cast);
-            // oContext.setProperty("casting", castArray.toString());
-            // oContext.setProperty("currency_code", currency);
-
-            // update_oModel.submitBatch("auto").then(function () {
-            //     resetBusy();
-            //     MessageBox.success("Movie details updated successfully!");
-            // }).catch(function (e) {
-            //     resetBusy();
-            //     MessageBox.error("An error occured while updating details..:" + e);
-            // })
         },
+
 
         // <------- Reviews ------->
         onSubmit: async function () {
@@ -813,16 +759,9 @@ sap.ui.define([
             this.onNavBack();
         },
         onNavBack: function () {
-            // const oHistory = History.getInstance();
-            // const sPreviousHash = oHistory.getPreviousHash();
             const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             oRouter.navTo("RouteHome", {}, true);
 
-            // if (sPreviousHash !== undefined) {
-            //     window.history.go(-1);
-            // } else {
-            //     oRouter.navTo("RouteHome", {}, true);
-            // }
         },
 
 
@@ -831,7 +770,6 @@ sap.ui.define([
 
         // <------- MyReviews page ------->
         _formatCommentAttr: function (sComment) {
-            // return sComment ? [{ text: sComment }] : [];
 
             if (!sComment) {
                 return "No comment provided.";
@@ -848,10 +786,6 @@ sap.ui.define([
         },
 
         onAddPress: function () {
-            // EITHER: Navigate to a Create page
-            // this.oRouter.navTo("RouteReviews");
-
-            // OR: Open a create dialog
             this._openCreateDialog();
         },
 
@@ -921,14 +855,6 @@ sap.ui.define([
             this._oCreateDialog.close();
         },
 
-        // onNavBack: function () {
-        //     const sPrev = History.getInstance().getPreviousHash();
-        //     if (sPrev !== undefined) {
-        //         window.history.go(-1);
-        //     } else {
-        //         this.oRouter.navTo("RouteHome", {}, true);
-        //     }
-        // },
 
         onExit: function () {
             if (this._oCreateDialog) {
@@ -997,8 +923,6 @@ sap.ui.define([
         // watchlist dialog
         onOpenWatchListDialog: async function () {
             const oView = this.getView();
-            // const oItem = oEvent.getSource();
-            // const oContext = oItem.getBindingContext();
 
             if (!this._watchListDialog) {
                 this._watchListDialog = await Fragment.load({
@@ -1030,26 +954,6 @@ sap.ui.define([
             this._updateWatchProgress();
             MessageToast.show("Your Watchlist has been cleared.");
         },
-
-        // filter watch list..
-        onWatchListFilterChange: function (oEvent) {
-            const selectedKey = oEvent.getParameter("key");
-            const oList = this.getView().byId("watchList");
-            const oBinding = oList.getBinding("items");
-
-            if (selectedKey === "all") {
-                oBinding.filter([]); // Show all
-            } else {
-                // const oFilter = new Filter("status", "EQ", selectedKey);
-                const oFilter = new Filter({
-                    path: "status",
-                    operator: "EQ",
-                    value1: selectedKey
-                });
-                oBinding.filter([oFilter]);
-            }
-        },
-
 
 
         // Progress Bar----
