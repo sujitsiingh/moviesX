@@ -670,6 +670,7 @@ sap.ui.define([
         },
 
         onEditMe: function () {
+            var oView = this.getView();
             var itemCode = this.getView().byId("itemCode").getValue();
 
             var title = this.getView().byId("editTitle").getValue();
@@ -683,33 +684,73 @@ sap.ui.define([
 
             var currency = this.getView().byId("editCurrency").getValue();
 
-            var update_oModel = this.getView().getModel();
-            var sPath = "/Movies('" + itemCode + "')";
-            var oBinding = update_oModel.bindContext(sPath);
-            var oContext = oBinding.getBoundContext();
 
-            var oView = this.getView();
-            function resetBusy() {
-                oView.setBusy(false);
-            }
+            var payload = {
+                title: title,
+                overview: overview,
+                releaseYear: releaseYear,
+                runtimeMin: runtimeMin,
+                numReviews: numReviews,
+                casting: castArray,
+                currency_code: currency
+            };
+            var sUrl = "/odata/v4/catalog/Movies('" + itemCode + "')";
             oView.setBusy(true);
 
-            oContext.setProperty("title", title);
-            oContext.setProperty("overview", overview);
-            oContext.setProperty("releaseYear", releaseYear);
-            oContext.setProperty("runtimeMin", runtimeMin);
-            oContext.setProperty("numReviews", numReviews);
-            // oContext.setProperty("cast", cast);
-            oContext.setProperty("casting", castArray.toString());
-            oContext.setProperty("currency_code", currency);
 
-            update_oModel.submitBatch("auto").then(function () {
-                resetBusy();
-                MessageBox.success("Movie details updated successfully!");
-            }).catch(function (e) {
-                resetBusy();
-                MessageBox.error("An error occured while updating details..:" + e);
+            fetch(sUrl, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
             })
+
+                .then(response => {
+                    oView.setBusy(false);
+                    if (response.ok) {
+                        MessageBox.success("Movie details updated successfully!");
+                    } else {
+                        return response.text().then(text => {
+                            throw new Error(text);
+                        });
+                    }
+                })
+                .catch(error => {
+                    oView.setBusy(false);
+                    MessageBox.error("An error occurred while updating details: " + error.message);
+                });
+
+
+
+
+            // var update_oModel = this.getView().getModel();
+            // var sPath = "/Movies('" + itemCode + "')";
+            // var oBinding = update_oModel.bindContext(sPath);
+            // var oContext = oBinding.getBoundContext();
+
+            // var oView = this.getView();
+            // function resetBusy() {
+            //     oView.setBusy(false);
+            // }
+            // oView.setBusy(true);
+
+            // oContext.setProperty("title", title);
+            // oContext.setProperty("overview", overview);
+            // oContext.setProperty("releaseYear", releaseYear);
+            // oContext.setProperty("runtimeMin", runtimeMin);
+            // oContext.setProperty("numReviews", numReviews);
+            // // oContext.setProperty("cast", cast);
+            // oContext.setProperty("casting", castArray.toString());
+            // oContext.setProperty("currency_code", currency);
+
+            // update_oModel.submitBatch("auto").then(function () {
+            //     resetBusy();
+            //     MessageBox.success("Movie details updated successfully!");
+            // }).catch(function (e) {
+            //     resetBusy();
+            //     MessageBox.error("An error occured while updating details..:" + e);
+            // })
         },
 
         // <------- Reviews ------->
